@@ -1,4 +1,3 @@
 shopProject
 ===========
-This is new edition
-Fuuuuuuuuasdsd
+This is new editionFuuuuuuuuasdsdFuuuuuuuuasdsd
