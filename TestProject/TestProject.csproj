@@ -222,15 +222,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
-      <Project>{3e6293c6-a7c7-41e2-9379-5df4ff4cdad5}</Project>
+      <Project>{645b9a20-f7c5-49de-ac0d-b70b6ac12f85}</Project>
       <Name>BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
-      <Project>{195eb1b7-812e-4e7b-821b-1623d2fdf0c9}</Project>
+      <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
       <Name>Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
-      <Project>{f71bc978-5a5f-43cd-a30b-5846537f6319}</Project>
+      <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
