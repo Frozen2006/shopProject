@@ -13,7 +13,9 @@ namespace DAL
     {
         public override void Load()
         {
-            Bind<DbContext>().To<ShopContext>();
+            //object life cycle = life cycle of thread.
+            //1 user = 1 thread... -> 1 context on 1 user
+            Bind<DbContext>().To<ShopContext>().InThreadScope();
         }
     }
 }
