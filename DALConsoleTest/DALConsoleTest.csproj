@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D99D1DDA-8208-4F98-AB36-95A913FC315A}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{287B8F21-2DAA-4948-AE4E-A93204752140}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>DALConsoleTest</RootNamespace>
+    <AssemblyName>DALConsoleTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,11 +36,7 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,61 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductRepository.cs" />
-    <Compile Include="Category.cs">
-      <DependentUpon>Shop.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CategoryRepository.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="PartialEntities\Category.cs" />
-    <Compile Include="PartialEntities\Product.cs" />
-    <Compile Include="Product.cs">
-      <DependentUpon>Shop.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RepositoryBase.cs" />
-    <Compile Include="Shop.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Shop.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Shop.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Shop.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Shop.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Shop.edmx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Shop.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Shop.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
-    <None Include="Shop.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Shop.edmx</DependentUpon>
-      <LastGenOutput>Shop.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Shop.edmx.diagram">
-      <DependentUpon>Shop.edmx</DependentUpon>
-    </None>
-    <None Include="Shop.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Shop.edmx</DependentUpon>
-      <LastGenOutput>Shop.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{d99d1dda-8208-4f98-ab36-95a913fc315a}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

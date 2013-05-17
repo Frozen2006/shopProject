@@ -8,6 +8,7 @@
 		2. Придумать более крутые интерфейсы (с большим числом методов)
 			для ProductRepository и CategoryRepository
 		3. Сделать нормальный Dispose в BaseRepository как у Сергея сделано
+		4. Connection String НУЖНО МЕНЯТЬ и в DALConsoleTest		
 	
 2) Прикрутить мембершип
 	1. Создать в нашей базе данных нужные таблицы
