@@ -30,11 +30,11 @@ namespace DALConsoleTest
             //    Console.WriteLine(category + "\n");
             //}
 
-            var c = cats.Skip(3).First();
+            var c = cats.Skip(4).First();
             var p = prods.Skip(3).First();
 
             Console.WriteLine(c);
-            Console.WriteLine(p);
+            Console.WriteLine(p.Category);
 
             //p.CategoryId = c.Id;
             //prodRep.Update(p);
