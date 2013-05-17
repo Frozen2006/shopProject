@@ -14,13 +14,31 @@ namespace DALConsoleTest
         {
             var context = new ShopContext();
             var prodRep = new ProductRepository(context);
+            var catRep = new CategoryRepository(context);
 
             var prods = prodRep.ReadAll().Take(20).ToArray();
 
-            foreach (var product in prods)
-            {
-                Console.WriteLine(product);
-            }
+            //foreach (var product in prods)
+            //{
+            //    Console.WriteLine(product+"\n");
+            //}
+
+            var cats = catRep.ReadAll().Take(20).ToArray();
+
+            //foreach (var category in cats)
+            //{
+            //    Console.WriteLine(category + "\n");
+            //}
+
+            var c = cats.Skip(3).First();
+            var p = prods.Skip(3).First();
+
+            Console.WriteLine(c);
+            Console.WriteLine(p);
+
+            //p.CategoryId = c.Id;
+            //prodRep.Update(p);
+
 
             Console.Read();
         }

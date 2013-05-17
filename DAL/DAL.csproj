@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookRepository.cs" />
+    <Compile Include="ProductRepository.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>

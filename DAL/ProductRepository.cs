@@ -20,7 +20,7 @@ namespace DAL.Repositories.DbFirstRepository
                 product.UnitOfMeasure = item.UnitOfMeasure;
 
                 //Нужно тестировать.
-                product.Category = item.Category;
+                //product.Category = item.Category;
             }
             Context.SaveChanges();
         }
