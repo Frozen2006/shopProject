@@ -10,7 +10,7 @@ namespace DAL.Repositories
     {
         void Create(T item);
         void Delete(T item);
-        T Read(Guid id);
+        T Read(int id);
         void Update(T item);
         IQueryable<T> ReadAll();
     }
