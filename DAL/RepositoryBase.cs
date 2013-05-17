@@ -10,11 +10,11 @@ namespace DAL.Repositories.DbFirstRepository
     public abstract class RepositoryBase<T> : IRepository<T> where T : class, IEntity
     {
         //Вот этот контекст должен назначаться Ninject'ом. Поэтому попросим его в конструктор
-        protected static ShopContext Context { get; set; }
+        protected static DbContext Context { get; set; }
         protected DbSet<T> CurrentDbSet { get; set; }
 
         //И пускай теперь Ninject сам думает, как сделать, чтобы контекст был один.
-        protected RepositoryBase(ShopContext context)
+        protected RepositoryBase(DbContext context)
         {
             Context = context;
             CurrentDbSet = Context.Set<T>();

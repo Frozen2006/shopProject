@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DAL.Repositories.DbFirstRepository;
+using Ninject;
 
 namespace DALConsoleTest
 {
@@ -12,9 +13,11 @@ namespace DALConsoleTest
     {
         static void Main(string[] args)
         {
-            var context = new ShopContext();
-            var prodRep = new ProductRepository(context);
-            var catRep = new CategoryRepository(context);
+            Ninject.IKernel kern = new StandardKernel(new NinjectKernel());
+
+
+            ProductRepository prodRep = kern.Get<ProductRepository>();
+            CategoryRepository catRep = kern.Get<CategoryRepository>();
 
             var prods = prodRep.ReadAll().Take(20).ToArray();
 
