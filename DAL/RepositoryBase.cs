@@ -47,9 +47,18 @@ namespace DAL.Repositories.DbFirstRepository
         }
         //Необходим нормальный Unit of Work, или хотябы человеческий Dispose
         //там нужна какая-то проверка
+
+
+        //state of current object
+        private bool _isDisposed = false;
+
         public void Dispose()
         {
-            Context.Dispose();
+            if (!_isDisposed)
+            {
+                Context.Dispose();
+                _isDisposed = true;
+            }
         }
     }
 }
