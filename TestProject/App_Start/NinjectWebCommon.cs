@@ -58,6 +58,10 @@ namespace TestProject.App_Start
             //DAL Bindings
 
             kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
+            kernel.Bind<DAL.Repositories.IRepository<DAL.Category>>()
+                  .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
+            kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
+                  .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
         }        
     }
 }
