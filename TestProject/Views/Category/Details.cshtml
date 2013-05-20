@@ -3,15 +3,24 @@
 <h2>Category description</h2>
 Current category is @Model.Category.Name, Id = @Model.Category.Id
 
+<hr/>
+
 @if (Model.Parents.Count() != 0) {
     <h3>Up to</h3>
     
     foreach (var parent in Model.Parents)
     {
+        if (parent != Model.Parents.First())
+        {
+            <span>&gt;&gt;</span>
+        }
+
         @Html.ActionLink(parent.Name, "Details", new {id = parent.Id});
-        <span>&gt;&gt;</span>
     }
+    
+    <hr/>
 }
+
 
 @if (Model.Subcategories.Count() != 0) {
     <h3>Down to</h3>
@@ -20,6 +29,20 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
     foreach (var subcategory in Model.Subcategories)
     {
         @Html.ActionLink(subcategory.ToString(), "Details", new {id = subcategory.Id});
+        <br/>
+    }
+    
+    <hr/>
+}
+
+
+
+@if (Model.Category.Products.Count() != 0)
+{
+    <h3>Products</h3>
+    foreach (var product in Model.Category.Products)
+    {
+        @product.ToString()
         <br/>
     }
 }
