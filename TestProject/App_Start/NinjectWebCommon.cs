@@ -49,12 +49,15 @@ namespace TestProject.App_Start
             return kernel;
         }
 
+        public static IKernel Kernel;
+
         /// <summary>
         /// Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            Kernel = kernel;
             //DAL Bindings
 
             kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
@@ -62,6 +65,12 @@ namespace TestProject.App_Start
                   .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
                   .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
+
+            kernel.Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
+            kernel.Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
+            kernel.Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
+
+            kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
         }        
     }
 }
