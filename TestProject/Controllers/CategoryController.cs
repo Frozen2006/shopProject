@@ -14,9 +14,16 @@ namespace TestProject.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly CategoryService _prodService = NinjectWebCommon.Kernel.Get<CategoryService>();
+        private readonly CategoryService _prodService;
         //
         // GET: /Product/
+
+        [Inject]
+        public CategoryController(CategoryService ps)
+        {
+            _prodService = ps;
+        }
+
         public ActionResult Index()
         {
             var root = _prodService.GetRootCategory();
