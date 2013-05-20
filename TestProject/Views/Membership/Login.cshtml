@@ -1,0 +1,28 @@
+﻿@model TestProject.Models.LoginModel
+
+@{
+    ViewBag.Title = "login";
+}
+
+<h2>login</h2>
+
+@using (Html.BeginForm())
+{
+    <ol>
+        <li>
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+        </li>
+        <li>
+            @Html.LabelFor(q => q.Password)
+            @Html.TextBoxFor(m => m.Password)
+        </li>
+    </ol>
+    
+    <input type="submit" value="LogIn"/>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<b>@ViewBag.Data</b>

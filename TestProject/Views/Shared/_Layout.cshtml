@@ -9,10 +9,6 @@
 </head>
     <body>
         @Html.Partial("_LoginPartial")
-           // @if (User.IsInRole("SecurityGuard"))
-          //  {
-        //  //     @Html.ActionLink("Security Guard", "Index", "Dashboard", new { area = "SecurityGuard" }, null)
-        //    }
         @RenderBody()
 
         @Scripts.Render("~/bundles/jquery")

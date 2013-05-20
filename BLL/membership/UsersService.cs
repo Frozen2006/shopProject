@@ -32,7 +32,7 @@ namespace BLL.membership
         // Create new user
         // Argument's adress2 and phone2 may be null.
         //
-        public void CeateUser(string email, string password, string title, string firstName, string lastName,
+        public bool CeateUser(string email, string password, string title, string firstName, string lastName,
                               string address, string address2, string phone, string phone2, int zip, string city)
         {
             if ((email == null) || (password == null) || (title == null) || (firstName == null) || (lastName == null) ||
@@ -40,6 +40,11 @@ namespace BLL.membership
             {
                 throw new InvalidDataException("Somethind argument's is not set");
             }
+
+            User exUser = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+
+            if (exUser != null)
+                return false;
 
             User nUser = new User();
 
@@ -55,10 +60,12 @@ namespace BLL.membership
             nUser.zip = zip;
             nUser.city = city;
 
-            nUser.RoleId = 0; // 0 - user, 1 - administrator
+            nUser.RoleId = 1; // 1 - user, 2 - administrator
 
 
             _repository.Create(nUser);
+
+            return true;
         }
 
         public bool CheckUser(string email, string password)
@@ -75,8 +82,11 @@ namespace BLL.membership
 
         public bool LogIn(string email, string password)
         {
+
+            string hassedPass = GetHash(password);
+
             User user =
-                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == GetHash(password)));
+                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
 
             if (user == null)
                 return false;
@@ -116,6 +126,7 @@ namespace BLL.membership
             user.password = GetHash(newPassword);
 
             _repository.Update(user);
+            return true;
         }
 
         // Get User role name
@@ -189,10 +200,10 @@ namespace BLL.membership
         {
             string guid = Guid.NewGuid().ToString();
             User userAccount = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
-            Session currentSession = new Session() { guid = guid, User = userAccount };
+            Session currentSession = new Session() { guid = guid, UserId = userAccount.Id };
             _sessionRepository.Create(currentSession);
 
-            HttpContext.Current.Cache.Add(guid, currentSession.User.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
+            HttpContext.Current.Cache.Add(guid, userAccount.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
                                           CacheItemPriority.Normal, null);
 
             return guid;
@@ -231,6 +242,28 @@ namespace BLL.membership
                 return true;
             }
             return false;
+        }
+
+        public string GetUserEmailFromSession(string guid)
+        {
+            //part 1 - find in cash
+            string UserEmail = (string)HttpContext.Current.Cache.Get(guid);
+            if (UserEmail != null)
+            {
+                return UserEmail;
+            }
+
+            //part 2 - DB req
+            Session session = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+            if (session != null)
+            {
+
+                HttpContext.Current.Cache.Add(guid, session.User.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
+                                              CacheItemPriority.Normal, null);
+                return session.User.email;
+            }
+
+            return null;
         }
 
         // Generate md5 hash for string

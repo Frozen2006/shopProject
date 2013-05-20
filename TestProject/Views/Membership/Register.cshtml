@@ -1,0 +1,66 @@
+﻿@model TestProject.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm())
+{
+    <ol>
+        <li>
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Password)
+            @Html.TextBoxFor(m => m.Password)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.ConfirmPassword)
+            @Html.TextBoxFor(m => m.ConfirmPassword)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.firstName)
+            @Html.TextBoxFor(m => m.firstName)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.lastName)
+            @Html.TextBoxFor(m => m.lastName)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Address1)
+            @Html.TextBoxFor(m => m.Address1)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Address2)
+            @Html.TextBoxFor(m => m.Address2)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Phone1)
+            @Html.TextBoxFor(m => m.Phone1)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Phone2)
+            @Html.TextBoxFor(m => m.Phone2)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.Zip)
+            @Html.TextBoxFor(m => m.Zip)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.City)
+            @Html.TextBoxFor(m => m.City)
+        </li>
+    </ol>
+    
+    <input type="submit" value="Register"/>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
