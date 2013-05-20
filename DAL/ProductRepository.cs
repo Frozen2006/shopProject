@@ -2,7 +2,7 @@
 
 namespace DAL.Repositories.DbFirstRepository
 {
-    public class ProductRepository : RepositoryBase<Product>
+    public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
         public ProductRepository(ShopContext context) : base(context)
         {

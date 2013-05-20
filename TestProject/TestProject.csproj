@@ -157,7 +157,6 @@
     <Compile Include="Areas\SecurityGuard\Models\SelectObject.cs" />
     <Compile Include="Areas\SecurityGuard\Models\UserViewModel.cs" />
     <Compile Include="Areas\SecurityGuard\SecurityGuardAreaRegistration.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembershipControllesr\BaseController.cs" />
     <Compile Include="Controllers\MembershipControllesr\SGAccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -252,7 +251,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Areas\SecurityGuard\Views\Web.config" />
     <Content Include="Areas\SecurityGuard\Views\Shared\_SecurityGuardLayoutPage.cshtml" />
     <Content Include="Areas\SecurityGuard\Views\Role\Index.cshtml" />

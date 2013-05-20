@@ -14,18 +14,13 @@ namespace TestProject.Controllers
 {
     public class CategoryController : Controller
     {
-        private CategoryService _prodService = NinjectWebCommon.Kernel.Get<CategoryService>();
+        private readonly CategoryService _prodService = NinjectWebCommon.Kernel.Get<CategoryService>();
         //
         // GET: /Product/
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult List()
-        {
             var root = _prodService.GetRootCategory();
-            return RedirectToAction("Details", new {id = root.Id});
+            return RedirectToAction("Details", new { id = root.Id });
         }
 
         public ActionResult Details(int id)
