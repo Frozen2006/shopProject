@@ -2,8 +2,9 @@
 
 namespace DAL.Repositories.DbFirstRepository
 {
-    public class CategoryRepository : RepositoryBase<Category>
+    public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {
+
         public CategoryRepository(ShopContext context)
             : base(context)
         {
@@ -23,6 +24,12 @@ namespace DAL.Repositories.DbFirstRepository
                 categoty.Products = item.Products;
             }
             Context.SaveChanges();
+        }
+
+        private const int _rootCategoryId = 0;
+        public Category GetRootCategory()
+        {
+            return Read(_rootCategoryId);
         }
     }
 }

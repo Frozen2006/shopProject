@@ -15,6 +15,8 @@ namespace TestProject.App_Start
 
     public static class NinjectWebCommon 
     {
+        public static IKernel Kernel { get; set; }
+
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
@@ -49,27 +51,24 @@ namespace TestProject.App_Start
             return kernel;
         }
 
-        public static IKernel Kernel;
-
         /// <summary>
         /// Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            Kernel = kernel;
             //DAL Bindings
 
             kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
-            kernel.Bind<DAL.Repositories.IRepository<DAL.Category>>()
+            kernel.Bind<DAL.Repositories.ICategoryRepository>()
                   .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
                   .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
 
+            Kernel = kernel;
             kernel.Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
             kernel.Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
             kernel.Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
-
             kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
         }        
     }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL
+namespace DAL
 {
-    public class Class1
+    public interface IProductRepository
     {
+        //Special product repository methods
     }
 }

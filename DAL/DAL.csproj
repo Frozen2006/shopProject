@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICategoryRepository.cs" />
+    <Compile Include="IProductRepository.cs" />
     <Compile Include="membership\RoleRepository.cs" />
     <Compile Include="membership\SessionRepository.cs" />
     <Compile Include="membership\UserRepository.cs" />
