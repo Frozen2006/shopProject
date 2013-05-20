@@ -1,0 +1,27 @@
+﻿@model TestProject.Models.CategoryDetailsModel
+
+<h2>Category description</h2>
+Current category is @Model.Category.Name, Id = @Model.Category.Id
+
+@if (Model.Parents.Count() != 0) {
+    <h3>Up to</h3>
+    
+    foreach (var parent in Model.Parents)
+    {
+        @Html.ActionLink(parent.Name, "Details", new {id = parent.Id});
+        <span>&gt;&gt;</span>
+    }
+}
+
+@if (Model.Subcategories.Count() != 0) {
+    <h3>Down to</h3>
+    
+    
+    foreach (var subcategory in Model.Subcategories)
+    {
+        @Html.ActionLink(subcategory.ToString(), "Details", new {id = subcategory.Id});
+        <br/>
+    }
+}
+
+

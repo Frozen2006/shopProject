@@ -15,6 +15,8 @@ namespace TestProject.App_Start
 
     public static class NinjectWebCommon 
     {
+        public static IKernel Kernel { get; set; }
+
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
@@ -58,10 +60,12 @@ namespace TestProject.App_Start
             //DAL Bindings
 
             kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
-            kernel.Bind<DAL.Repositories.IRepository<DAL.Category>>()
+            kernel.Bind<DAL.Repositories.ICategoryRepository>()
                   .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
                   .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
+
+            Kernel = kernel;
         }        
     }
 }
