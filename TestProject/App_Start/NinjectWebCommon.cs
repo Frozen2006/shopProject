@@ -66,6 +66,10 @@ namespace TestProject.App_Start
                   .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
 
             Kernel = kernel;
+            kernel.Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
+            kernel.Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
+            kernel.Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
+            kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
         }        
     }
 }

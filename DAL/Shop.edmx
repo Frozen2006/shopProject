@@ -8,6 +8,9 @@
         <EntityContainer Name="ShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="ShopModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="ShopModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="ShopModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sessions" EntityType="ShopModel.Store.Sessions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="ShopModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Categories_ToCategories" Association="ShopModel.Store.FK_Categories_ToCategories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
@@ -15,6 +18,14 @@
           <AssociationSet Name="FK_Products_ToCategories" Association="ShopModel.Store.FK_Products_ToCategories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sessions_ToUsers" Association="ShopModel.Store.FK_Sessions_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sessions" EntitySet="Sessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ToRoles" Association="ShopModel.Store.FK_Users_ToRoles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Categories">
@@ -36,6 +47,39 @@
           <Property Name="SellByWeight" Type="nchar" Nullable="false" MaxLength="1" />
           <Property Name="AverageWeight" Type="float" Nullable="false" />
           <Property Name="UnitOfMeasure" Type="nvarchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="guid" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="first_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="address2" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="phone2" Type="nvarchar" MaxLength="50" />
+          <Property Name="zip" Type="int" Nullable="false" />
+          <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Categories_ToCategories">
           <End Role="Categories" Type="ShopModel.Store.Categories" Multiplicity="1" />
@@ -61,6 +105,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Sessions_ToUsers">
+          <End Role="Users" Type="ShopModel.Store.Users" Multiplicity="1" />
+          <End Role="Sessions" Type="ShopModel.Store.Sessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sessions">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ToRoles">
+          <End Role="Roles" Type="ShopModel.Store.Roles" Multiplicity="1" />
+          <End Role="Users" Type="ShopModel.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -75,6 +143,17 @@
           <AssociationSet Name="FK_Products_ToCategories" Association="ShopModel.FK_Products_ToCategories">
             <End Role="Categories" EntitySet="Categories1" />
             <End Role="Products" EntitySet="Products1" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="ShopModel.User" />
+          <EntitySet Name="Roles" EntityType="ShopModel.Role" />
+          <AssociationSet Name="FK_Users_ToRoles" Association="ShopModel.FK_Users_ToRoles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Sessions" EntityType="ShopModel.Session" />
+          <AssociationSet Name="FK_Sessions_ToUsers" Association="ShopModel.FK_Sessions_ToUsers">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -125,6 +204,67 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="first_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="last_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="address" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="address2" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="phone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="phone2" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="zip" Nullable="false" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="ShopModel.FK_Users_ToRoles" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Sessions" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="User" ToRole="Session" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="ShopModel.FK_Users_ToRoles" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Users_ToRoles">
+          <End Type="ShopModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="ShopModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="guid" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="Session" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Sessions_ToUsers">
+          <End Type="ShopModel.User" Role="User" Multiplicity="1" />
+          <End Type="ShopModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -153,6 +293,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ShopModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="phone2" ColumnName="phone2" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address2" ColumnName="address2" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ShopModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sessions">
+            <EntityTypeMapping TypeName="ShopModel.Session">
+              <MappingFragment StoreEntitySet="Sessions">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -167,7 +343,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
