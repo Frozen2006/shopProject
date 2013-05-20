@@ -19,6 +19,10 @@ namespace DALConsoleTest
             ProductRepository prodRep = kern.Get<ProductRepository>();
             CategoryRepository catRep = kern.Get<CategoryRepository>();
 
+            
+
+
+
             var prods = prodRep.ReadAll().Take(20).ToArray();
 
             //foreach (var product in prods)

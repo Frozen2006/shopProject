@@ -1,3 +1,5 @@
+using System.Data.Entity;
+
 [assembly: WebActivator.PreApplicationStartMethod(typeof(TestProject.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(TestProject.App_Start.NinjectWebCommon), "Stop")]
 
@@ -53,6 +55,9 @@ namespace TestProject.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            //DAL Bindings
+
+            kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
         }        
     }
 }

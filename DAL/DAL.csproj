@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NinjectKernel.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Category.cs">
       <DependentUpon>Shop.tt</DependentUpon>
