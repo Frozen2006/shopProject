@@ -79,7 +79,7 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
         }
     </ul>
 
-    <table cellpadding="8" border="1" style="border-collapse: collapse;">
+    <table border="1" style="border-collapse: collapse;">
         <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
             <th>Name</th>
             <th>Price</th>
@@ -103,12 +103,13 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
     
     int pageSize = Model.PageSize;
     int productCount = Model.Category.Products.Count();
+    const int maxPageCount = 15;
 
     int pageCount = productCount/pageSize + 1;
 
-    if (pageCount > 15)
+    if (pageCount >= maxPageCount)
     {
-        int linkCount = 6;
+        const int linkCount = 6;
         for (int i = 1; i <= linkCount; i++)
         {
             @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
@@ -124,7 +125,7 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
         }      
 
     }
-    else
+    if (pageCount > 1 && pageCount < maxPageCount)
     {
         //View all page anchors
         for (int i = 1; i <= pageCount; i++)
