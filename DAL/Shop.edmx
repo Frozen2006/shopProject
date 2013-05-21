@@ -11,6 +11,13 @@
           <EntitySet Name="Roles" EntityType="ShopModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Sessions" EntityType="ShopModel.Store.Sessions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="ShopModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Zips" EntityType="ShopModel.Store.Zips" store:Type="Tables" store:Schema="dbo" store:Name="Zips">
+            <DefiningQuery>SELECT 
+      [Zips].[zip] AS [zip], 
+      [Zips].[city] AS [city], 
+      [Zips].[sub_city] AS [sub_city]
+      FROM [dbo].[Zips] AS [Zips]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Categories_ToCategories" Association="ShopModel.Store.FK_Categories_ToCategories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
@@ -80,6 +87,18 @@
           <Property Name="zip" Type="int" Nullable="false" />
           <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'projectDB.dbo.Zips' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Zips">
+          <Key>
+            <PropertyRef Name="zip" />
+            <PropertyRef Name="city" />
+          </Key>
+          <Property Name="zip" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="sub_city" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Categories_ToCategories">
           <End Role="Categories" Type="ShopModel.Store.Categories" Multiplicity="1" />
@@ -155,6 +174,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
+          <EntitySet Name="Zips" EntityType="ShopModel.Zip" />
         </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -265,6 +285,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Zip">
+          <Key>
+            <PropertyRef Name="zip1" />
+            <PropertyRef Name="city" />
+          </Key>
+          <Property Type="String" Name="zip1" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="sub_city" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -326,6 +355,15 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zips">
+            <EntityTypeMapping TypeName="ShopModel.Zip">
+              <MappingFragment StoreEntitySet="Zips">
+                <ScalarProperty Name="sub_city" ColumnName="sub_city" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="zip1" ColumnName="zip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

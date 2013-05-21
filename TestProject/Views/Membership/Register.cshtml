@@ -1,5 +1,9 @@
 ﻿@model TestProject.Models.RegisterModel
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
 @{
     ViewBag.Title = "Register";
 }
@@ -61,6 +65,24 @@
     
     <input type="submit" value="Register"/>
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+<script>
+ 
+    $(function() {
+        document.getElementById('Zip').onkeyup = function () {
+            var z = document.getElementById('Zip');
+            var zip = { zip: z.value };
+            $.ajax({
+                type: "POST",
+                url: "/Membership/RegisterRow",
+                data: zip,
+                success: function (response) {
+
+                    document.getElementById('City').value = response.name;
+                    
+                }
+            });
+        };
+    });
+
+</script>

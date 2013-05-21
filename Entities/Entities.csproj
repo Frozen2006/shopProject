@@ -44,6 +44,7 @@
     </Compile>
     <Compile Include="IEntity.cs" />
     <Compile Include="PartialEntities\Category.cs" />
+    <Compile Include="PartialEntities\Zip.cs" />
     <Compile Include="PartialEntities\Product.cs" />
     <Compile Include="PartialEntities\Role.cs" />
     <Compile Include="PartialEntities\Session.cs" />
@@ -64,6 +65,9 @@
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zip.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
   </ItemGroup>

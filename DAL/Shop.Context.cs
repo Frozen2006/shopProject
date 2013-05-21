@@ -7,9 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Entities;
-
-namespace DAL
+namespace Entities
 {
     using System;
     using System.Data.Entity;
@@ -20,18 +18,18 @@ namespace DAL
         public ShopContext()
             : base("name=ShopContext")
         {
-
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public DbSet<Category> Categories1 { get; set; }
         public DbSet<Product> Products1 { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<Zip> Zips { get; set; }
     }
 }

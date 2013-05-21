@@ -14,6 +14,7 @@
         <AssociationConnector Association="ShopModel.FK_Users_ToRoles" />
         <EntityTypeShape EntityType="ShopModel.Session" Width="1.5" PointX="10.375" PointY="5.25" />
         <AssociationConnector Association="ShopModel.FK_Sessions_ToUsers" />
+        <EntityTypeShape EntityType="ShopModel.Zip" Width="1.5" PointX="14.625" PointY="5.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -46,6 +46,23 @@ namespace TestProject.Controllers.MembershipControllesr
             return View(model);
         }
 
+
+        //Ajax jquery responce method
+        [HttpPost]
+        public ActionResult RegisterRow(string zip)
+        {
+            Request.Headers["X-Requested-With"] = "XMLHttpRequest";
+            if (Request.IsAjaxRequest())
+            {
+                string outData = zip + " maybe";
+
+                var data = new { name = outData };
+                return Json(data);
+            }
+            return View("Register");
+        }
+
+
         public ActionResult Login()
         {
             return View();
