@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using Entities;
+using Interfaces.Repositories;
 
 namespace DAL.Repositories.DbFirstRepository
 {
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
     {
-        public ProductRepository(ShopContext context) : base(context)
+        public ProductRepository(DbContext context) : base(context)
         {
         }
         public override void Update(Product item)

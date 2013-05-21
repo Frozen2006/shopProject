@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using BLL;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(TestProject.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(TestProject.App_Start.NinjectWebCommon), "Stop")]
@@ -12,6 +13,8 @@ namespace TestProject.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+
+    using Entities;
 
     public static class NinjectWebCommon 
     {
@@ -57,19 +60,12 @@ namespace TestProject.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            //DAL Bindings
+            kernel.Load("NinjectModules.dll");
+            var s = kernel.Get<CategoryService>();
 
-            kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
-            kernel.Bind<DAL.Repositories.ICategoryRepository>()
-                  .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
-            kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
-                  .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
+            kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
 
             Kernel = kernel;
-            kernel.Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
-            kernel.Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
-            kernel.Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
-            kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
         }        
     }
 }
