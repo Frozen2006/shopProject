@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,28 @@ namespace BLL
             parents.Reverse();
 
             return parents;
+        }
+
+        public IEnumerable<Product> GetProducts(Category category, int page, int pageSize, SortType sort, bool reverse)
+        {
+            IEnumerable<Product> products = category.Products;
+
+            switch (sort)
+            {
+                case SortType.Alphabetic:
+                    products = products.OrderBy(prod => prod.Name);
+                    break;
+                case SortType.Price:
+                    products = products.OrderBy(prod => prod.Price);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("sort");
+            }
+            //!
+            if (reverse)
+                products = products.Reverse();
+
+            return products.Skip(pageSize * (page - 1)).Take(pageSize);
         }
     }
 }

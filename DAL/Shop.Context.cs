@@ -20,14 +20,13 @@ namespace DAL
         public ShopContext()
             : base("name=ShopContext")
         {
-
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public DbSet<Category> Categories1 { get; set; }
         public DbSet<Product> Products1 { get; set; }
         public DbSet<User> Users { get; set; }

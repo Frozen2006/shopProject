@@ -1,4 +1,5 @@
-﻿@model TestProject.Models.CategoryDetailsModel
+﻿@using BLL
+@model TestProject.Models.CategoryDetailsModel
 
 <h2>Category description</h2>
 Current category is @Model.Category.Name, Id = @Model.Category.Id
@@ -15,7 +16,7 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
             <span>&gt;&gt;</span>
         }
 
-        @Html.ActionLink(parent.Name, "Details", new {id = parent.Id});
+        @Html.ActionLink(parent.Name, "Details", new {id = parent.Id})
     }
     
     <hr/>
@@ -28,21 +29,110 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
     
     foreach (var subcategory in Model.Subcategories)
     {
-        @Html.ActionLink(subcategory.ToString(), "Details", new {id = subcategory.Id});
+        @Html.ActionLink(subcategory.ToString(), "Details", new {id = subcategory.Id})
         <br/>
     }
     
     <hr/>
 }
 
-@if (Model.Category.Products.Count() != 0)
+@if (Model.Products.Count() != 0)
 {
     <h3>Products</h3>
-    foreach (var product in Model.Category.Products)
+    //public ActionResult Details(int id, int? page, int? pageSize, SortType? sort, bool? reverse)
+    <style>
+        li {
+            float: left;
+            margin: 5px;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+            overflow: hidden;
+            margin: 5px;
+            padding: 0;
+        }
+    </style>
+    <ul>
+        <li>
+            @Html.ActionLink("Alphabetic", "Details", new { id = Model.Category.Id, sort = SortType.Alphabetic, pageSize = Model.PageSize, reverse = Model.Reverse })
+        </li>
+        <li>
+            @Html.ActionLink("Price", "Details", new { id = Model.Category.Id, sort = SortType.Price, pageSize = Model.PageSize, reverse = Model.Reverse })
+        </li>
+
+        <li>
+            @Html.ActionLink("Direct", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false})
+        </li>
+        <li>
+            @Html.ActionLink("Reverse", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true})
+        </li>
+        
+        @for (int i = 1; i < 4; i++)
+        {
+            <li>
+                @{
+                    int size = (int) Math.Pow(10, i);
+                    @Html.ActionLink("Show by " + size, "Details", new {id = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse})
+                }
+            </li>
+        }
+    </ul>
+
+    <table cellpadding="8" border="1" style="border-collapse: collapse;">
+        <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
+            <th>Name</th>
+            <th>Price</th>
+            <th>Id</th>
+            <th>Category name</th>
+            <th>Category id</th>
+        </tr>
+
+        @foreach (var product in Model.Products)
+        {
+
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Id</td>
+                <td>@product.Category.Name</td>
+                <td>@product.CategoryId</td>
+            </tr>
+        }
+    </table>
+    
+    int pageSize = Model.PageSize;
+    int productCount = Model.Category.Products.Count();
+
+    int pageCount = productCount/pageSize + 1;
+
+    if (pageCount > 15)
     {
-        @product.ToString()
-        <br/>
+        int linkCount = 6;
+        for (int i = 1; i <= linkCount; i++)
+        {
+            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
+            <span> </span>
+        }
+        
+        <span>...</span>
+        
+        for (int i = pageCount - linkCount; i <= pageCount; i--)
+        {
+            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
+            <span> </span>
+        }      
+
     }
+    else
+    {
+        //View all page anchors
+        for (int i = 1; i <= pageCount; i++)
+        {
+            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })<span> </span>
+        }
+    }
+
 }
 
 

@@ -14,8 +14,6 @@ namespace TestProject.Controllers
     public class CategoryController : Controller
     {
         private readonly CategoryService _prodService;
-        //
-        // GET: /Product/
 
         [Inject]
         public CategoryController(CategoryService ps)
@@ -28,18 +26,27 @@ namespace TestProject.Controllers
             var root = _prodService.GetRootCategory();
             return RedirectToAction("Details", new { id = root.Id });
         }
-
-        public ActionResult Details(int id)
+        
+        public ActionResult Details(int id, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
-            var categoryDetails = new CategoryDetailsModel();
-           
+            var model = new CategoryDetailsModel();
+
             Category category = _prodService.GetCategoryById(id);
 
-            categoryDetails.Category = category;
-            categoryDetails.Subcategories = _prodService.GetSubcategories(category);
-            categoryDetails.Parents = _prodService.GetParentsList(category);
+            model.Category = category;
+            model.Subcategories = _prodService.GetSubcategories(category);
+            model.Parents = _prodService.GetParentsList(category);
 
-            return View(categoryDetails);
+            model.PageNumber = page ?? 1;
+            model.PageSize = pageSize ?? 10;
+            model.SortType = sort ?? SortType.Alphabetic;
+            model.Reverse = reverse ?? false;
+
+            model.Products = _prodService.GetProducts(model.Category, model.PageNumber, model.PageSize,
+                                                      model.SortType, model.Reverse);
+
+
+            return View(model);
         }
 
     }
