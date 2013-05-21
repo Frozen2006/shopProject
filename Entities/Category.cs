@@ -7,21 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Category
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int CategoryId { get; set; }
-        public double Price { get; set; }
-        public string SellByWeight { get; set; }
-        public double AverageWeight { get; set; }
-        public string UnitOfMeasure { get; set; }
+        public Category()
+        {
+            this.Categories1 = new HashSet<Category>();
+            this.Products = new HashSet<Product>();
+        }
     
-        public virtual Category Category { get; set; }
+        public int Id { get; set; }
+        public int Parent { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<Category> Categories1 { get; set; }
+        public virtual Category Category1 { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

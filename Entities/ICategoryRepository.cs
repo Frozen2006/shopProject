@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Repositories;
 
-namespace DAL.Repositories
+namespace Entities
 {
     public interface ICategoryRepository : IRepository<Category>
     {

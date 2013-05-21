@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Entities
 {
-    public interface IEntity
+    public interface IProductRepository
     {
-        int Id { get; }
+        //Special product repository methods
     }
 }

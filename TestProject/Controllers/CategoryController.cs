@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BLL;
 using DAL;
 using DAL.Repositories;
+using Entities;
 using Ninject;
 using TestProject.App_Start;
 using TestProject.Models;

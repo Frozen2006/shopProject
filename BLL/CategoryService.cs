@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DAL;
 using DAL.Repositories;
 using DAL.Repositories.DbFirstRepository;
+using Entities;
 using Ninject;
 
 namespace BLL

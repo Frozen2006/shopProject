@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Entities
 {
-    public partial class Session : IEntity
+    public interface IEntity
     {
+        int Id { get; }
     }
 }

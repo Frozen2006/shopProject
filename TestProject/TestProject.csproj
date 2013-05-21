@@ -298,6 +298,10 @@
       <Project>{d99d1dda-8208-4f98-ab36-95a913fc315a}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{56d9fb78-9f87-436e-baf4-1103b694c4f3}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
       <Name>Helpers</Name>

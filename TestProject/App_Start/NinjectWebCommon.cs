@@ -13,6 +13,8 @@ namespace TestProject.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
+    using Entities;
+
     public static class NinjectWebCommon 
     {
         public static IKernel Kernel { get; set; }
@@ -60,9 +62,9 @@ namespace TestProject.App_Start
             //DAL Bindings
 
             kernel.Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
-            kernel.Bind<DAL.Repositories.ICategoryRepository>()
+            kernel.Bind<ICategoryRepository>()
                   .To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
-            kernel.Bind<DAL.Repositories.IRepository<DAL.Product>>()
+            kernel.Bind<IRepository<Product>>()
                   .To<DAL.Repositories.DbFirstRepository.ProductRepository>();
 
             Kernel = kernel;

@@ -39,8 +39,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Category.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ICategoryRepository.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="IProductRepository.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="PartialEntities\Category.cs" />
+    <Compile Include="PartialEntities\Product.cs" />
+    <Compile Include="PartialEntities\Role.cs" />
+    <Compile Include="PartialEntities\Session.cs" />
+    <Compile Include="PartialEntities\User.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Session.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shop.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shop.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Shop.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

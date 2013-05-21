@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Entities;
+
 namespace DAL
 {
     using System;

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Entities
 {
-    partial class Role : IEntity
+    public partial class Session : IEntity
     {
     }
 }
