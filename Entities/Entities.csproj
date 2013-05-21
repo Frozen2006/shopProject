@@ -42,10 +42,7 @@
     <Compile Include="Category.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
-    <Compile Include="ICategoryRepository.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="IProductRepository.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="PartialEntities\Category.cs" />
     <Compile Include="PartialEntities\Product.cs" />
     <Compile Include="PartialEntities\Role.cs" />

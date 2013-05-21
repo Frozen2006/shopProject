@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using Entities;
+using Interfaces.Repositories;
 using Ninject.Modules;
 using System.Data.Entity;
 using Ninject.Web.Common;
@@ -19,7 +20,7 @@ namespace NinjectModules
             Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
 
             Bind<ICategoryRepository>().To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
-            Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>();
+            Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>(); 
             
 
             Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();

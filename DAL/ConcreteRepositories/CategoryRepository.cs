@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Linq;
 using Entities;
+using Interfaces.Repositories;
 
 namespace DAL.Repositories.DbFirstRepository
 {

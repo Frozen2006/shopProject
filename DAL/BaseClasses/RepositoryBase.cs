@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
+using Interfaces.Repositories;
 
 namespace DAL.Repositories.DbFirstRepository
 {

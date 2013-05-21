@@ -7,6 +7,7 @@ using DAL;
 using DAL.Repositories;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces.Repositories;
 using Ninject;
 
 namespace BLL
