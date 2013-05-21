@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Interfaces
+namespace Entities
 {
-    public class Class1
+    partial class Role : IEntity
     {
     }
 }

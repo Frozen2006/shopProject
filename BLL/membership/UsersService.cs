@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Caching;
 using DAL;
+using DAL.Repositories.DbFirstRepository;
 using DAL.membership;
 using System.Web;
+using Entities;
 
 namespace BLL.membership
 {

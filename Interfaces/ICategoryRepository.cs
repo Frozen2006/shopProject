@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Repositories;
+using Entities;
 
-namespace DAL.Repositories
+namespace Interfaces.Repositories
 {
     public interface ICategoryRepository : IRepository<Category>
     {

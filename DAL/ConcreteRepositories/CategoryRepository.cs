@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using Entities;
+using Interfaces.Repositories;
 
 namespace DAL.Repositories.DbFirstRepository
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {
 
-        public CategoryRepository(ShopContext context)
+        public CategoryRepository(DbContext context)
             : base(context)
         {
         }

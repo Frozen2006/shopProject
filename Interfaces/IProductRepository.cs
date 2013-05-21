@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Interfaces.Repositories
 {
-    partial class Role : IEntity
+    public interface IProductRepository
     {
+        //Special product repository methods
     }
 }

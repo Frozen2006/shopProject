@@ -7,17 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Session
+    public partial class Product
     {
         public int Id { get; set; }
-        public string guid { get; set; }
-        public int UserId { get; set; }
+        public string Name { get; set; }
+        public int CategoryId { get; set; }
+        public double Price { get; set; }
+        public string SellByWeight { get; set; }
+        public double AverageWeight { get; set; }
+        public string UnitOfMeasure { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

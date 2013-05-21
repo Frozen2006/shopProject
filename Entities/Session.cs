@@ -7,25 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Session
     {
-        public Category()
-        {
-            this.Categories1 = new HashSet<Category>();
-            this.Products = new HashSet<Product>();
-        }
-    
         public int Id { get; set; }
-        public int Parent { get; set; }
-        public string Name { get; set; }
+        public string guid { get; set; }
+        public int UserId { get; set; }
     
-        public virtual ICollection<Category> Categories1 { get; set; }
-        public virtual Category Category1 { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual User User { get; set; }
     }
 }
