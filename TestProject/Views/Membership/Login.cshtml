@@ -8,21 +8,20 @@
 
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
     <ol>
         <li>
             @Html.LabelFor(m => m.Email)
             @Html.TextBoxFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
         </li>
         <li>
             @Html.LabelFor(q => q.Password)
-            @Html.TextBoxFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Email)
         </li>
     </ol>
     
     <input type="submit" value="LogIn"/>
 }
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-<b>@ViewBag.Data</b>

@@ -10,6 +10,7 @@ namespace Helpers
     {
         public int Id;
         public string Name;
+        public string CategoryName;
         public int CategoryId;
         public double PriceOfOneItem;
         public string SellByWeight;

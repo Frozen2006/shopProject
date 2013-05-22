@@ -17,6 +17,7 @@ namespace Entities
         public User()
         {
             this.Sessions = new HashSet<Session>();
+            this.Carts = new HashSet<Cart>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,6 @@ namespace Entities
     
         public virtual Role Role { get; set; }
         public virtual ICollection<Session> Sessions { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

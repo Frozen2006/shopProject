@@ -6,11 +6,13 @@
     <edmx:StorageModels>
     <Schema Namespace="ShopModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ShopModelStoreContainer">
+          <EntitySet Name="Carts" EntityType="ShopModel.Store.Carts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Categories" EntityType="ShopModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="ShopModel.Store.Products" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="ShopModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Sessions" EntityType="ShopModel.Store.Sessions" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="ShopModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UsersCarts" EntityType="ShopModel.Store.UsersCarts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Zips" EntityType="ShopModel.Store.Zips" store:Type="Tables" store:Schema="dbo" store:Name="Zips">
             <DefiningQuery>SELECT 
       [Zips].[zip] AS [zip], 
@@ -18,6 +20,10 @@
       [Zips].[sub_city] AS [sub_city]
       FROM [dbo].[Zips] AS [Zips]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Carts_ToProducts" Association="ShopModel.Store.FK_Carts_ToProducts">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Carts" EntitySet="Carts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Categories_ToCategories" Association="ShopModel.Store.FK_Categories_ToCategories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Categories1" EntitySet="Categories" />
@@ -34,7 +40,23 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_UsersCarts_ToCarts" Association="ShopModel.Store.FK_UsersCarts_ToCarts">
+            <End Role="Carts" EntitySet="Carts" />
+            <End Role="UsersCarts" EntitySet="UsersCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCarts_ToUsers" Association="ShopModel.Store.FK_UsersCarts_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCarts" EntitySet="UsersCarts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Carts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Id" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
@@ -88,6 +110,14 @@
           <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="UsersCarts">
+          <Key>
+            <PropertyRef Name="Users_Id" />
+            <PropertyRef Name="Carts_Id" />
+          </Key>
+          <Property Name="Users_Id" Type="int" Nullable="false" />
+          <Property Name="Carts_Id" Type="int" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'projectDB.dbo.Zips' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -100,6 +130,18 @@
           <Property Name="city" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="sub_city" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Carts_ToProducts">
+          <End Role="Products" Type="ShopModel.Store.Products" Multiplicity="1" />
+          <End Role="Carts" Type="ShopModel.Store.Carts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Carts">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Categories_ToCategories">
           <End Role="Categories" Type="ShopModel.Store.Categories" Multiplicity="1" />
           <End Role="Categories1" Type="ShopModel.Store.Categories" Multiplicity="*" />
@@ -148,6 +190,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsersCarts_ToCarts">
+          <End Role="Carts" Type="ShopModel.Store.Carts" Multiplicity="1" />
+          <End Role="UsersCarts" Type="ShopModel.Store.UsersCarts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCarts">
+              <PropertyRef Name="Carts_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCarts_ToUsers">
+          <End Role="Users" Type="ShopModel.Store.Users" Multiplicity="1" />
+          <End Role="UsersCarts" Type="ShopModel.Store.UsersCarts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCarts">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -175,7 +241,16 @@
             <End Role="Session" EntitySet="Sessions" />
           </AssociationSet>
           <EntitySet Name="Zips" EntityType="ShopModel.Zip" />
-        </EntityContainer>
+          <EntitySet Name="Carts" EntityType="ShopModel.Cart" />
+          <AssociationSet Name="FK_Carts_ToProducts" Association="ShopModel.FK_Carts_ToProducts">
+            <End Role="Product" EntitySet="Products1" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="UsersCarts" Association="ShopModel.UsersCarts">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -199,6 +274,7 @@
           <Property Name="AverageWeight" Type="Double" Nullable="false" />
           <Property Name="UnitOfMeasure" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Category" Relationship="ShopModel.FK_Products_ToCategories" FromRole="Products" ToRole="Categories" />
+          <NavigationProperty Name="Carts" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Product" ToRole="Cart" />
         </EntityType>
         <Association Name="FK_Categories_ToCategories">
           <End Type="ShopModel.Category" Multiplicity="1" Role="Categories" />
@@ -243,6 +319,7 @@
           <Property Type="Int32" Name="RoleId" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="ShopModel.FK_Users_ToRoles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Sessions" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="User" ToRole="Session" />
+          <NavigationProperty Name="Carts" Relationship="ShopModel.UsersCarts" FromRole="User" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -294,7 +371,33 @@
           <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="sub_city" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Product_Id" Nullable="false" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Cart" ToRole="Product" />
+          <NavigationProperty Name="Users" Relationship="ShopModel.UsersCarts" FromRole="Cart" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Carts_ToProducts">
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersCarts">
+          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
+          <End Type="ShopModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -367,7 +470,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="ShopModel.Cart">
+              <MappingFragment StoreEntitySet="Carts">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersCarts" TypeName="ShopModel.UsersCarts" StoreEntitySet="UsersCarts">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="Cart">
+              <ScalarProperty Name="Id" ColumnName="Carts_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

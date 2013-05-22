@@ -31,5 +31,6 @@ namespace Entities
         public DbSet<Role> Roles { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Zip> Zips { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

@@ -33,6 +33,9 @@ namespace NinjectModules
             Bind<BLL.CategoryService>().ToSelf();
             Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
 
+            //Cart
+            Bind<Interfaces.ICart>().To<BLL.CartService>();
+
         }
     }
 }
