@@ -30,6 +30,9 @@ namespace NinjectModules
 
             Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
 
+            //Cart
+            Bind<Interfaces.ICart>().To<BLL.CartService>();
+
         }
     }
 }
