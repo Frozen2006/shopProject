@@ -62,10 +62,10 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
         </li>
 
         <li>
-            @Html.ActionLink("Direct", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false})
+            @Html.ActionLink("Direct order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false})
         </li>
         <li>
-            @Html.ActionLink("Reverse", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true})
+            @Html.ActionLink("Reverse order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true})
         </li>
         
         @for (int i = 1; i < 4; i++)
