@@ -2,7 +2,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Content/jquery.autocomplete.js")
+    @Scripts.Render("~/Content/jquery-ui-1.10.3.custom.min.js")
+    @Styles.Render("~/Content/jquery-ui-1.10.3.custom.min.css")
 }
 
 @{
@@ -86,10 +87,52 @@
         };
     });*/
 
-    $(function() {
-        $("#Zip").autocomplete("/Membership/RegisterRow");
+    $(function () {
+        
 
+      //  $("#Zip").autocomplete("/Membership/RegisterRow");
+        $("#Zip").autocomplete( {
+            source: function (request, response) {
+                //console.log(request.term);
+                $.ajax
+                ({
+                    url: "/Membership/RegisterRow",
+                    data: "{ 'term': '" + request.term + "' }",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataFilter: function (data) {
+                        //console.log(data.toString());
+                        //alert(data.toString());
+                        return data;
+                    },
+                    success: function (data) {
+                        // console.log(data.d.toString());
+                      //  response($.map(data.d, function(item) {
+                            // console.log(item.Isin)
+                            // console.log(item.Name)
+                      //      return {
+                       //         label: item.Name.toString(),
+                       //         value: item.Name.toString()
+                       //     };
+                        // }));
+                        response(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(textStatus);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function(event, ui) {
+                var item = ui.item;
+
+                document.getElementById("City").value = item.city;
+            }
+        });
 
     });
+
+
 
 </script>

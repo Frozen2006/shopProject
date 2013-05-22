@@ -49,24 +49,36 @@ namespace TestProject.Controllers.MembershipControllesr
         }
 
 
-
-
         //Ajax jquery responce method
-        [HttpGet]
-        public ActionResult RegisterRow(string q)
+        [HttpPost]
+        public ActionResult RegisterRow(string term)
         {
+            if (term == null)
+                return null;
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
-            if (Request.IsAjaxRequest() && (q.Length >= 3))
+            if (Request.IsAjaxRequest() && (term.Length > 0))
             {
                 //string outData = _myZip.GetFirstCityPartical(q);
-                List<string> dataList = _myZip.GetCities(q);
+                List<Tuple<string,string>> dataList = _myZip.GetCities(term);
 
-                //var data = new { name = outData };
-                return Json(dataList);
+                List<jsonOutData> ooo = new List<jsonOutData>();
+
+                foreach (var dL in dataList)
+                {
+                    ooo.Add(new jsonOutData(){label = dL.Item1+" "+dL.Item2, value = dL.Item1, city = dL.Item2});
+                }
+
+                return Json(ooo);
             }
-            return View("Register");
-        }
+            return View("Register");}
 
+
+        private struct jsonOutData
+        {
+            public string label;
+            public string value;
+            public string city;
+        }
 
         public ActionResult Login()
         {

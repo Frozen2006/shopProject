@@ -43,9 +43,9 @@ namespace BLL.membership
         }
 
         // Return list of possible sity
-        //
-        //
-        public List<string> GetCities(string particalZip)
+        // Item1 = zip code
+        // Item2 = ciy name
+        public List<Tuple<string,string>> GetCities(string particalZip)
         {
             var city = _repo.ReadAll().Where(m => m.zip1.CompareTo(particalZip) == 0);
 
@@ -56,11 +56,11 @@ namespace BLL.membership
                 city = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0);
             }
 
-            List<string> outData = new List<string>();
+            List<Tuple<string, string>> outData = new List<Tuple<string, string>>();
 
             foreach (var oneCity in city)
             {
-                outData.Add(oneCity.city+", "+oneCity.sub_city);
+                outData.Add(Tuple.Create(oneCity.zip1,oneCity.city+", "+oneCity.sub_city));
             }
 
             return outData;

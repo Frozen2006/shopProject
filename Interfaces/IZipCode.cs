@@ -9,7 +9,7 @@ namespace Interfaces
     public interface IZipCode
     {
         string GetFirstCityPartical(string particalZip);
-        List<string> GetCities(string particalZip);
+        List<Tuple<string,string>> GetCities(string particalZip);
     }
 
 }
