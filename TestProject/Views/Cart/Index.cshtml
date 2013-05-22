@@ -1,0 +1,33 @@
+﻿@model TestProject.Models.CartViewModel
+
+@if (Model.Products.Count() != 0)
+{
+    <h3>Cart</h3>
+
+    <table border="1" style="border-collapse: collapse;">
+        <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
+            <th>Name</th>
+            <th>Price</th>
+            <th>Id</th>
+            <th>Category name</th>
+            <th>Category id</th>
+            <th>Count</th>
+            <th>Total</th>
+        </tr>
+    
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.PriceOfOneItem</td>
+                <td>@product.Id</td>
+                <td>@product.CategoryName</td>
+                <td>@product.CategoryId</td>
+                <td>@product.Count</td>
+                <td>@product.TotalPrice</td>
+            </tr>
+        }
+    </table>
+    <br/>
+    <b>Total price:</b> @Model.TotalPrice
+}

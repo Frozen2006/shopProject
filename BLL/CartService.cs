@@ -77,6 +77,7 @@ namespace BLL
                     {
                         Id = cart.Product.Id,
                         Name = cart.Product.Name,
+                        CategoryName = cart.Product.Category.Name,
                         CategoryId = cart.Product.CategoryId,
                         PriceOfOneItem = cart.Product.Price,
                         AverageWeight = cart.Product.AverageWeight,

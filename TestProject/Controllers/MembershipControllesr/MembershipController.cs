@@ -96,7 +96,7 @@ namespace TestProject.Controllers.MembershipControllesr
                 }
             }
 
-            ModelState.AddModelError("", "Somthing is wrong");
+            ModelState.AddModelError("", "Bad user name or pass");
             ViewBag.Data = "Bad user name or pass";
             return View(model);
         }
