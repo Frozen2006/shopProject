@@ -17,7 +17,7 @@ namespace NinjectModules
         public override void Load()
         {
 
-            Bind<DbContext>().To<DAL.ShopContext>().InRequestScope();
+            Bind<DbContext>().To<Entities.ShopContext>().InRequestScope();
 
             Bind<ICategoryRepository>().To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>(); 
@@ -26,6 +26,9 @@ namespace NinjectModules
             Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
             Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
             Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
+            Bind<DAL.membership.ZipRepository>().To<DAL.membership.ZipRepository>();
+
+            Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
 
         }
     }

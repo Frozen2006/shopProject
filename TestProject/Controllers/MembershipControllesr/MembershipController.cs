@@ -14,12 +14,14 @@ namespace TestProject.Controllers.MembershipControllesr
         // GET: /Membership/
 
         [Inject]
-        public MembershipController(UsersService uservice)
+        public MembershipController(UsersService uservice, Interfaces.IZipCode zip)
         {
             us = uservice;
+            _myZip = zip;
         }
 
         private readonly UsersService us;
+        private Interfaces.IZipCode _myZip;
 
         public ActionResult Index()
         {
@@ -47,17 +49,20 @@ namespace TestProject.Controllers.MembershipControllesr
         }
 
 
+
+
         //Ajax jquery responce method
-        [HttpPost]
-        public ActionResult RegisterRow(string zip)
+        [HttpGet]
+        public ActionResult RegisterRow(string q)
         {
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
-            if (Request.IsAjaxRequest())
+            if (Request.IsAjaxRequest() && (q.Length >= 3))
             {
-                string outData = zip + " maybe";
+                //string outData = _myZip.GetFirstCityPartical(q);
+                List<string> dataList = _myZip.GetCities(q);
 
-                var data = new { name = outData };
-                return Json(data);
+                //var data = new { name = outData };
+                return Json(dataList);
             }
             return View("Register");
         }

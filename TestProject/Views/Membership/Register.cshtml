@@ -2,6 +2,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Content/jquery.autocomplete.js")
 }
 
 @{
@@ -67,7 +68,7 @@
 }
 
 <script>
- 
+/* 
     $(function() {
         document.getElementById('Zip').onkeyup = function () {
             var z = document.getElementById('Zip');
@@ -83,6 +84,12 @@
                 }
             });
         };
+    });*/
+
+    $(function() {
+        $("#Zip").autocomplete("/Membership/RegisterRow");
+
+
     });
 
 </script>
