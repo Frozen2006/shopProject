@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using BLL;
+using NinjectModules;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(TestProject.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(TestProject.App_Start.NinjectWebCommon), "Stop")]
@@ -60,7 +61,7 @@ namespace TestProject.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load("NinjectModules.dll");
+            kernel.Load(new DataAccessModule());
             var s = kernel.Get<CategoryService>();
 
             kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();

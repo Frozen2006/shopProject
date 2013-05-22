@@ -260,15 +260,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\SGAccount\Register.cshtml" />
-    <Content Include="Views\SGAccount\Login.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\ForgotPassword.cshtml" />
-    <Content Include="Views\SGAccount\EnterSecretAnswer.cshtml" />
-    <Content Include="Views\SGAccount\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\SGAccount\ChangePassword.cshtml" />
-    <Content Include="Views\PasswordResetMailer\PasswordReset.cshtml" />
-    <Content Include="Views\PasswordResetMailer\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />
@@ -298,6 +289,10 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NinjectModules\NinjectModules.csproj">
+      <Project>{015a49e5-be88-4f22-ab80-f11e17b12353}</Project>
+      <Name>NinjectModules</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
