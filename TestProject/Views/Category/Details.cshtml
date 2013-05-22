@@ -97,9 +97,64 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
                 <td>@product.Id</td>
                 <td>@product.Category.Name</td>
                 <td>@product.CategoryId</td>
+                <td>
+                    <input type="button" value="-" onclick="decrease(event)" />
+                    <span class="counter">1</span>
+                    <input type="button" value="+" onclick="increase(event)" />
+                    @{string st = "addToCart(event," + product.Id + ")";   
+                          <input type="button" value="Add" onclick=@st />
+                      }
+                </td>
             </tr>
         }
     </table>
+    
+    <script>
+        function getCounter(element){
+            return element.parentNode.getElementsByClassName("counter")[0];
+        }
+
+        function increase(event) {            
+            var counter = getCounter(event.target);
+            var count = parseInt(counter.innerHTML);
+            count += 1;
+
+            counter.innerHTML = count;            
+        }
+
+        function decrease(event) {
+            var counter = getCounter(event.target);
+            var count = parseInt(counter.innerHTML);
+
+            if (count > 1) {
+                count -= 1;
+                counter.innerHTML = count;
+            }            
+        }
+
+        //public ActionResult AddToCart(int productId, int count)
+        function sendRequest(id, c) {
+            $.ajax
+            ({
+                url: "/Category/AddToCart",
+                data: { productId: id, count: c },
+                type: "POST",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
+                }
+            })
+        }
+
+        function addToCart(event, productId) {
+            var counter = getCounter(event.target);
+            var count = parseInt(counter.innerHTML);
+
+            sendRequest(productId, count);
+        }
+    </script>
     
     int pageSize = Model.PageSize;
     int productCount = Model.Category.Products.Count();
@@ -135,5 +190,39 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
     }
 
 }
+
+<script>
+
+
+    //$(function () {     
+
+    //    $("#Zip").autocomplete( {
+    //        source: function (request, response) {
+    //            $.ajax
+    //            ({
+    //                url: "/Membership/RegisterRow",
+    //                data: "{ 'term': '" + request.term + "' }",
+    //                dataType: "json",
+    //                type: "POST",
+    //                contentType: "application/json; charset=utf-8",
+    //                success: function (data) {
+    //                    response(data);
+    //                },
+    //                error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                    alert(textStatus);
+    //                }
+    //            });
+    //        },
+    //        minLength: 3,
+    //        select: function(event, ui) {
+    //            var item = ui.item;
+
+    //            document.getElementById("City").value = item.city;
+    //        }
+    //    });
+
+    //});
+
+</script>
 
 

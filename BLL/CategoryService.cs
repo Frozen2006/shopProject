@@ -72,5 +72,10 @@ namespace BLL
 
             return products.Skip(pageSize * (page - 1)).Take(pageSize);
         }
+
+        public Product GetProduct(int productId)
+        {
+            return ProductRepository.Read(productId);
+        }
     }
 }

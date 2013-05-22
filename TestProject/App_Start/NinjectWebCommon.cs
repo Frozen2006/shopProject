@@ -62,9 +62,7 @@ namespace TestProject.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load(new DataAccessModule());
-            var s = kernel.Get<CategoryService>();
-
-            kernel.Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
+            var s = kernel.Get<CategoryService>();            
 
             Kernel = kernel;
         }        

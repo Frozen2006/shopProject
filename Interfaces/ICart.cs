@@ -7,7 +7,7 @@ using Helpers;
 
 namespace Interfaces
 {
-    interface ICart
+    public interface ICart
     {
         void Add(string UserEmail, int ProductId, int Count);
         List<Helpers.ProductInCart> GetAllChart(string UserEmail);
