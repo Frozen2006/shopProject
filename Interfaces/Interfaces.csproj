@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICart.cs" />
     <Compile Include="ICategoryRepository.cs" />
     <Compile Include="IProductRepository.cs" />
     <Compile Include="IRepository.cs" />
@@ -49,6 +50,10 @@
     <ProjectReference Include="..\Entities\Entities.csproj">
       <Project>{56d9fb78-9f87-436e-baf4-1103b694c4f3}</Project>
       <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
+      <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
