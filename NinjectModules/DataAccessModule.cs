@@ -29,7 +29,6 @@ namespace NinjectModules
             Bind<DAL.membership.ZipRepository>().To<DAL.membership.ZipRepository>();
 
             Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
-            Bind<Interfaces.ICart>().To<BLL.FakeCartService>();
             Bind<BLL.CategoryService>().ToSelf();
             Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
 

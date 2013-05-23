@@ -173,7 +173,7 @@ Current category is @Model.Category.Name, Id = @Model.Category.Id
         
         <span>...</span>
         
-        for (int i = pageCount - linkCount; i <= pageCount; i--)
+        for (int i = pageCount - linkCount; i <= pageCount; i++)
         {
             @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
             <span> </span>
