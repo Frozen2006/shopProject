@@ -70,7 +70,8 @@ namespace TestProject.Controllers.MembershipControllesr
 
                 return Json(ooo);
             }
-            return View("Register");}
+            return View("Register");
+        }
 
 
         private struct jsonOutData

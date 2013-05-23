@@ -13,21 +13,94 @@
             <th>Category id</th>
             <th>Count</th>
             <th>Total</th>
+            <th>Actions</th>
         </tr>
     
         @foreach (var product in Model.Products)
         {
-            <tr>
+            
+            <tr id="@product.Id">
                 <td>@product.Name</td>
                 <td>@product.PriceOfOneItem</td>
                 <td>@product.Id</td>
                 <td>@product.CategoryName</td>
                 <td>@product.CategoryId</td>
-                <td>@product.Count</td>
-                <td>@product.TotalPrice</td>
+                <td>
+                    @{ string decFuncName = "decrement(" + product.Id + ")"; }
+                    <input type="button" value="-" onclick="@decFuncName"/>
+                    <span id="count">@product.Count</span>
+                    @{ string incFuncName = "incriment(" + product.Id + ")"; }
+                    <input type="button" value="+" onclick="@incFuncName"/>
+                </td>
+                <td id="price">@product.TotalPrice</td>
+                @{ string delFuncName = "remover(" + product.Id + ")"; }
+                <td><input type="button" value="Delete" onclick="@delFuncName"/></td>
             </tr>
         }
     </table>
     <br/>
-    <b>Total price:</b> @Model.TotalPrice
+    <b>Total price:</b> <div id="totalPrice">@Model.TotalPrice</div>
 }
+
+
+<script>
+    function remover(productId) {
+        $.ajax({
+            url: "/Cart/Remove",
+            data: { productId: productId },
+            type: "POST",
+            success: function(data) {
+                $("tr#" + productId).remove();
+                $("#totalPrice")[0].innerHTML = data;
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+    }
+    function decrement(productId) {
+        var oldVal = $("tr#"+productId).find("#count")[0].innerHTML;
+
+        var newVal = oldVal;
+        
+        if (oldVal > 1) {
+            newVal--;
+        }
+
+        $.ajax({
+            url: "/Cart/SetNewValue",
+            data: { productId: productId, count: newVal },
+            type: "POST",
+            success: function (data) {
+                $("tr#" + productId).find("#count")[0].innerHTML = newVal;
+                $("tr#" + productId).find("#price")[0].innerHTML = data.positionPrice;
+                $("#totalPrice")[0].innerHTML = data.totalPrice;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                location.reload();
+            }
+        });
+    }
+    function incriment(productId) {
+        var oldVal = $("tr#" + productId).find("#count")[0].innerHTML;
+
+        var newVal = oldVal;
+
+            newVal++;
+        
+        $.ajax({
+            url: "/Cart/SetNewValue",
+            data: { productId: productId, count: newVal },
+            type: "POST",
+            success: function (data) {
+                $("tr#" + productId).find("#count")[0].innerHTML = newVal;
+                $("tr#" + productId).find("#price")[0].innerHTML = data.positionPrice;
+                $("#totalPrice")[0].innerHTML = data.totalPrice;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                location.reload();
+            }
+        });
+    }
+
+</script>

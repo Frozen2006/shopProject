@@ -136,7 +136,7 @@ namespace BLL
         //Update count of any product
         //New count replace old count of ProductId
         //
-        public void UpateCount(string UserEmail, int ProductId, int NewCount)
+        public double UpateCount(string UserEmail, int ProductId, int NewCount)
         {
             if (String.IsNullOrWhiteSpace(UserEmail) || (NewCount <= 0))
                 throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
@@ -154,6 +154,8 @@ namespace BLL
             currentCart.Count = NewCount;
 
             _repo.Update(us);
+
+            return currentCart.Product.Price*currentCart.Count;
         }
 
         public double GetTotalPrice(string UserEmail)

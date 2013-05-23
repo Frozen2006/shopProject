@@ -40,5 +40,52 @@ namespace TestProject.Controllers.Cart
             return View(model);
         }
 
+        //Ajax jquery responce method
+        [HttpPost]
+        public ActionResult Remove(string productId)
+        {
+            if (productId == null)
+                return null;
+            Request.Headers["X-Requested-With"] = "XMLHttpRequest";
+            if (Request.IsAjaxRequest() && (productId.Length > 0))
+            {
+                string sessionId = Request.Cookies.Get("session_data").Value;
+                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+
+                _cart.DeleteProduct(userEmail, Convert.ToInt32(productId));
+
+                return Content(Convert.ToString(_cart.GetTotalPrice(userEmail)));
+            }
+            return View("Index");
+        }
+
+        //Ajax jquery responce method
+        [HttpPost]
+        public ActionResult SetNewValue(string productId, int count)
+        {
+            if (productId == null)
+                return null;
+            Request.Headers["X-Requested-With"] = "XMLHttpRequest";
+            if (Request.IsAjaxRequest() && (productId.Length > 0))
+            {
+                string sessionId = Request.Cookies.Get("session_data").Value;
+                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+
+                double newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(productId), count);
+
+                var outData =
+                    new
+                        {
+                            positionPrice = Convert.ToString(newPositionTotalPrice),
+                            totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail))
+                        };
+
+
+                return Json(outData);
+            }
+            return View("Index");
+        }
+
+
     }
 }
