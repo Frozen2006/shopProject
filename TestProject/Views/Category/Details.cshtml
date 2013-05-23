@@ -12,45 +12,46 @@
 
 <div class="row-fluid">
     <div class="well siedbar-nav span3">
-    <span class="nav-header">Category</span>
+        <span class="nav-header">Category</span>
 
-    <ul class="nav nav-list">
-        <li class="active">
-            <a href="/">@Model.Category.Name</a>            
-        </li>
-    </ul>
-
-    @if (Model.Parents.Count() != 0) {
-        <span class="nav-header">Back to</span>
-    
         <ul class="nav nav-list">
-        @foreach (var parent in Model.Parents)
-        {
-            <li>
-                @Html.ActionLink(parent.Name, "Details", new {id = parent.Id})
+            <li class="active">
+                <a href="/">@Model.Category.Name</a>            
             </li>
-        }
-        </ul>    
-    }
-
-@if (Model.Subcategories.Count() != 0) {    
-        <span class="nav-header">Subcategories</span>    
-    
-        <ul class="nav nav-list">
-        @foreach (var subcategory in Model.Subcategories)
-        {
-            <li>
-                @Html.ActionLink(subcategory.Name, "Details", new {id = subcategory.Id})      
-            </li>      
-        }
         </ul>
+
+        @if (Model.Parents.Count() != 0) {
+            <span class="nav-header">Back to</span>
     
-}
+            <ul class="nav nav-list">
+                @foreach (var parent in Model.Parents)
+                {
+                    <li>
+                        @Html.ActionLink(parent.Name, "Details", new {id = parent.Id})
+                    </li>
+                }
+            </ul>    
+        }
+
+        @if (Model.Subcategories.Count() != 0) {    
+            <span class="nav-header">Subcategories</span>    
+    
+            <ul class="nav nav-list">
+                @foreach (var subcategory in Model.Subcategories)
+                {
+                    <li>
+                        @Html.ActionLink(subcategory.Name, "Details", new {id = subcategory.Id})      
+                    </li>      
+                }
+            </ul>
+    
+        }
     </div>
     <div class="span9">  
-            @if (Model.Products.Count() != 0)
+        <div class="well">
+        @if (Model.Products.Count() != 0)
             {   
-            <h3>Products</h3>
+                <h3>Products</h3>
 
 
                 @Html.ActionLink("Alphabetic", "Details", new { id = Model.Category.Id, sort = SortType.Alphabetic, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn"})
@@ -64,71 +65,72 @@
                     @Html.ActionLink("Show by " + size, "Details", new {id = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse}, new { @class="btn"})
                 }
 
-            <table class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
-                <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Id</th>
-                    <th>Category name</th>
-                    <th>Category id</th>
-                    <th>Add to cart</th>
-                </tr>
-
-                @foreach (var product in Model.Products)
-                {
-                    <tr>
-                        <td>@product.Name</td>
-                        <td>@product.Price</td>
-                        <td>@product.Id</td>
-                        <td>@product.Category.Name</td>
-                        <td>@product.CategoryId</td>
-                        <td>
-                            <input type="button" value="-" onclick="decrease(event)" class="btn btn-mini" />
-                            <span class="counter">1</span>
-                            <input type="button" value="+" onclick="increase(event)" class="btn btn-mini"/>
-                            @{string st = "addToCart(event," + product.Id + ")";   
-                                  <input class="btn btn-danger" type="button" value="Add" onclick=@st />
-                              }
-                        </td>
+                <table class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
+                    <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Id</th>
+                        <th>Category name</th>
+                        <th>Category id</th>
+                        <th>Add to cart</th>
                     </tr>
-                }
-            </table>   
+
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                            <td>@product.Id</td>
+                            <td>@product.Category.Name</td>
+                            <td>@product.CategoryId</td>
+                            <td>
+                                <input type="button" value="-" onclick="decrease(event)" class="btn btn-mini" />
+                                <span class="counter">1</span>
+                                <input type="button" value="+" onclick="increase(event)" class="btn btn-mini"/>
+                                @{string st = "addToCart(event," + product.Id + ")";   
+                                    <input class="btn btn-danger" type="button" value="Add" onclick=@st />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>   
 
     
-            int pageSize = Model.PageSize;
-            int productCount = Model.Category.Products.Count();
-            const int maxPageCount = 15;
+                int pageSize = Model.PageSize;
+                int productCount = Model.Category.Products.Count();
+                const int maxPageCount = 15;
 
-            int pageCount = productCount/pageSize + 1;
+                int pageCount = productCount/pageSize + 1;
 
-            if (pageCount >= maxPageCount)
-            {
-                const int linkCount = 6;
-                for (int i = 1; i <= linkCount; i++)
+                if (pageCount >= maxPageCount)
                 {
-                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
-                    <span> </span>
-                }
+                    const int linkCount = 6;
+                    for (int i = 1; i <= linkCount; i++)
+                    {
+                        @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
+                        <span> </span>
+                    }
         
-                <span>...</span>
+                    <span>...</span>
         
-                for (int i = pageCount - linkCount; i <= pageCount; i++)
-                {
-                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
-                    <span> </span>
-                }      
+                    for (int i = pageCount - linkCount; i <= pageCount; i++)
+                    {
+                        @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
+                        <span> </span>
+                    }      
 
-            }
-            if (pageCount > 1 && pageCount < maxPageCount)
-            {
-                //View all page anchors
-                for (int i = 1; i <= pageCount; i++)
+                }
+                if (pageCount > 1 && pageCount < maxPageCount)
                 {
-                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })<span> </span>
+                    //View all page anchors
+                    for (int i = 1; i <= pageCount; i++)
+                    {
+                        @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })<span> </span>
+                    }
                 }
             }
-        }
-    </div>
+        </div>
+        </div>
 </div>
 
 <script>
