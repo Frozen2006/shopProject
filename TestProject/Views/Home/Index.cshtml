@@ -1,5 +1,45 @@
-﻿@{
-    ViewBag.Title = "Index Page";
+﻿@using BLL.membership
+@using Ninject;
+@{ 
+    UsersService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<UsersService>(); 
 }
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <div class="hero-unit">
+        <h1>Hello all!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        
+         @if ((Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (us.CheckSession(Request.Cookies.Get("session_data").Value)))
+         {
+             <p>@Html.ActionLink("See more...", "Index", "Category", new {}, new {@class = "btn btn-primary btn-large"}) or @Html.ActionLink("Check out", "Index", "Cart", new {}, new {@class = "btn btn-primary btn-large"})</p>
+         }
+         else
+         {
+             <p>@Html.ActionLink("Regiter", "Register", "Membership", new {}, new { @class = "btn btn-primary btn-large"}) or @Html.ActionLink("Login In", "Login", "Membership", new {}, new { @class = "btn btn-primary btn-large"})</p>
+         }
+                
+    </div>
+    
+    <div class="row">
+        <div class="span6">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span6">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
 
-<h1>This is Index page =)</h1>
+        <div class="span12">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+   </div>
+</div>
+
+

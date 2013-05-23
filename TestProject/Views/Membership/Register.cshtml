@@ -9,71 +9,113 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
+<style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+    }
 
-@using (Html.BeginForm())
+    .form-reg {
+        max-width: 500px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+    .form-signin input[type="text"],
+    .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+    }
+
+</style>
+<script>
+    $(function () {
+       // $("#mainMenu")[0].remove();
+    });
+
+</script>
+
+
+
+
+@using (Html.BeginForm("Register", "Membership", FormMethod.Post, new { @class = "form-reg" }))
 {
+    <h2 class="form-signin-heading">Register</h2>
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <ol>
         <li>
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email)
+            @Html.Label("Enter you email adress")
+            @Html.TextBoxFor(m => m.Email, new { @class = "input-block-level", @placeholder = "Email" })
             @Html.ValidationMessageFor(m => m.Email)
         </li>
         <li>
-            @Html.LabelFor(m => m.Password)
-            @Html.PasswordFor(m => m.Password)
+            @Html.Label("Password")
+            @Html.PasswordFor(m => m.Password, new { @class = "input-block-level", @placeholder = "Password" })
             @Html.ValidationMessageFor(m => m.Password)
         </li>
         <li>
-            @Html.LabelFor(m => m.ConfirmPassword)
-            @Html.PasswordFor(m => m.ConfirmPassword)
+            @Html.Label("Confirm you password")
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-block-level", @placeholder = "Confirm Password" })
             @Html.ValidationMessageFor(m => m.ConfirmPassword)
         </li>
         <li>
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title)
+            @Html.Label("Title ('Mr', 'Ms', etc)")
+            @Html.TextBoxFor(m => m.Title, new { @class = "input-block-level", @placeholder = "Title" })
             @Html.ValidationMessageFor(m => m.Title)
         </li>
         <li>
             @Html.LabelFor(m => m.firstName)
-            @Html.TextBoxFor(m => m.firstName)
+            @Html.TextBoxFor(m => m.firstName, new { @class = "input-block-level", @placeholder = "First Name" })
             @Html.ValidationMessageFor(m => m.firstName)
         </li>
         <li>
             @Html.LabelFor(m => m.lastName)
-            @Html.TextBoxFor(m => m.lastName)
+            @Html.TextBoxFor(m => m.lastName, new { @class = "input-block-level", @placeholder = "Last Name" })
             @Html.ValidationMessageFor(m => m.lastName)
         </li>
         <li>
-            @Html.LabelFor(m => m.Address1)
-            @Html.TextBoxFor(m => m.Address1)
+            @Html.Label("Enter you main adress to delivery")
+            @Html.TextBoxFor(m => m.Address1, new { @class = "input-block-level", @placeholder = "Adress" })
             @Html.ValidationMessageFor(m => m.Address1)
         </li>
         <li>
-            @Html.LabelFor(m => m.Address2)
-            @Html.TextBoxFor(m => m.Address2)
+            @Html.Label("Enter you secondary adress (additional)")
+            @Html.TextBoxFor(m => m.Address2, new { @class = "input-block-level", @placeholder = "Secondary adress" })
             @Html.ValidationMessageFor(m => m.Address2)
         </li>
         <li>
-            @Html.LabelFor(m => m.Phone1)
-            @Html.TextBoxFor(m => m.Phone1)
+            @Html.Label("You phone")
+            @Html.TextBoxFor(m => m.Phone1, new { @class = "input-block-level", @placeholder = "Phone" })
             @Html.ValidationMessageFor(m => m.Phone1)
         </li>
         <li>
-            @Html.LabelFor(m => m.Phone2)
-            @Html.TextBoxFor(m => m.Phone2)
+            @Html.Label("You secondary phone (additional)")
+            @Html.TextBoxFor(m => m.Phone2, new { @class = "input-block-level", @placeholder = "Secondary phone" })
             @Html.ValidationMessageFor(m => m.Phone2)
         </li>
         <li>
-            @Html.LabelFor(m => m.Zip)
-            @Html.TextBoxFor(m => m.Zip)
+            @Html.Label("City zip code")
+            @Html.TextBoxFor(m => m.Zip, new { @class = "input-block-level", @placeholder = "Zip (start enter to view help)" })
             @Html.ValidationMessageFor(m => m.Zip)
         </li>
         <li>
-            @Html.LabelFor(m => m.City)
-            @Html.TextBoxFor(m => m.City)
+            @Html.Label("City")
+            @Html.TextBoxFor(m => m.City, new { @class = "input-block-level", @placeholder = "City" })
             @Html.ValidationMessageFor(m => m.City)
         </li>
     </ol>
