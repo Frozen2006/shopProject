@@ -1,228 +1,179 @@
 ﻿@using BLL
 @model TestProject.Models.CategoryDetailsModel
 
-<h2>Category description</h2>
-Current category is @Model.Category.Name, Id = @Model.Category.Id
-
-<hr/>
-
-@if (Model.Parents.Count() != 0) {
-    <h3>Up to</h3>
-    
-    foreach (var parent in Model.Parents)
-    {
-        if (parent != Model.Parents.First())
-        {
-            <span>&gt;&gt;</span>
-        }
-
-        @Html.ActionLink(parent.Name, "Details", new {id = parent.Id})
-    }
-    
-    <hr/>
-}
-
-
-@if (Model.Subcategories.Count() != 0) {
-    <h3>Down to</h3>
-    
-    
-    foreach (var subcategory in Model.Subcategories)
-    {
-        @Html.ActionLink(subcategory.ToString(), "Details", new {id = subcategory.Id})
-        <br/>
-    }
-    
-    <hr/>
-}
-
-@if (Model.Products.Count() != 0)
-{
-    <h3>Products</h3>
-    //public ActionResult Details(int id, int? page, int? pageSize, SortType? sort, bool? reverse)
-    <style>
-        li {
-            float: left;
-            margin: 5px;
-            padding: 0;
-        }
-        ul {
-            list-style: none;
-            overflow: hidden;
-            margin: 5px;
-            padding: 0;
-        }
-    </style>
-    <ul>
-        <li>
-            @Html.ActionLink("Alphabetic", "Details", new { id = Model.Category.Id, sort = SortType.Alphabetic, pageSize = Model.PageSize, reverse = Model.Reverse })
-        </li>
-        <li>
-            @Html.ActionLink("Price", "Details", new { id = Model.Category.Id, sort = SortType.Price, pageSize = Model.PageSize, reverse = Model.Reverse })
-        </li>
-
-        <li>
-            @Html.ActionLink("Direct order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false})
-        </li>
-        <li>
-            @Html.ActionLink("Reverse order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true})
-        </li>
-        
-        @for (int i = 1; i < 4; i++)
-        {
-            <li>
-                @{
-                    int size = (int) Math.Pow(10, i);
-                    @Html.ActionLink("Show by " + size, "Details", new {id = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse})
-                }
-            </li>
-        }
-    </ul>
-
-    <table border="1" style="border-collapse: collapse;">
-        <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
-            <th>Name</th>
-            <th>Price</th>
-            <th>Id</th>
-            <th>Category name</th>
-            <th>Category id</th>
-        </tr>
-
-        @foreach (var product in Model.Products)
-        {
-
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Id</td>
-                <td>@product.Category.Name</td>
-                <td>@product.CategoryId</td>
-                <td>
-                    <input type="button" value="-" onclick="decrease(event)" />
-                    <span class="counter">1</span>
-                    <input type="button" value="+" onclick="increase(event)" />
-                    @{string st = "addToCart(event," + product.Id + ")";   
-                          <input type="button" value="Add" onclick=@st />
-                      }
-                </td>
-            </tr>
-        }
-    </table>
-    
-    <script>
-        function getCounter(element){
-            return element.parentNode.getElementsByClassName("counter")[0];
-        }
-
-        function increase(event) {            
-            var counter = getCounter(event.target);
-            var count = parseInt(counter.innerHTML);
-            count += 1;
-
-            counter.innerHTML = count;            
-        }
-
-        function decrease(event) {
-            var counter = getCounter(event.target);
-            var count = parseInt(counter.innerHTML);
-
-            if (count > 1) {
-                count -= 1;
-                counter.innerHTML = count;
-            }            
-        }
-
-        //public ActionResult AddToCart(int productId, int count)
-        function sendRequest(id, c) {
-            $.ajax
-            ({
-                url: "/Category/AddToCart",
-                data: { productId: id, count: c },
-                type: "POST",
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert(textStatus);
-                }
-            })
-        }
-
-        function addToCart(event, productId) {
-            var counter = getCounter(event.target);
-            var count = parseInt(counter.innerHTML);
-
-            sendRequest(productId, count);
-        }
-    </script>
-    
-    int pageSize = Model.PageSize;
-    int productCount = Model.Category.Products.Count();
-    const int maxPageCount = 15;
-
-    int pageCount = productCount/pageSize + 1;
-
-    if (pageCount >= maxPageCount)
-    {
-        const int linkCount = 6;
-        for (int i = 1; i <= linkCount; i++)
-        {
-            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-            <span> </span>
-        }
-        
-        <span>...</span>
-        
-        for (int i = pageCount - linkCount; i <= pageCount; i++)
-        {
-            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-            <span> </span>
-        }      
-
-    }
-    if (pageCount > 1 && pageCount < maxPageCount)
-    {
-        //View all page anchors
-        for (int i = 1; i <= pageCount; i++)
-        {
-            @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })<span> </span>
-        }
-    }
-
-}
+<div id="message_box" class="alert fade" style="position: fixed; top: 50%; left: 50%; width: 300px; margin-left: -100px; padding: 30px;">
+    Message
+    <button type="button" class="close" data-dismiss="alert">×</button>
+</div>
 
 <script>
-
-
-    //$(function () {     
-
-    //    $("#Zip").autocomplete( {
-    //        source: function (request, response) {
-    //            $.ajax
-    //            ({
-    //                url: "/Membership/RegisterRow",
-    //                data: "{ 'term': '" + request.term + "' }",
-    //                dataType: "json",
-    //                type: "POST",
-    //                contentType: "application/json; charset=utf-8",
-    //                success: function (data) {
-    //                    response(data);
-    //                },
-    //                error: function (XMLHttpRequest, textStatus, errorThrown) {
-    //                    alert(textStatus);
-    //                }
-    //            });
-    //        },
-    //        minLength: 3,
-    //        select: function(event, ui) {
-    //            var item = ui.item;
-
-    //            document.getElementById("City").value = item.city;
-    //        }
-    //    });
-
-    //});
-
+    $(".alert").alert()
 </script>
 
+<div class="row-fluid">
+    <div class="well siedbar-nav span3">
+    <span class="nav-header">Category</span>
 
+    <ul class="nav nav-list">
+        <li class="active">
+            <a href="/">@Model.Category.Name</a>            
+        </li>
+    </ul>
+
+    @if (Model.Parents.Count() != 0) {
+        <span class="nav-header">Back to</span>
+    
+        <ul class="nav nav-list">
+        @foreach (var parent in Model.Parents)
+        {
+            <li>
+                @Html.ActionLink(parent.Name, "Details", new {id = parent.Id})
+            </li>
+        }
+        </ul>    
+    }
+
+@if (Model.Subcategories.Count() != 0) {    
+        <span class="nav-header">Subcategories</span>    
+    
+        <ul class="nav nav-list">
+        @foreach (var subcategory in Model.Subcategories)
+        {
+            <li>
+                @Html.ActionLink(subcategory.Name, "Details", new {id = subcategory.Id})      
+            </li>      
+        }
+        </ul>
+    
+}
+    </div>
+    <div class="span9">  
+            @if (Model.Products.Count() != 0)
+            {   
+            <h3>Products</h3>
+
+
+                @Html.ActionLink("Alphabetic", "Details", new { id = Model.Category.Id, sort = SortType.Alphabetic, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn"})
+                @Html.ActionLink("Price", "Details", new { id = Model.Category.Id, sort = SortType.Price, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn"})
+                @Html.ActionLink("Direct order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false}, new { @class="btn"})
+                @Html.ActionLink("Reverse order", "Details", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true}, new { @class="btn"})
+      
+                for (int i = 1; i < 4; i++)
+                {      
+                    int size = (int) Math.Pow(10, i);
+                    @Html.ActionLink("Show by " + size, "Details", new {id = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse}, new { @class="btn"})
+                }
+
+            <table class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
+                <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Id</th>
+                    <th>Category name</th>
+                    <th>Category id</th>
+                    <th>Add to cart</th>
+                </tr>
+
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>@product.Id</td>
+                        <td>@product.Category.Name</td>
+                        <td>@product.CategoryId</td>
+                        <td>
+                            <input type="button" value="-" onclick="decrease(event)" class="btn btn-mini" />
+                            <span class="counter">1</span>
+                            <input type="button" value="+" onclick="increase(event)" class="btn btn-mini"/>
+                            @{string st = "addToCart(event," + product.Id + ")";   
+                                  <input class="btn btn-danger" type="button" value="Add" onclick=@st />
+                              }
+                        </td>
+                    </tr>
+                }
+            </table>   
+
+    
+            int pageSize = Model.PageSize;
+            int productCount = Model.Category.Products.Count();
+            const int maxPageCount = 15;
+
+            int pageCount = productCount/pageSize + 1;
+
+            if (pageCount >= maxPageCount)
+            {
+                const int linkCount = 6;
+                for (int i = 1; i <= linkCount; i++)
+                {
+                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
+                    <span> </span>
+                }
+        
+                <span>...</span>
+        
+                for (int i = pageCount - linkCount; i <= pageCount; i++)
+                {
+                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })
+                    <span> </span>
+                }      
+
+            }
+            if (pageCount > 1 && pageCount < maxPageCount)
+            {
+                //View all page anchors
+                for (int i = 1; i <= pageCount; i++)
+                {
+                    @Html.ActionLink(i.ToString(), "Details", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class="btn btn-mini" })<span> </span>
+                }
+            }
+        }
+    </div>
+</div>
+
+<script>
+    function getCounter(element) {
+        return element.parentNode.getElementsByClassName("counter")[0];
+    }
+
+    function increase(event) {
+        var counter = getCounter(event.target);
+        var count = parseInt(counter.innerHTML);
+        count += 1;
+
+        counter.innerHTML = count;
+    }
+
+    function decrease(event) {
+        var counter = getCounter(event.target);
+        var count = parseInt(counter.innerHTML);
+
+        if (count > 1) {
+            count -= 1;
+            counter.innerHTML = count;
+        }
+    }
+
+    //public ActionResult AddToCart(int productId, int count)
+    function sendRequest(id, c) {
+        $.ajax
+        ({
+            url: "/Category/AddToCart",
+            data: { productId: id, count: c },
+            type: "POST",
+            success: function (data) {
+                alert(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        })
+    }
+
+    function addToCart(event, productId) {
+        var counter = getCounter(event.target);
+        var count = parseInt(counter.innerHTML);
+
+        sendRequest(productId, count);
+    }
+</script>
