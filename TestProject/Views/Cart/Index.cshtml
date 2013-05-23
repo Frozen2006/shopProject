@@ -4,7 +4,7 @@
 {
     <h3>Cart</h3>
 
-    <table border="1" style="border-collapse: collapse;">
+    <table class="table table-hover">
         <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
             <th>Name</th>
             <th>Price</th>
@@ -27,14 +27,14 @@
                 <td>@product.CategoryId</td>
                 <td>
                     @{ string decFuncName = "decrement(" + product.Id + ")"; }
-                    <input type="button" value="-" onclick="@decFuncName"/>
+                    <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
                     <span id="count">@product.Count</span>
                     @{ string incFuncName = "incriment(" + product.Id + ")"; }
-                    <input type="button" value="+" onclick="@incFuncName"/>
+                    <input type="button"  class="btn btn-mini" value="+" onclick="@incFuncName"/>
                 </td>
                 <td id="price">@product.TotalPrice</td>
                 @{ string delFuncName = "remover(" + product.Id + ")"; }
-                <td><input type="button" value="Delete" onclick="@delFuncName"/></td>
+                <td><input type="button" class="btn btn-danger" value="Delete" onclick="@delFuncName"/></td>
             </tr>
         }
     </table>
