@@ -72,8 +72,10 @@ namespace BLL.membership
 
         public bool CheckUser(string email, string password)
         {
+            string hassedPass = GetHash(password);
+
             User user =
-                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == GetHash(password)));
+                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
 
             if (user == null)
                 return false;
@@ -120,7 +122,9 @@ namespace BLL.membership
         //
         public bool ChangePassword(string email, string oldPassword, string newPassword)
         {
-            User user = _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == GetHash(oldPassword)));
+            string hassedPass = GetHash(oldPassword);
+
+            User user = _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
 
             if (user == null)
                 return false;
