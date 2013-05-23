@@ -3,25 +3,63 @@
 @{
     ViewBag.Title = "login";
 }
+<style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+    }
 
-<h2>login</h2>
+    .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+    .form-signin input[type="text"],
+    .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+    }
 
-@using (Html.BeginForm())
+</style>
+<script>
+    $(function() {
+        $("#mainMenu")[0].remove();
+    });
+     
+</script>
+
+@using (Html.BeginForm("Login", "Membership", FormMethod.Post, new { @class = "form-signin"  }))
 {
+    <h2 class="form-signin-heading">Please sign in</h2>
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <ol>
         <li>
             @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class="input-block-level", @placeholder="Email address"})
             @Html.ValidationMessageFor(m => m.Email)
         </li>
         <li>
             @Html.LabelFor(q => q.Password)
-            @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Email)
+            @Html.PasswordFor(m => m.Password, new { @class="input-block-level", @placeholder="Password"})
+            @Html.ValidationMessageFor(m => m.Password)
         </li>
     </ol>
     
-    <input type="submit" value="LogIn"/>
+    <input class="btn btn-large btn-primary" type="submit" value="LogIn"/>
 }

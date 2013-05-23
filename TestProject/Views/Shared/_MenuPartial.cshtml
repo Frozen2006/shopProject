@@ -1,0 +1,51 @@
+﻿@using BLL.membership
+@using Ninject;
+@{ 
+    UsersService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<UsersService>(); 
+}
+<div id="mainMenu" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Project name</a>
+            <div class="nav-collapse collapse">
+
+
+                @{/*If login in*/}
+                @if ((Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (us.CheckSession(Request.Cookies.Get("session_data").Value)))
+                {
+                        <ul class="dropdown pull-right">
+                        <a href="#" class="navbar-text dropdown-toggle" data-toggle="dropdown">@us.GetUserEmailFromSession(Request.Cookies.Get("session_data").Value)<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("My cart", "Index", "Cart")</li>
+                                <li><a href="#">Settings</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Log out", "LogOut", "Membership")</li>
+                            </ul>
+                        </ul>
+
+                }
+                else
+                {
+                    <p class="navbar-text pull-right">
+                        @Html.ActionLink("Login In", "Login", "Membership", new { }, new { @class = "navbar-link" }) or @Html.ActionLink("Register", "Logout", "Membership", new { }, new { @class = "navbar-link" })
+                    </p>
+                }
+
+                <ul class="nav">
+                    <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Catalog", "Index", "Category")</li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
