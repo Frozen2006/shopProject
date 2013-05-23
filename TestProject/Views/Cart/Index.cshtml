@@ -28,12 +28,12 @@
                 <td>
                     @{ string decFuncName = "decrement(" + product.Id + ")"; }
                     <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
-                    <span id="count">@product.Count</span>
+                    <span id="count" class="badge">@product.Count</span>
                     @{ string incFuncName = "incriment(" + product.Id + ")"; }
                     <input type="button"  class="btn btn-mini" value="+" onclick="@incFuncName"/>
                 </td>
                 <td id="price">@product.TotalPrice</td>
-                @{ string delFuncName = "remover(" + product.Id + ")"; }
+                @{ string delFuncName = "askRemove(" + product.Id + ")"; }
                 <td><input type="button" class="btn btn-danger" value="Delete" onclick="@delFuncName"/></td>
             </tr>
         }
@@ -41,9 +41,29 @@
     <br/>
     <b>Total price:</b> <div id="totalPrice">@Model.TotalPrice</div>
 }
-
+<div id="myModal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Delete item</h3>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure to remove this item?</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" onclick="closeModal()">Close</a>
+    <a href="#" id="delete" class="btn btn-primary">Delete</a>
+  </div>
+</div>
 
 <script>
+    function closeModal() {
+        $("#myModal").modal('hide');
+    }
+    function askRemove(productId) {
+        $("#myModal").find("#delete")[0].onclick = function() { remover(productId); };
+        $("#myModal").modal('show');
+    }
+
     function remover(productId) {
         $.ajax({
             url: "/Cart/Remove",
@@ -52,6 +72,7 @@
             success: function(data) {
                 $("tr#" + productId).remove();
                 $("#totalPrice")[0].innerHTML = data;
+                $("#myModal").modal('hide');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert(textStatus);
@@ -86,7 +107,7 @@
 
         var newVal = oldVal;
 
-            newVal++;
+        newVal++;
         
         $.ajax({
             url: "/Cart/SetNewValue",
