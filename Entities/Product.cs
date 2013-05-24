@@ -26,6 +26,7 @@ namespace Entities
         public string SellByWeight { get; set; }
         public double AverageWeight { get; set; }
         public string UnitOfMeasure { get; set; }
+        public string Description { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }

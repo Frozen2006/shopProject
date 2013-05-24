@@ -37,7 +37,6 @@ namespace BLL
 
             Cart _tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
 
-
             //Product add first time
             if (_tmpCart == null)
             {

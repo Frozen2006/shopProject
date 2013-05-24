@@ -76,6 +76,7 @@
           <Property Name="SellByWeight" Type="nchar" Nullable="false" MaxLength="1" />
           <Property Name="AverageWeight" Type="float" Nullable="false" />
           <Property Name="UnitOfMeasure" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -275,6 +276,7 @@
           <Property Name="UnitOfMeasure" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Category" Relationship="ShopModel.FK_Products_ToCategories" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="Carts" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Product" ToRole="Cart" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Categories_ToCategories">
           <End Type="ShopModel.Category" Multiplicity="1" Role="Categories" />
@@ -415,6 +417,7 @@
           <EntitySetMapping Name="Products1">
             <EntityTypeMapping TypeName="ShopModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
