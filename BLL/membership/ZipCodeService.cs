@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.membership;
+using Entities;
 
 namespace BLL.membership
 {
@@ -47,18 +48,25 @@ namespace BLL.membership
         // Item2 = ciy name
         public List<Tuple<string,string>> GetCities(string particalZip)
         {
-            var city = _repo.ReadAll().Where(m => m.zip1.CompareTo(particalZip) == 0);
+            Entities.Zip oneTCity = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) == 0);
 
-             //city = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) > 0);
-
-            if (city.Count() == 0)
+            if (oneTCity != null)
             {
-                city = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0);
+                List<Tuple<string, string>> outDataF = new List<Tuple<string, string>>();
+                outDataF.Add(Tuple.Create(oneTCity.zip1, oneTCity.city + ", " + oneTCity.sub_city));
+                return outDataF;
+            }
+
+            IQueryable<Entities.Zip> citys = null;
+
+            if (oneTCity == null)
+            {
+                citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
             }
 
             List<Tuple<string, string>> outData = new List<Tuple<string, string>>();
 
-            foreach (var oneCity in city)
+            foreach (var oneCity in citys)
             {
                 outData.Add(Tuple.Create(oneCity.zip1,oneCity.city+", "+oneCity.sub_city));
             }

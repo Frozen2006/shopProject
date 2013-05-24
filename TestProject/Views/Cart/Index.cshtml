@@ -8,9 +8,9 @@
         <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
             <th>Name</th>
             <th>Price</th>
-            <th>Id</th>
+
             <th>Category name</th>
-            <th>Category id</th>
+
             <th>Count</th>
             <th>Total</th>
             <th>Actions</th>
@@ -22,9 +22,9 @@
             <tr id="@product.Id">
                 <td>@product.Name</td>
                 <td>@product.PriceOfOneItem</td>
-                <td>@product.Id</td>
+
                 <td>@product.CategoryName</td>
-                <td>@product.CategoryId</td>
+
                 <td>
                     @{ string decFuncName = "decrement(" + product.Id + ")"; }
                     <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
