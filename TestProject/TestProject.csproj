@@ -281,6 +281,8 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\Account.cshtml" />
+    <Content Include="Views\Counter.cshtml" />
+    <Content Include="Views\Partial1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

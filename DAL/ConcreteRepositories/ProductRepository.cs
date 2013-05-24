@@ -21,6 +21,7 @@ namespace DAL.Repositories.DbFirstRepository
                 product.SellByWeight = item.SellByWeight;
                 product.AverageWeight = item.AverageWeight;
                 product.UnitOfMeasure = item.UnitOfMeasure;
+                product.Description = item.Description;
 
                 //Нужно тестировать.
                 product.Category = item.Category;

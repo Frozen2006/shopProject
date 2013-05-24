@@ -82,6 +82,8 @@
                                     <input class="btn btn-danger" type="button" value="Add" onclick=@st />
                                 }
                             </td>
+                                @Html.Partial(Counter, product.Id);
+                            </td>
                         </tr>
                     }
                 </table>   
