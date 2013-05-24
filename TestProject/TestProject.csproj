@@ -146,6 +146,7 @@
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\MembershipControllesr\MembershipController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Filters\AutorizeRole.cs" />
