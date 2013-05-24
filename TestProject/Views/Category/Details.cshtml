@@ -1,15 +1,6 @@
 ﻿@using BLL
 @model TestProject.Models.CategoryDetailsModel
 
-<div id="message_box" class="alert fade" style="position: fixed; top: 50%; left: 50%; width: 300px; margin-left: -100px; padding: 30px;">
-    Message
-    <button type="button" class="close" data-dismiss="alert">×</button>
-</div>
-
-<script>
-    $(".alert").alert()
-</script>
-
 <div class="row-fluid">
     <div class="well siedbar-nav span3">
         <span class="nav-header">Category</span>
@@ -133,7 +124,14 @@
         </div>
 </div>
 
+<div id="alert-area" style="position: fixed; top: 200px; left: 50%; width: 500px;"></div>
+
 <script>
+    function newAlert(type, message) {
+        $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
+        $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+    }
+
     function getCounter(element) {
         return element.parentNode.getElementsByClassName("counter")[0];
     }
@@ -164,7 +162,7 @@
             data: { productId: id, count: c },
             type: "POST",
             success: function (data) {
-                alert(data);
+                newAlert('alert', data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert(textStatus);
