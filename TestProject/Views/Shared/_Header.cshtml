@@ -1,0 +1,80 @@
+﻿@using BLL.membership
+@using Ninject;
+@{ 
+    UsersService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<UsersService>();
+    //check autorization
+    bool isLoginIn = (Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (us.CheckSession(Request.Cookies.Get("session_data").Value));
+
+    string foolTitle = null;
+    if (isLoginIn)
+    {
+        string email = us.GetUserEmailFromSession(Request.Cookies.Get("session_data").Value);
+        foolTitle = us.GetUserFoolTitle(email);
+    }
+}
+<div id="mainMenu" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3" style="text-align: center;"><a class="brand" href="#">Project name</a></div>
+                <div class="span9" style="padding: 10px;">
+                    <div class="row-fluid">
+                        <!-- FIRST BLOCK -->
+                        <div class="span8">
+                            <form class="form-search" style="margin: 0">
+                                <div class="input-append span12" style="margin: 0">
+                                    <input type="text" class="span10 search-query" placeholder="Search...">
+                                    <button type="submit" class="btn"><i class="icon-search"> </i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- END OF FIRST BLOCK -->
+                        <!-- THIRD BLOCK -->
+                         <div class="span1 offset2">
+                            @{/*If login in*/}
+                            @if (isLoginIn)
+                            {
+                                Html.RenderPartial("_MenuIconPart");
+                            }
+                        </div>
+                        <!-- END THRID BLOCK -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="nav-collapse collapse">
+                   @if (isLoginIn)
+                            {
+                                <p class="navbar-text pull-right">Hi, @foolTitle</p>
+                            }
+                            else
+                            {
+                                   <p class="navbar-text pull-right">@Html.ActionLink("Register", "Register", "Membership") or @Html.ActionLink("Login In", "Login", "Membership")</p> 
+                            }
+                <ul class="nav nav-pills">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">Shop</a></li>
+                    @if (isLoginIn)
+                    {
+                        <li><a href="#contact">History</a></li>
+                        <li><a href="#contact">Orders</a></li>
+                        <li><a href="#contact">Delivery Types</a></li>
+                    }
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

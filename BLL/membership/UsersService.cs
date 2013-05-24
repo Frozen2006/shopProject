@@ -250,6 +250,19 @@ namespace BLL.membership
             return false;
         }
 
+        //Return user title and first last name
+        //
+        //
+        public string GetUserFoolTitle(string email)
+        {
+            User user = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+
+            if (user == null)
+                throw new InstanceNotFoundException("User not found!");
+
+            return user.title + " " + user.first_name + " " + user.last_name;
+        }
+
         public string GetUserEmailFromSession(string guid)
         {
             //part 1 - find in cash
