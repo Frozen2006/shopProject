@@ -1,0 +1,46 @@
+﻿@model TestProject.Models.ChangePasswordModel
+@{
+    ViewBag.Title = "Account";
+}
+<div class="row-fluid">
+    <div class="span2">
+        <ul class="nav nav-tabs nav-stacked">
+            <li>@Html.ActionLink("Home", "Index")</li>
+            <li class="active">@Html.ActionLink("Security", "Account")</li>
+            <li>@Html.ActionLink("Delivery", "Index")</li>
+        </ul>
+    </div>
+    <div class="span10">
+        <div class="well well-large">
+            <h2>Security settings</h2> <br/>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.OldPassword)
+                        @Html.TextBoxFor(m => m.OldPassword, new { @class="input-block-level", @placeholder="Old password"})
+                        @Html.ValidationMessageFor(m => m.OldPassword)
+                    </li>
+                    <li>
+                        @Html.LabelFor(q => q.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class="input-block-level", @placeholder="Password"})
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </li>
+                    <li>
+                        @Html.LabelFor(q => q.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class="input-block-level", @placeholder="Confirm Password"})
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </li>
+                </ol>
+    
+                <input class="btn btn-large btn-primary" data-loading-text="Loading..." type="submit" value="Change"/>
+            }
+        </div>
+    </div>
+</div>
+
+
+
