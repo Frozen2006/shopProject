@@ -2,6 +2,6 @@
 <input type="button" value="-" onclick="decrease(event)" class="btn btn-mini" />
 <span class="counter">0</span>
 <input type="button" value="+" onclick="increase(event)" class="btn btn-mini"/>
-@{string st = "addToCart(event," + Model + ")";   
-    <input class="btn btn-danger" type="button" value="Add" onclick=@st />
+@{string st = "addToCart(event," + Model + ")";  
+    <input class="btn btn-danger" type="button" value="Add" onclick="@st" />
 }

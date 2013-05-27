@@ -13,19 +13,12 @@ using Interfaces;
 
 namespace TestProject.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
-        private readonly CategoryService _prodService;
-        private readonly UsersService _userService;
-        private readonly ICart _cartService;
-
         [Inject]
         public CategoryController(CategoryService ps, UsersService us, ICart cs)
-        {
-            _prodService = ps;
-            _userService = us;
-            _cartService = cs;
-        }
+            : base(ps, us, cs) { }
+
 
         public ActionResult Index()
         {
@@ -38,19 +31,8 @@ namespace TestProject.Controllers
             var model = new CategoryDetailsModel();
 
             Category category = _prodService.GetCategoryById(id);
-
             model.Category = category;
             model.Subcategories = _prodService.GetSubcategories(category);
-            model.Parents = _prodService.GetParentsList(category);
-
-            model.PageNumber = page ?? 1;
-            model.PageSize = pageSize ?? 10;
-            model.SortType = sort ?? SortType.Alphabetic;
-            model.Reverse = reverse ?? false;
-
-            model.Products = _prodService.GetProducts(model.Category, model.PageNumber, model.PageSize,
-                                                      model.SortType, model.Reverse);
-
 
             return View(model);
         }
@@ -88,26 +70,15 @@ namespace TestProject.Controllers
             return Content(intCount + " units of" + product.Name + "were successfully added");
         }
 
-        public ActionResult TestAction()
+        [ChildActionOnly]
+        public ActionResult CategoryNavigation(Category category)
         {
-            return Content("It works");
+            var model = new CategotyNavigationModel();
+
+            model.Category = category;
+            model.Parents = _prodService.GetParentsList(category);
+
+            return PartialView(model);
         }
-
-
-        /*
-             interface ICart
-    {
-        void Add(string UserEmail, int ProductId, int Count);
-        List<Helpers.ProductInCart> GetAllChart(string UserEmail);
-        void DeleteProduct(string UserEmail, int ProductId);
-        void Clear(string UserEmail);
-        void UpateCount(string UserEmail, int NewCount);
-        double GetTotalPrice(string UserEmail);
-        
-        //Other methods be realize in future
-        //void Buy(string UserEmail);
-    }
-         */
-
     }
 }

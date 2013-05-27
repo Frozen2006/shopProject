@@ -148,6 +148,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\MembershipControllesr\MembershipController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Filters\AutorizeRole.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,10 +157,13 @@
     <Compile Include="Mailers\IPasswordResetMailer.cs" />
     <Compile Include="Mailers\Models\MailerModel.cs" />
     <Compile Include="Mailers\PasswordResetMailer.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\CategoryDetailsModel.cs" />
+    <Compile Include="Models\CategotyNavigationModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -282,7 +286,9 @@
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\Account.cshtml" />
     <Content Include="Views\Counter.cshtml" />
-    <Content Include="Views\Partial1.cshtml" />
+    <Content Include="Views\Product\List.cshtml" />
+    <Content Include="Views\Category\CategoryNavigation.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
