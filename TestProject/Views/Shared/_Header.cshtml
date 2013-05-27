@@ -56,8 +56,8 @@
                                    <p class="navbar-text pull-right">@Html.ActionLink("Register", "Register", "Membership") or @Html.ActionLink("Login In", "Login", "Membership")</p> 
                             }
                 <ul class="nav nav-pills">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#about">Shop</a></li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Shop", "Index", "Category")</li>
                     @if (isLoginIn)
                     {
                         <li><a href="#contact">History</a></li>

@@ -13,6 +13,7 @@ using DAL.Repositories.DbFirstRepository;
 using DAL.membership;
 using System.Web;
 using Entities;
+using Helpers;
 
 namespace BLL.membership
 {
@@ -116,6 +117,31 @@ namespace BLL.membership
             }
         }
 
+        public UserDetails GetUserDetails(string email)
+        {
+            User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+
+            if (us == null)
+                throw new InstanceNotFoundException("User not found");
+
+            UserDetails userDetails = new UserDetails()
+                {
+                    Id = us.Id,
+                    RoleId = us.RoleId,
+                    address = us.address,
+                    address2 = us.address2,
+                    city = us.city,
+                    zip = us.zip,
+                    email = us.email,
+                    phone = us.phone,
+                    phone2 = us.phone2,
+                    first_name = us.first_name,
+                    last_name = us.last_name,
+                    title = us.title
+                };
+
+            return userDetails;
+        }
 
         //Change user password. 
         //Return true on success, and false on fail.
@@ -201,6 +227,24 @@ namespace BLL.membership
             return false;
         }
 
+        public void ChangeDeliveryData(string email, string address, string address2, string phone, string phone2,
+                                       int zip, string city)
+        {
+            User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+
+            if (us == null)
+                throw new InstanceNotFoundException("User not found");
+
+            us.address = address;
+            us.address2 = address2;
+            us.phone = phone;
+            us.phone2 = phone2;
+            us.zip = zip;
+            us.city = city;
+        
+            _repository.Update(us);
+        
+        }
 
         public string StartSession(string userEmail)
         {
@@ -303,6 +347,7 @@ namespace BLL.membership
 
             return hash;
         }
+
 
 
     }

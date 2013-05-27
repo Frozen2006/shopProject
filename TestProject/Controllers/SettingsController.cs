@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL.membership;
+using Helpers;
 using Ninject;
+using TestProject.Models;
 
 namespace TestProject.Controllers
 {
@@ -30,6 +32,43 @@ namespace TestProject.Controllers
         {
             return View();
         }
+
+        public ActionResult Delivery()
+        {
+            Models.ChangeDeliveryAddressModel model = new ChangeDeliveryAddressModel();
+
+           string sessionId = Request.Cookies.Get("session_data").Value;
+           string userEmail = us.GetUserEmailFromSession(sessionId);
+
+            UserDetails userDetails = us.GetUserDetails(userEmail);
+
+            model.Address1 = userDetails.address;
+            model.Address2 = userDetails.address2;
+            model.Phone1 = userDetails.phone;
+            model.Phone2 = userDetails.phone2;
+            model.Zip = userDetails.zip;
+            model.City = userDetails.city;
+
+
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delivery(Models.ChangeDeliveryAddressModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string sessionId = Request.Cookies.Get("session_data").Value;
+                string userEmail = us.GetUserEmailFromSession(sessionId);
+
+               us.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
+            }
+            ModelState.AddModelError("", "Input data is bad");
+            ViewBag.Data = "BAD";
+            return View(model);
+        }
+
 
         [HttpPost]
         public ActionResult Account(Models.ChangePasswordModel model)

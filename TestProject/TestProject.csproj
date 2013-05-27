@@ -160,6 +160,7 @@
     <Compile Include="Mailers\PasswordResetMailer.cs" />
     <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\CategoryDetailsModel.cs" />
+    <Compile Include="Models\ChangeDeliveryAddressModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -279,11 +280,11 @@
     <Content Include="Views\Membership\Register.cshtml" />
     <Content Include="Views\Membership\Login.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Settings\Account.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_MenuIconPart.cshtml" />
+    <Content Include="Views\Settings\Delivery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

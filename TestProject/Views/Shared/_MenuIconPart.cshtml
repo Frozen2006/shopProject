@@ -5,7 +5,7 @@
         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-wrench"> </i></a>
 
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                <li><a href="#">Settings</a></li>
+                <li>@Html.ActionLink("Settings", "Index", "Settings")</li>
                 <li>@Html.ActionLink("Log out", "Logout","Membership")</li>
             </ul>
 

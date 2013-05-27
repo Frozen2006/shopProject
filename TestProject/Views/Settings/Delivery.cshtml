@@ -1,0 +1,64 @@
+﻿@model TestProject.Models.ChangeDeliveryAddressModel
+@{
+    ViewBag.Title = "Account";
+}
+
+@Scripts.Render("~/Content/js/reg_autocomp.js")
+
+<div class="row-fluid">
+    <div class="span2">
+        <ul class="nav nav-tabs nav-stacked">
+            <li>@Html.ActionLink("Home", "Index")</li>
+            <li>@Html.ActionLink("Security", "Account")</li>
+            <li class="active">@Html.ActionLink("Delivery", "Delivery")</li>
+        </ul>
+    </div>
+    <div class="span10">
+        <div class="well well-large">
+            <h2>Security settings</h2> <br/>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <ol>
+                    <li>
+                        @Html.Label("Enter you main adress to delivery")
+                        @Html.TextBoxFor(m => m.Address1, new { @class = "input-block-level", @placeholder = "Adress" })
+                        @Html.ValidationMessageFor(m => m.Address1)
+                    </li>
+                    <li>
+                        @Html.Label("Enter you secondary adress (additional)")
+                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-block-level", @placeholder = "Secondary adress" })
+                        @Html.ValidationMessageFor(m => m.Address2)
+                    </li>
+                    <li>
+                        @Html.Label("You phone")
+                        @Html.TextBoxFor(m => m.Phone1, new { @class = "input-block-level", @placeholder = "Phone" })
+                        @Html.ValidationMessageFor(m => m.Phone1)
+                    </li>
+                    <li>
+                        @Html.Label("You secondary phone (additional)")
+                        @Html.TextBoxFor(m => m.Phone2, new { @class = "input-block-level", @placeholder = "Secondary phone" })
+                        @Html.ValidationMessageFor(m => m.Phone2)
+                    </li>
+                    <li>
+                        @Html.Label("City zip code")
+                        @Html.TextBoxFor(m => m.Zip, new { @class = "input-block-level", @placeholder = "Zip (start enter to view help)" })
+                        @Html.ValidationMessageFor(m => m.Zip)
+                    </li>
+                    <li>
+                        @Html.Label("City")
+                        @Html.TextBoxFor(m => m.City, new { @class = "input-block-level", @placeholder = "City" })
+                        @Html.ValidationMessageFor(m => m.City)
+                    </li>
+                </ol>
+                
+                <input class="btn btn-large btn-primary" data-loading-text="Loading..." type="submit" value="Change"/>
+            }
+        </div>
+    </div>
+</div>
+
+
+

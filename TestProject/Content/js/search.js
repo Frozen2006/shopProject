@@ -6,7 +6,7 @@
             $.each( items, function( index, item ) {
                 var aaa = ul[0];
                 var newItem = document.createElement("B");
-                newItem.innerHTML = "Price: " + item.price;
+                newItem.innerHTML = "Price: " + item.price + "$";
                 newItem.style.display = "inline";
                 newItem.style.float = "right";
                 aaa.appendChild(newItem);
