@@ -1,0 +1,34 @@
+﻿@model Entities.Product
+
+@Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
+
+<style>
+    .prod_detail {
+        margin: 0 20%;
+    }
+    .photo {
+        margin: 0 auto;
+        display: block;
+    }
+</style>
+ 
+<div class="well prod_detail">
+    <h2>@Model.Name</h2>
+
+    @{                
+        string path = "/Image/ProductImg/" + Model.Id;                            
+        <img class="photo" src="@path" />
+    }
+    <h3>Description:</h3>
+    <p>@Model.Description</p>    
+    
+    <div class="display-label">
+            @Html.DisplayNameFor(model => model.Price)
+    </div>
+    <h2>Price</h2>
+    <p>@Model.Price</p>
+
+    @Html.ActionLink("To Category", "List", "Product", new { categoryId = Model.Category.Id }, new { @class = "btn" })
+
+</div>
+

@@ -1,0 +1,37 @@
+﻿@model TestProject.Models.CategotyNavigationModel
+
+@{
+    string imgPath;
+ }
+<div class="well">
+    <span class="nav-header">Category</span>
+
+    <ul class="breadcrumb">
+
+    @if (Model.Parents.Count() != 0)
+    {  
+        foreach (var parent in Model.Parents)
+        {  
+        <li>
+            <a href="#">                                            
+                @{
+                    imgPath = "/Image/CategoryImg/" + parent.Id;   
+                }
+                <img width="30" height="30" src="@imgPath" />
+                @Html.ActionLink(parent.Name, "Details", new { id = parent.Id})    
+            </a> 
+            <span class="divider">></span>
+        </li>
+        }
+
+    }     
+        <li class="active"> 
+                                            
+                @{
+                    imgPath = "/Image/CategoryImg/" + Model.Category.Id;   
+                }                
+                <img width="30" height="30" src="@imgPath" />
+                @Model.Category.Name         
+        </li>
+    </ul>  
+</div> 
