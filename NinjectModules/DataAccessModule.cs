@@ -35,6 +35,8 @@ namespace NinjectModules
             //Cart
             Bind<Interfaces.ICart>().To<BLL.CartService>();
 
+            Bind<BLL.SearchService>().To<BLL.SearchService>();
+
         }
     }
 }
