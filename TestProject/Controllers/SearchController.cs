@@ -56,11 +56,10 @@ namespace TestProject.Controllers
                 products = _search.GetProductsFromCategory(data, category);
             }
 
-            Models.SearchPageModel model = new SearchPageModel() {Categories = categories, Products = products};
+            Models.SearchPageModel model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category()};
 
             return View(model);
         }
-
 
         //Ajax responce method
         [HttpPost]
