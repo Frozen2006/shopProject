@@ -40,23 +40,33 @@
                       {
                           //1 category
                           <div class="span4 category_box">
-                              @{
-                                  var subcategory = subcategories[i];
-                                  string path = "/Image/CategoryImg/" + subcategory.Id;   
-                                }
-                                <img src="@path" />
-
-                          
-                              @if(subcategory.Categories1.Count() != 0)
+                            @{
+                                var subcategory = subcategories[i];
+                                string href;
+                            }
+                            @if(subcategory.Categories1.Count() != 0)
                               {
                                 //if has subcategories
-                                @Html.ActionLink(subcategory.Name, "Details", new { id = subcategory.Id })   
+                                href = "/category/details/" + subcategory.Id;                                
                               }
                               else
                               {
                                 //if not, view products
-                                @Html.ActionLink(subcategory.Name, "List", "Product", new { categoryId = subcategory.Id }, null)
+                                href = "/product/list?categoryId=" + subcategory.Id;                                
                               } 
+
+                              
+                              @{                                  
+                                  string path = "/Image/CategoryImg/" + subcategory.Id;   
+                                }
+                                <a href="@href">
+                                  <img src="@path" />
+                                </a>
+                                <br />
+                                <a href="@href">
+                                  @subcategory.Name
+                                </a>                          
+
                           </div>
                           
                           i++;          

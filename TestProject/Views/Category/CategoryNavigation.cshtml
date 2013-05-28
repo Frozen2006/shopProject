@@ -3,6 +3,13 @@
 @{
     string imgPath;
  }
+
+<style>
+    .no_underline:hover {
+        text-decoration: none;
+    }
+</style>
+
 <div class="well">
     <span class="nav-header">Category</span>
 
@@ -13,13 +20,20 @@
         foreach (var parent in Model.Parents)
         {  
         <li>
-            <a href="#">                                            
-                @{
-                    imgPath = "/Image/CategoryImg/" + parent.Id;   
-                }
+            @{
+            string href = "/category/details/" + parent.Id;
+            }            
+                                        
+            @{
+                imgPath = "/Image/CategoryImg/" + parent.Id;   
+            }
+            <a class="no_underline" href="@href">
                 <img width="30" height="30" src="@imgPath" />
-                @Html.ActionLink(parent.Name, "Details", new { id = parent.Id})    
-            </a> 
+            </a>
+            <a href="@href">
+                @parent.Name
+            </a>
+
             <span class="divider">></span>
         </li>
         }
