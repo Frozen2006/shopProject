@@ -1,107 +1,159 @@
 ﻿@using BLL
 @model TestProject.Models.ProductListModel
 
-<div>  
-    @Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
+<style>
+    .no_underline:hover {
+        text-decoration: none;
+    }
+    .products {
+        margin: 0 auto;
+    }
+    .info {
+        width: 70%;
+        display: inline-block;
+    }
+    .tocart {
+        display: inline-block;
+        width: 28%;
+        text-align: right;
+    }
+    #sort_panel .btn {
+        vertical-align:top;
+        margin: 0 5px;
+    }
+    
+</style>
 
-    <div class="well">
-    @if (Model.Products.Count() != 0)
-    {   
-            <h3>Products</h3>
+@Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
 
+@if (Model.Products.Count() != 0)
+{  
+<div class="products"> 
+    <h3>Products</h3>
 
-            @Html.ActionLink("Price", "List", new { id = Model.Category.Id, sort = SortType.Price, pageSize = Model.PageSize, reverse = Model.Reverse }, new { @class = "btn" })
-            @Html.ActionLink("Direct order", "List", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = false }, new { @class = "btn" })
-            @Html.ActionLink("Reverse order", "List", new { id = Model.Category.Id, sort = Model.SortType, pageSize = Model.PageSize, reverse = true }, new { @class = "btn" })
-      
-        for (int i = 1; i < 4; i++)
+    <div id="sort_panel">
+        <select id="sort" onchange="jsFunction()">
+            <option>Alphabetic ascending</option>      
+            <option>Alphabetic descending</option> 
+            <option>Price ascending</option>                 
+            <option>Price descending</option>            
+        </select>
+
+        <script>
+            function jsFunction() {
+
+                var params = {
+                    categoryId: "@Model.Category.Id",
+                    sort: "@Model.SortType",
+                    pageSize: "@Model.PageSize",
+                    reverse: "@Model.Reverse"
+                }
+
+                var select = document.getElementById("sort");
+
+                switch (select.selectedIndex) {
+                    case 0:
+                        params.sort = "Alphabetic";
+                        params.reverse = "False";
+                        break;
+                    case 1:
+                        params.sort = "Alphabetic";
+                        params.reverse = "True";
+                        break;
+                    case 2:
+                        params.sort = "Price";
+                        params.reverse = "False";
+                        break;
+                    case 3:
+                        params.sort = "Price";
+                        params.reverse = "True";
+                        break;
+                }
+       
+                window.location.href = "/product/list?" + $.param(params);  
+            }
+        </script>
+
+        @for (int i = 1; i < 4; i++)
         {
             int size = (int)Math.Pow(10, i);
-                @Html.ActionLink("Show by " + size, "List", new { id = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse }, new { @class = "btn" })
+                @Html.ActionLink("Show by " + size, "List", new { categoryId = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse }, new { @class = "btn" })
         }
+    </div>      
 
-            <table class="table table-hover" style="margin-top: 10px; margin-bottom: 0px;">
-                <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Id</th>
-                    <th>Category name</th>
-                    <th>Category id</th>
-                    <th>Add to cart</th>
-                </tr>
 
-                @foreach (var product in Model.Products)
-                {
-                    <tr>
-                        <td>
-                            @{                
-                                string path = "/Image/ProductImg/" + product.Id;                            
-                                <img width="30" height="30" src="@path" />
-                            }
-                        </td>
-                        <td>
-                            @Html.ActionLink(product.Name, "Details", new { id = product.Id })
-                        </td>
-                        <td>@product.Price</td>
-                        <td>@product.Id</td>
-                        <td>@product.Category.Name</td>
-                        <td>@product.CategoryId</td>
-                        <td>                                  
-                            @Html.Partial("../Counter", product.Id)        
-                        </td>
-                    </tr>
-                }
-            </table>   
+@foreach(var product in Model.Products)
+{
+    <div class="well product_box">
+        @{
+            string href = "/product/details/" + product.Id;
+            string path = "/Image/ProductImg/" + product.Id;
+            
+            <div class="info">
+                <a class="no_underline" href="@href">
+                    <img class="product_photo" width="70" height="70" src="@path" />
+                </a>
+                <a href="@href">
+                    @product.Name
+                </a>
+            </div>
+                
+            <div class="tocart">
+                <span>Price:</span>
+                @product.Price
+                @Html.Partial("../Counter", product.Id)  
+            </div>
+        }     
+    </div>
+}
 
-    
-                int pageSize = Model.PageSize;
-                int productCount = Model.Category.Products.Count();
-                const int maxPageCount = 15;
+@{
+    int pageSize = Model.PageSize;
+    int productCount = Model.Category.Products.Count();
+    const int maxPageCount = 15;
 
-                int pageCount = productCount / pageSize + 1;
+    int pageCount = productCount / pageSize + 1;
+}
 
-            <div class="pagination pagination-centered">
-            <ul>
-            @if (pageCount >= maxPageCount)
+    <div class="pagination pagination-centered">
+        <ul>
+        @if (pageCount >= maxPageCount)
+        {
+            const int linkCount = 6;
+
+            for (int i = 1; i <= linkCount; i++)
             {
-                const int linkCount = 6;
+                <li>
+                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
+                </li>
+            }      
 
-                for (int i = 1; i <= linkCount; i++)
-                {
-                    <li>
-                        @Html.ActionLink(i.ToString(), "List", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                    </li>
-                }      
-
-                <li class="disabled">...</li>
+            <li class="disabled">...</li>
 
                     
-                for (int i = pageCount - linkCount; i <= pageCount; i++)
-                {
-                    <li>
-                        @Html.ActionLink(i.ToString(), "List", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                    </li>
-                }
-            }
-
-            @if (pageCount > 1 && pageCount < maxPageCount)
+            for (int i = pageCount - linkCount; i <= pageCount; i++)
             {
-                //View all page anchors
-
-                for (int i = 1; i <= pageCount; i++)
-                {
-                    <li>
-                        @Html.ActionLink(i.ToString(), "List", new { id = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                    </li>
-                }
+                <li>
+                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
+                </li>
             }
-            </ul>
-            </div>
-    }
+        }
+
+        @if (pageCount > 1 && pageCount < maxPageCount)
+        {
+            //View all page anchors
+
+            for (int i = 1; i <= pageCount; i++)
+            {
+                <li>
+                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
+                </li>
+            }
+        }
+        </ul>
     </div>
 </div>
-
+}
 
 <div id="alert-area" style="position: fixed; top: 200px; left: 50%; width: 500px;"></div>
 
