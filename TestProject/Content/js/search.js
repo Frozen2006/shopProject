@@ -40,8 +40,12 @@
               delay: 150,
               select: function (event, ui) {
                   var item = ui.item;
+                  //var regExp = /^(?:http:\/\/)?([^\/]+)/g;
+                  //var regRez = regExp.exec(document.URL);
 
-                  //document.getElementById("City").value = item.city;
+                 // var test = regRez[0] + "/Product/Details/" + item.ProductId;
+                  //document.location.href = regRez[0] + "/Product/Details/" + item.ProductId;
+                  document.location.href = "/Product/Details/" + item.ProductId;
               }
           });
 

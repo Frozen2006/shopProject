@@ -21,12 +21,13 @@
                     <div class="row-fluid">
                         <!-- FIRST BLOCK -->
                         <div class="span8">
-                            <form class="form-search" style="margin: 0">
-                                <div class="input-append span12" style="margin: 0">
-                                    <input type="search" id="searchArea" class="span10 search-query" placeholder="Search...">
-                                    <button type="submit" class="btn"><i class="icon-search"> </i></button>
-                                </div>
-                            </form>
+                                @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "form-search", @style = "margin: 0" }))
+                                {
+                                    <div class="input-append span12" style="margin: 0">
+                                        <input type="text" name="data" id="searchArea" class="span10 search-query" placeholder="Search...">
+                                        <button type="submit" class="btn"><i class="icon-search"> </i></button>
+                                    </div>
+                                }
                         </div>
                         <!-- END OF FIRST BLOCK -->
                         <!-- THIRD BLOCK -->

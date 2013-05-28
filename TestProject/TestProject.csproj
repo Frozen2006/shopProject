@@ -168,6 +168,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\SearchPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,8 +195,12 @@
     <Content Include="Content\img\glyphicons-halflings.png" />
     <Content Include="Content\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Content\js\bootstrap.input-clear.js" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\reg_autocomp.js" />
+    <Content Include="Content\js\search.js" />
+    <Content Include="Content\js\search_old.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -293,6 +298,7 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Category\CategoryNavigation.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

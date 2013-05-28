@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Helpers;
 using Interfaces.Repositories;
 using Ninject;
 
@@ -36,12 +37,33 @@ namespace BLL
             return outData;
         }
 
+        public List<CategoriesInSearch> GetCategories(string searchData)
+        {
+            List<CategoriesInSearch> allCat = new List<CategoriesInSearch>();
+            var q = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData));
+
+            foreach (var product in q)
+            {
+                CategoriesInSearch qq = allCat.FirstOrDefault(m => m.Category == product.Category);
+                if (qq == null)
+                {
+                    allCat.Add(new CategoriesInSearch{ Category = product.Category, Count = 1});
+                }
+                else
+                {
+                    qq.Count++;
+                }
+            }
+
+            return allCat;
+        }
+
         //Return all products from category
-        public List<Product> GetProductsFromCategory(string searchData, int categoryId)
+        public List<Product> GetProductsFromCategory(string searchData, string categoryName)
         {
             List<Product> outData = new List<Product>();
 
-            var searchDara = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.CategoryId == categoryId));
+            var searchDara = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
 
             foreach (var product in searchDara)
             {
