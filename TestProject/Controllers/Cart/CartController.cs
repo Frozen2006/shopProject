@@ -61,6 +61,8 @@ namespace TestProject.Controllers.Cart
 
         private static object _locker = new object();
 
+        
+
         //Ajax jquery responce method
         [HttpPost]
         public ActionResult SetNewValue(string productId, int count)
@@ -93,5 +95,54 @@ namespace TestProject.Controllers.Cart
         }
 
 
+        public class jsonUpdateAll
+        {
+            public string Id;
+            public string positionPrice;
+            public string totalPrice;
+            public string count;
+        }
+
+        //Ajax jquery responce method
+        [HttpPost]
+        public ActionResult SetNewValueToAll(List<int> Id, List<int> Count)
+        {
+           if (Id == null)
+                return null;
+            Request.Headers["X-Requested-With"] = "XMLHttpRequest";
+            if (Request.IsAjaxRequest() && (Id.Count > 0))
+            {
+                string sessionId = Request.Cookies.Get("session_data").Value;
+                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+
+                List<jsonUpdateAll> outData = new List<jsonUpdateAll>();
+
+                for (int q = 0; q < Id.Count; q++)
+                {
+                    lock (_locker)
+                    {
+                        double newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
+                        outData.Add(new jsonUpdateAll { Id = Convert.ToString(Id[q]), positionPrice = Convert.ToString(newPositionTotalPrice), count = Convert.ToString(Count[q])});
+                    }
+                }
+
+                string totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail));
+
+                foreach (var jsonUpdateAll in outData)
+                {
+                    jsonUpdateAll.totalPrice = totalPrice;
+                }
+                /*var outData =
+                    new
+                    {
+                        positionPrice = Convert.ToString(newPositionTotalPrice),
+                        totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail))
+                    };*/
+
+
+                return Json(outData);
+            }
+            return View("Index");
+        }
     }
 }

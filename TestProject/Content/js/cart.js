@@ -24,15 +24,66 @@ function remover(productId) {
 
 function updateAll() {
     var productBox = $("div.product_box");
-    
+
+    var outData = [];
+
     for(var i in productBox)
     {
         var prodId = productBox[i].id;
-
-        update(prodId);
+        if (!isNaN(prodId)) {
+            outData.push(getDataFromId(prodId));
+        }
     }
+
+    var ids = [];
+    var counts = [];
+    
+    for (var i in outData) {
+        ids.push(outData[i].Id);
+        counts.push(outData[i].Count);
+    }
+
+
+    $.ajax({
+        url: "/Cart/SetNewValueToAll",
+        data: { Id: ids, Count: counts },
+        traditional: true,
+        type: "POST",
+        success: function (data) {
+            var productBox = $("div.product_box");
+            for (var i in data) {
+                var productId = data[i].Id;
+                var sss = $("div#" + productId).find("#count");
+                $("div#" + productId).find("#count")[0].innerHTML = data[i].count;
+                $("div#" + productId).find("#price")[0].innerHTML = data[i].positionPrice;
+
+                var rem = $("div#" + productId).find("#update");
+
+                if (rem.length > 0) {
+                    rem[0].remove();
+                }
+            $("div#" + productId).find("#count")[0].className = "badge";
+            }
+            $("#totalPrice")[0].innerHTML = data[0].totalPrice;
+
+
+
+
+            $("#UpdateAll").prop("disabled", true);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            location.reload();
+        }
+    });
 }
 
+
+function getDataFromId(productId) {
+    var boxWithCount = $("div#" + productId).find("#count")[0];
+    var val = boxWithCount.innerHTML;
+
+    return { Id: productId, Count: val };
+}
 
 function decrement(productId) {
     var boxWithCount = $("div#" + productId).find("#count")[0];
