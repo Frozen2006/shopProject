@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using DAL;
 using Entities;
 using Interfaces.Repositories;
+using Ninject.Infrastructure;
 using Ninject.Modules;
+using Ninject.Web.Common;
 using System.Data.Entity;
 using Ninject.Web.Common;
 
@@ -16,9 +18,8 @@ namespace NinjectModules
     {
         public override void Load()
         {
-
             Bind<DbContext>().To<Entities.ShopContext>().InRequestScope();
-
+          //  Bind<DbContext>().To<Entities.ShopContext>().InScope( ctx => StandardScopeCallbacks.Request ?? StandardScopeCallbacks.Thread)
             Bind<ICategoryRepository>().To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>(); 
             

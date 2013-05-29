@@ -59,22 +59,22 @@ namespace BLL
         }
 
         //Return all products from category
-        public List<Product> GetProductsFromCategory(string searchData, string categoryName)
+        public ProductInSearch GetProductsFromCategory(string searchData, string categoryName)
         {
-            List<Product> outData = new List<Product>();
+            var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
 
-            var searchDara = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
 
-            foreach (var product in searchDara)
-            {
-                outData.Add(product);
-            }
+            ProductInSearch pis = new ProductInSearch()
+                {
+                    AllCount = searchedData.Count(),
+                    Products = searchedData.ToList()
+                };
 
-            return outData;
+            return pis;
         }
 
         // Find data with padination
-        public List<Product> GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse)
+        public ProductInSearch GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse)
         {
             IEnumerable<Product> products;
 
@@ -102,7 +102,15 @@ namespace BLL
             if (reverse)
                 products = products.Reverse();
 
-            return products.ToList();
+
+
+            int countOfAllProducts = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData)).Count();
+
+
+
+            ProductInSearch pis = new ProductInSearch() { Products = products.ToList(), AllCount = countOfAllProducts};
+
+            return pis;
         }
     }
 }

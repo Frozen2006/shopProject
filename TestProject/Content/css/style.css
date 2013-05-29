@@ -6,3 +6,24 @@
       header {
           padding: 20px 0;
       }
+
+          .no_underline:hover {
+        text-decoration: none;
+    }
+    .products {
+        margin: 0 auto;
+    }
+    .info {
+        width: 70%;
+        display: inline-block;
+    }
+    .tocart {
+        display: inline-block;
+        width: 28%;
+        text-align: right;
+    }
+    #sort_panel .btn {
+        vertical-align:top;
+        margin: 0 5px;
+    }
+    

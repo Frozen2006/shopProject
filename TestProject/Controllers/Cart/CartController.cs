@@ -59,6 +59,8 @@ namespace TestProject.Controllers.Cart
             return View("Index");
         }
 
+        private static object _locker = new object();
+
         //Ajax jquery responce method
         [HttpPost]
         public ActionResult SetNewValue(string productId, int count)
@@ -71,7 +73,11 @@ namespace TestProject.Controllers.Cart
                 string sessionId = Request.Cookies.Get("session_data").Value;
                 string userEmail = _usersService.GetUserEmailFromSession(sessionId);
 
-                double newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(productId), count);
+                double newPositionTotalPrice;
+                lock (_locker)
+                {
+                    newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(productId), count);
+                }
 
                 var outData =
                     new

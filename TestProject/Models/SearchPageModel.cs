@@ -17,5 +17,7 @@ namespace TestProject.Models
         public SortType SortType;
         public int PageSize;
         public bool Reverse;
+        public int Page;
+        public int CountAll;
     }
 }

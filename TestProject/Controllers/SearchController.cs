@@ -46,17 +46,23 @@ namespace TestProject.Controllers
             }
 
             List<Product> products;
+            ProductInSearch pis;
+            int count;
             if (String.IsNullOrWhiteSpace(category))
             {
-                products = _search.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
+                pis = _search.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
                                                             (bool) reverse);
+                products = pis.Products;
+                count = pis.AllCount;
             }
             else
             {
-                products = _search.GetProductsFromCategory(data, category);
+                pis = _search.GetProductsFromCategory(data, category);
+                products = pis.Products;
+                count = pis.AllCount;
             }
 
-            Models.SearchPageModel model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category()};
+            Models.SearchPageModel model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category(), Page = (int)page, CountAll = count };
 
             return View(model);
         }

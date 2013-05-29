@@ -1,127 +1,108 @@
 ﻿@model TestProject.Models.CartViewModel
 
-@if (Model.Products.Count() != 0)
-{
-    <h3>Cart</h3>
+@Scripts.Render("~/Content/js/cart.js")
 
-    <table class="table table-hover">
-        <tr style="background: #B8DBFF; font-weight: bold; text-align:center;">
-            <th>Name</th>
-            <th>Price</th>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
 
-            <th>Category name</th>
+            @if (Model.Products.Count() != 0)
+            {
+                <div class="row-fluid" style="margin-bottom: 5px">
+                    <div class="span2 offset10">
+                        <input type="button" id="UpdateAll" class="btn btn-warning" onclick="updateAll()" value="Update All" disabled/>
+                        <input type="button" id="CrearAll" class="btn btn-warning" onclick="location.reload()" value="Clear all updates"/>
+                    </div>
+                </div>
+                
+                
+                foreach (var product in Model.Products)
+                {
 
-            <th>Count</th>
-            <th>Total</th>
-            <th>Actions</th>
-        </tr>
-    
-        @foreach (var product in Model.Products)
-        {
+                    <div class="well product_box" id="@product.Id">
+                        @{
+                            string href = "/product/details/" + product.Id;
+                            string path = "/Image/ProductImg/" + product.Id;
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <a class="no_underline" href="@href">
+                                            <img class="product_photo" width="70" height="70" src="@path" />
+                                        </a>
+                                        <a href="@href">
+                                            @product.Name
+                                        </a>
+                                    </div>
+                
+                                    <div class="span6">
+                                        <div class="row" style="margin-bottom: 5px">
+                                            <div class="offset7 span2">
+                                                <span style="float: right">Price: </span>
+                                            </div>
+                                            <div class="span2">
+                                                <div id="price" style="display: inline">@product.TotalPrice</div>
+                                                @{ string decFuncName = "decrement(" + product.Id + ")"; }
+                                            </div>
+                                            <div class="span1">
+                                                @{ string delFuncName = "askRemove(" + product.Id + ")"; }
+                                                <input type="button" id="deleteBtn" class="btn btn-danger" value="Delete" onclick="@delFuncName"/>  
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="offset7 span2">
+                                                <span style="float: right">Count:</span>
+                                            </div>
+                                            <div class="span2">
+                                                <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
+                                                <span id="count" class="badge">@product.Count</span>
+                                                @{ string incFuncName = "incriment(" + product.Id + ")"; }
+                                                <input type="button"  class="btn btn-mini" value="+" onclick="@incFuncName"/>
+                                            </div>
+                                            <div id="updateArea" class="span1">
+                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }     
+                    </div>
+                }
+                <br/>
+                <b>Total price:</b>
+                <div id="totalPrice">@Model.TotalPrice</div>
+            }
+            else
+            {
+                <div class="span6 offset3">
+                    <div class="hero-unit">
+                        <h1>You cart is empty!</h1>
+                        <p> Choise something in shop..</p>
+                        <p>
+                            @Html.ActionLink("Shop", "Index", "Category", new {}, new { @class="btn btn-primary btn-large"})
+                        </p>
+                    </div>
+                </div>
+                          
+            }
             
-            <tr id="@product.Id">
-                <td>@product.Name</td>
-                <td>@product.PriceOfOneItem</td>
-
-                <td>@product.CategoryName</td>
-
-                <td>
-                    @{ string decFuncName = "decrement(" + product.Id + ")"; }
-                    <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
-                    <span id="count" class="badge">@product.Count</span>
-                    @{ string incFuncName = "incriment(" + product.Id + ")"; }
-                    <input type="button"  class="btn btn-mini" value="+" onclick="@incFuncName"/>
-                </td>
-                <td id="price">@product.TotalPrice</td>
-                @{ string delFuncName = "askRemove(" + product.Id + ")"; }
-                <td><input type="button" class="btn btn-danger" value="Delete" onclick="@delFuncName"/></td>
-            </tr>
-        }
-    </table>
-    <br/>
-    <b>Total price:</b> <div id="totalPrice">@Model.TotalPrice</div>
-}
-<div id="myModal" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Delete item</h3>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure to remove this item?</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn" onclick="closeModal()">Close</a>
-    <a href="#" id="delete" class="btn btn-primary">Delete</a>
-  </div>
+        </div>
+    </div>
 </div>
 
-<script>
-    function closeModal() {
-        $("#myModal").modal('hide');
-    }
-    function askRemove(productId) {
-        $("#myModal").find("#delete")[0].onclick = function() { remover(productId); };
-        $("#myModal").modal('show');
-    }
+           
 
-    function remover(productId) {
-        $.ajax({
-            url: "/Cart/Remove",
-            data: { productId: productId },
-            type: "POST",
-            success: function(data) {
-                $("tr#" + productId).remove();
-                $("#totalPrice")[0].innerHTML = data;
-                $("#myModal").modal('hide');
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(textStatus);
-            }
-        });
-    }
-    function decrement(productId) {
-        var oldVal = $("tr#"+productId).find("#count")[0].innerHTML;
-
-        var newVal = oldVal;
-        
-        if (oldVal > 1) {
-            newVal--;
-        }
-
-        $.ajax({
-            url: "/Cart/SetNewValue",
-            data: { productId: productId, count: newVal },
-            type: "POST",
-            success: function (data) {
-                $("tr#" + productId).find("#count")[0].innerHTML = newVal;
-                $("tr#" + productId).find("#price")[0].innerHTML = data.positionPrice;
-                $("#totalPrice")[0].innerHTML = data.totalPrice;
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                location.reload();
-            }
-        });
-    }
-    function incriment(productId) {
-        var oldVal = $("tr#" + productId).find("#count")[0].innerHTML;
-
-        var newVal = oldVal;
-
-        newVal++;
-        
-        $.ajax({
-            url: "/Cart/SetNewValue",
-            data: { productId: productId, count: newVal },
-            type: "POST",
-            success: function (data) {
-                $("tr#" + productId).find("#count")[0].innerHTML = newVal;
-                $("tr#" + productId).find("#price")[0].innerHTML = data.positionPrice;
-                $("#totalPrice")[0].innerHTML = data.totalPrice;
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                location.reload();
-            }
-        });
-    }
-
-</script>
+<div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Delete item</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure to remove this item?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" onclick="closeModal()">Close</a>
+        <a href="#" id="delete" class="btn btn-primary">Delete</a>
+    </div>
+</div>
