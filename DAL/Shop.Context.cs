@@ -7,17 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
+
 namespace Entities
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ShopContext : DbContext
+    public partial class ShopContext : DbContext, IDisposable
     {
         public ShopContext()
             : base("name=ShopContext")
         {
+            Debug.WriteLine("Create {0} context", this.GetHashCode());
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -32,5 +35,10 @@ namespace Entities
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Zip> Zips { get; set; }
         public DbSet<Cart> Carts { get; set; }
+
+        public void Dispose()
+        {
+            Debug.WriteLine("Remove {0} context", this.GetHashCode());
+        }
     }
 }

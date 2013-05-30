@@ -6,6 +6,11 @@ function askRemove(productId) {
     $("#myModal").modal('show');
 }
 
+function newAlert(type, message) {
+    $("#alert-area").append($("<div id='alertBlock' class='alert " + type + " fade in' data-alert>" + '<button type="button" class="close" data-dismiss="alert">&times;</button> ' + message + " </div>"));
+    $("#alertBlock").delay(2000).fadeOut("slow", function () { $(this).remove(); });
+}
+
 function remover(productId) {
     $.ajax({
         url: "/Cart/Remove",
@@ -70,9 +75,11 @@ function updateAll() {
 
 
             $("#UpdateAll").prop("disabled", true);
+
+            newAlert("alert-success", "All product successful update!");
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            location.reload();
+            newAlert("alert-error", "Waring! Connection error! Try update you page.");
         }
     });
 }
@@ -158,10 +165,50 @@ function sendAjaxToChange(productId, newVal) {
             $("div#" + productId).find("#count")[0].className = "badge";
             
             $("#UpdateAll").prop("disabled", true);
+            
+            newAlert("alert-success", "Product count successful updated!");
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            location.reload();
+            newAlert("alert-error", "Waring! Connection error! Try update you page.");
         }
     });
 }
 
+function brutforceOnce() {
+    var productBox = $("div.product_box");
+
+    var outData = [];
+
+    for (var i in productBox) {
+        var prodId = productBox[i].id;
+        if (!isNaN(prodId)) {
+            incriment(prodId);
+        }
+    }
+
+    updateAll();
+}
+
+function brut(times) {
+    
+    for (var i = 0; i < times; i++) {
+        brutforceOnce();
+    }
+}
+
+function brut2(times, id) {
+
+    for (var i = 0; i < times; i++) {
+        $.ajax({
+            url: "/Cart/SetNewValue",
+            data: { productId: id, count: 1 },
+            type: "POST",
+            success: function (data) {
+                console.log("success sending");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                newAlert("alert-error", "Waring! Connection error! Try update you page.");
+            }
+        });
+    }
+}
