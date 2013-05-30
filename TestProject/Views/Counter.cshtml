@@ -1,11 +1,47 @@
-﻿@model int
+﻿@model Entities.Product
 
 <div class="counter">
-    <input type="button" class="btn btn-mini" value="-" onclick="decrease(event)"  />
-    <input type="text" class="counter"  value="0" />
-    <input type="button" class="btn btn-mini"  value="+" onclick="increase(event)" />
 
-    <input type="hidden" class="product_id" value="@Model" />
+    <div class="slider"></div>
+
+    <script>
+        $(function () {
+            $(".slider").slider({
+                range: "min",
+                min: 0,
+                max: 10,
+                value: 0,
+                step: 0.1,
+                slide: function (event, ui) {
+                    var counter = getCounter(event.target);
+                    counter.value = ui.value;
+
+                    $(counter).change();
+                }
+            });
+        })
+    </script>
+
+    <span>Price: </span>
+    <span class="price">0</span>                
+
+    <input type="text" class="counter"  value="0" onchange="countInput(event)" onkeyup="countInput(event)"/>
+
+    <script>
+        function countInput(event)
+        {
+            slider = getSlider(event.target);            
+
+            var stringCount = event.target.value;
+            var count = parseFloat(stringCount.replace(",", ".")) || 0;            
+            $(slider).slider("value", count);
+
+            var price = getPrice(event.target);
+            price.innerHTML = count * @Model.Price;
+        }
+    </script>
+
+    <input type="hidden" class="product_id" value="@Model.Id" />
 
     <input type="button" class="add_button btn btn-danger" value="Add" onclick="addToCart(event)" />
 </div>

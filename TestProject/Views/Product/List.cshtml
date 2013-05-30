@@ -99,9 +99,7 @@
             </div>
                 
             <div class="tocart">
-                <span>Price:</span>
-                @product.Price
-                @Html.Partial("../Counter", product.Id)  
+                @Html.Partial("../Counter", product)  
             </div>
         }     
     </div>
@@ -162,7 +160,6 @@
         $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
         $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
     }
-
     //Returns counter element by its sibling node (e.g. button event sender)
     function getCounter(element) {
         return element.parentNode.getElementsByClassName("counter")[0];
@@ -171,6 +168,16 @@
     //Returns input hidden element with product id by its sibling node (e.g. button event sender)
     function getIdInput(element) {
         return element.parentNode.getElementsByClassName("product_id")[0];
+    }
+
+    //Returns slider by its sibling node (e.g. button event sender)
+    function getSlider(element) {
+        return element.parentNode.getElementsByClassName("slider")[0];
+    }
+
+    //Returns price span by its sibling node (e.g. button event sender)
+    function getPrice(element) {
+        return element.parentNode.getElementsByClassName("price")[0];
     }
 
     //Increases counter value
