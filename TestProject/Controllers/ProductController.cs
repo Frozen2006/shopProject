@@ -37,6 +37,39 @@ namespace TestProject.Controllers
             return View(model);
         }
 
+        public ActionResult AddToCart(string productId, string count)
+        {
+            int intProductId;
+            int intCount;
+
+            if (!int.TryParse(productId, out intProductId) ||
+                !int.TryParse(count, out intCount))
+            {
+                return Content("Incorrect arguments");
+            }
+
+            var cookie = Request.Cookies["session_data"];
+            if (cookie == null)
+            {
+                return Content("User is not logged in");
+            }
+
+            string email = _userService.GetUserEmailFromSession(cookie.Value);
+            if (email == null)
+            {
+                return Content("User is not logged in");
+            }
+
+
+            Product product = _prodService.GetProduct(intProductId);
+            if (product == null)
+                return Content("Product not found");
+
+
+            _cartService.Add(email, intProductId, intCount);
+            return Content(intCount + " units of" + product.Name + "were successfully added");
+        }
+
         public ActionResult Details(int id)
         {
             var product = _prodService.GetProduct(id);

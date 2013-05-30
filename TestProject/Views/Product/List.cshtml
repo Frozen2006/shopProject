@@ -1,6 +1,7 @@
 ﻿@using BLL
 @model TestProject.Models.ProductListModel
 
+
 <style>
     .no_underline:hover {
         text-decoration: none;
@@ -20,8 +21,7 @@
     #sort_panel .btn {
         vertical-align:top;
         margin: 0 5px;
-    }
-    
+    }   
 </style>
 
 @Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
@@ -163,25 +163,33 @@
         $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
     }
 
+    //Returns counter element by its sibling node (e.g. button event sender)
     function getCounter(element) {
         return element.parentNode.getElementsByClassName("counter")[0];
     }
 
-    function increase(event) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
-        count += 1;
-
-        counter.innerHTML = count;
+    //Returns input hidden element with product id by its sibling node (e.g. button event sender)
+    function getIdInput(element) {
+        return element.parentNode.getElementsByClassName("product_id")[0];
     }
 
+    //Increases counter value
+    function increase(event) {
+        var counter = getCounter(event.target);
+        var count = parseInt(counter.value);
+        count += 1;
+
+        counter.value = count;
+    }
+
+    //Decreases counter value
     function decrease(event) {
         var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
+        var count = parseInt(counter.value);
 
-        if (count > 1) {
+        if (count >= 1) {
             count -= 1;
-            counter.innerHTML = count;
+            counter.value = count;
         }
     }
 
@@ -189,22 +197,27 @@
     function sendRequest(id, c) {
         $.ajax
         ({
-            url: "/Category/AddToCart",
+            url: "/Product/AddToCart",
             data: { productId: id, count: c },
             type: "POST",
             success: function (data) {
                 newAlert('alert', data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(textStatus);
+                newAlert('alert alert-error', errorThrown);
             }
         })
     }
 
-    function addToCart(event, productId) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
+    function addToCart(event) {
+        var input = getIdInput(event.target);
+        var id = parseInt(input.value);
 
-        sendRequest(productId, count);
+        var counter = getCounter(event.target);
+        var count = parseInt(counter.value);
+
+        if (count > 0) {
+            sendRequest(id, count);
+        }
     }
 </script>
