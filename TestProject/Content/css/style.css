@@ -27,3 +27,36 @@
         margin: 0 5px;
     }
     
+    #alert-area {
+        position: absolute;
+        padding-left: 45%;
+    }
+
+    .row-merga {
+        margin-bottom: 5px;
+    }
+
+
+    .span-float-right {
+        float: right;
+    }
+
+    #price {
+        display: inline;
+    }
+
+    .category_box {
+        text-align: center;
+        display: inline-block;
+        margin: 20px 0;
+    }
+    .category_box a {
+        display: block;
+    }
+
+    .category_nav_box {
+        display: inline-block;
+    }
+    .category_wrapper {
+        margin: 0 20%;
+    }

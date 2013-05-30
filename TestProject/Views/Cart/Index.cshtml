@@ -2,7 +2,7 @@
 
 @Scripts.Render("~/Content/js/cart.js")
 
-      <div id="alert-area" style="position: absolute; padding-left: 45%">
+      <div id="alert-area" >
         </div>
 
 <div class="container-fluid">
@@ -11,7 +11,7 @@
 
             @if (Model.Products.Count() != 0)
             {
-                <div class="row-fluid" style="margin-bottom: 5px">
+                <div class="row-fluid row-merga">
                     <div class="span2 offset10">
                         <input type="button" id="UpdateAll" class="btn btn-warning" onclick="updateAll()" value="Update All" disabled/>
                         <input type="button" id="CrearAll" class="btn btn-warning" onclick="location.reload()" value="Clear all updates"/>
@@ -38,12 +38,12 @@
                                     </div>
                 
                                     <div class="span6">
-                                        <div class="row" style="margin-bottom: 5px">
+                                        <div class="row row-merga">
                                             <div class="offset7 span2">
-                                                <span style="float: right">Price: </span>
+                                                <span class="span-float-right">Price: </span>
                                             </div>
                                             <div class="span2">
-                                                <div id="price" style="display: inline">@product.TotalPrice</div>
+                                                <div id="price">@product.TotalPrice</div>
                                                 @{ string decFuncName = "decrement(" + product.Id + ")"; }
                                             </div>
                                             <div class="span1">
@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="offset7 span2">
-                                                <span style="float: right">Count:</span>
+                                                <span class="span-float-right">Count:</span>
                                             </div>
                                             <div class="span2">
                                                 <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
