@@ -348,7 +348,5 @@ namespace BLL.membership
             return hash;
         }
 
-
-
     }
 }

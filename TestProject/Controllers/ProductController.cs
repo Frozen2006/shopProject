@@ -79,5 +79,10 @@ namespace TestProject.Controllers
             return View(product);
         }
 
+
+        public ActionResult AddArrayToCart(string[] products, string[] counts)
+        {            
+            return Content("In the fire");
+        }
     }
 }

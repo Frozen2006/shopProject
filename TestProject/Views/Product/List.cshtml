@@ -305,4 +305,35 @@
         $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
         $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
     }
+
+    function addAll() {
+
+        var productArray = new Array();
+        var countArray = new Array();
+
+        var idInputs = document.getElementsByClassName("product_id");
+
+        for (var i = 0; i < idInputs.length; i++) {
+            productArray.push(idInputs[i].value);
+            var count;
+        }
+
+
+
+        var postData = {
+            products: stringArray,
+            counts: countArray
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/Product/AddArrayToCart",
+            data: postData,
+            success: function (data) {
+                alert(data.Result);
+            },
+            dataType: "json",
+            traditional: true
+        });
+    }
 </script>
