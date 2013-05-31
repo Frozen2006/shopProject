@@ -40,7 +40,7 @@ namespace TestProject.Controllers
         public ActionResult AddToCart(string productId, string count)
         {
             int intProductId;
-            double doubleCount;
+            int doubleCount;
 
             if (!int.TryParse(productId, out intProductId) ||
                 !int.TryParse(count, out doubleCount))
@@ -66,8 +66,8 @@ namespace TestProject.Controllers
                 return Content("Product not found");
 
 
-            _cartService.Add(email, intProductId, intCount);
-            return Content(intCount + " units of" + product.Name + "were successfully added");
+            _cartService.Add(email, intProductId, doubleCount);
+            return Content(doubleCount + " units of" + product.Name + "were successfully added");
         }
 
         public ActionResult Details(int id)
