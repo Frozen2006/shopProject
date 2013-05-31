@@ -12,25 +12,20 @@ namespace Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Order
     {
-        public Product()
+        public Order()
         {
-            this.Carts = new HashSet<Cart>();
             this.Buyes = new HashSet<Buye>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int CategoryId { get; set; }
-        public double Price { get; set; }
-        public string SellByWeight { get; set; }
-        public double AverageWeight { get; set; }
-        public string UnitOfMeasure { get; set; }
-        public string Description { get; set; }
+        public int DeliverySpotId { get; set; }
+        public int UserId { get; set; }
+        public string Status { get; set; }
     
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
+        public virtual DeliverySpot DeliverySpot { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<Buye> Buyes { get; set; }
     }
 }

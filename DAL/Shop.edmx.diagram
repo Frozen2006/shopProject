@@ -18,6 +18,14 @@
         <EntityTypeShape EntityType="ShopModel.Cart" Width="1.5" PointX="4.375" PointY="5.875" />
         <AssociationConnector Association="ShopModel.FK_Carts_ToProducts" />
         <AssociationConnector Association="ShopModel.UsersCarts" />
+        <EntityTypeShape EntityType="ShopModel.Buye" Width="1.5" PointX="7.0975839379697963" PointY="24.498669009887927" />
+        <EntityTypeShape EntityType="ShopModel.DeliverySpot" Width="1.5" PointX="6.3194774549079487" PointY="16.743355684328524" />
+        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="7.5433190537352672" PointY="28.372292040089281" />
+        <AssociationConnector Association="ShopModel.FK_Buyes_ToProducts" />
+        <AssociationConnector Association="ShopModel.FK_Orders_ToDeliverySpots" />
+        <AssociationConnector Association="ShopModel.FK_Orders_ToUsers" />
+        <AssociationConnector Association="ShopModel.DeliverySpotsUsers" />
+        <AssociationConnector Association="ShopModel.OrdersBuyes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
