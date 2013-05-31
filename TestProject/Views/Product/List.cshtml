@@ -8,6 +8,7 @@
     }
     .products {
         margin: 0 auto;
+        width: 90%;
     }
     .info {
         width: 68%;
@@ -277,7 +278,7 @@
         $.ajax
         ({
             url: "/Product/AddToCart",
-            data: { productId: id, count: c },
+            data: { productId: id, count: c.toString().replace(".",",") },
             type: "POST",
             success: function (data) {
                 newAlert('alert', data);
