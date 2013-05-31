@@ -62,47 +62,12 @@
     <h3>Products</h3>
 
     <div id="sort_panel">
-        <select id="sort" onchange="jsFunction()">
+        <select id="sort" onchange="getPage()">
             <option>Alphabetic ascending</option>      
             <option>Alphabetic descending</option> 
             <option>Price ascending</option>                 
             <option>Price descending</option>            
         </select>
-
-        <script>
-            function jsFunction() {
-
-                var params = {
-                    categoryId: "@Model.Category.Id",
-                    sort: "@Model.SortType",
-                    pageSize: "@Model.PageSize",
-                    reverse: "@Model.Reverse"
-                }
-
-                var select = document.getElementById("sort");
-
-                switch (select.selectedIndex) {
-                    case 0:
-                        params.sort = "Alphabetic";
-                        params.reverse = "False";
-                        break;
-                    case 1:
-                        params.sort = "Alphabetic";
-                        params.reverse = "True";
-                        break;
-                    case 2:
-                        params.sort = "Price";
-                        params.reverse = "False";
-                        break;
-                    case 3:
-                        params.sort = "Price";
-                        params.reverse = "True";
-                        break;
-                }
-       
-                window.location.href = "/product/list?" + $.param(params);  
-            }
-        </script>
 
         @for (int i = 1; i < 4; i++)
         {
@@ -185,35 +150,62 @@
 
 <div id="alert-area" style="position: fixed; top: 200px; left: 50%; width: 500px;"></div>
 
+@*Sorting script*@
 <script>
+    function getPage() {
 
-    $(".float_slider").slider({
-        range: "min",
-        min: 0,
-        max: 10,
-        value: 0,
-        step: 0.1,
-        slide: function (event, ui) {
-            var counter = getCounter(event.target);
-            counter.value = ui.value;
-
-            $(counter).change();
+        var params = {
+            categoryId: "@Model.Category.Id",
+            sort: "@Model.SortType",
+            pageSize: "@Model.PageSize",
+            reverse: "@Model.Reverse"
         }
-    });
 
-    $(".int_slider").slider({
-        range: "min",
-        min: 0,
-        max: 10,
-        value: 0,
-        step: 1 ,
-        slide: function (event, ui) {
-            var counter = getCounter(event.target);
-            counter.value = ui.value;
+        var select = document.getElementById("sort");
 
-            $(counter).change();
+        switch (select.selectedIndex) {
+            case 0:
+                params.sort = "Alphabetic";
+                params.reverse = "False";
+                break;
+            case 1:
+                params.sort = "Alphabetic";
+                params.reverse = "True";
+                break;
+            case 2:
+                params.sort = "Price";
+                params.reverse = "False";
+                break;
+            case 3:
+                params.sort = "Price";
+                params.reverse = "True";
+                break;
         }
-    });
+
+        window.location.href = "/product/list?" + $.param(params);
+    }
+</script>
+
+@*Slider scripts*@
+<script>
+    function constructSlider(sliderClass, step) {
+        $("." + sliderClass).slider({
+            range: "min",
+            min: 0,
+            max: 10,
+            value: 0,
+            step: step,
+            slide: function (event, ui) {
+                var counter = getCounter(event.target);
+                counter.value = ui.value;
+
+                $(counter).change();
+            }
+        });
+    }
+
+    constructSlider("int_slider", 1);
+    constructSlider("float_slider", 0.1);
 
     function countInput(event, price, sliderClass)
     {
@@ -257,10 +249,6 @@
         event.target.value = count;
     }
 
-    function newAlert(type, message) {
-        $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
-        $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
-    }
     //Returns counter element by its sibling node (e.g. button event sender)
     function getCounter(element) {
         return element.parentNode.getElementsByClassName("counter")[0];
@@ -280,27 +268,10 @@
     function getPrice(element) {
         return element.parentNode.getElementsByClassName("estimated_price_value")[0];
     }
+</script>
 
-    //Increases counter value
-    function increase(event) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.value);
-        count += 1;
-
-        counter.value = count;
-    }
-
-    //Decreases counter value
-    function decrease(event) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.value);
-
-        if (count >= 1) {
-            count -= 1;
-            counter.value = count;
-        }
-    }
-
+@*Adding to cart scripts*@
+<script>
     //public ActionResult AddToCart(int productId, int count)
     function sendRequest(id, c) {
         $.ajax
@@ -322,10 +293,15 @@
         var id = parseInt(input.value);
 
         var counter = getCounter(event.target);
-        var count = parseInt(counter.value);
+        var count = parseFloat(counter.value);
 
-        if (count > 0) {
+        if (count && count > 0) {
             sendRequest(id, count);
         }
+    }
+
+    function newAlert(type, message) {
+        $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
+        $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
     }
 </script>

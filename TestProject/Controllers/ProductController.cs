@@ -40,10 +40,10 @@ namespace TestProject.Controllers
         public ActionResult AddToCart(string productId, string count)
         {
             int intProductId;
-            int intCount;
+            double doubleCount;
 
             if (!int.TryParse(productId, out intProductId) ||
-                !int.TryParse(count, out intCount))
+                !int.TryParse(count, out doubleCount))
             {
                 return Content("Incorrect arguments");
             }
