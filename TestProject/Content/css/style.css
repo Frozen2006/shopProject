@@ -119,3 +119,67 @@
     .no-margin {
         margin: 0;
     }
+
+/*Styles for product list*/
+
+    .no_underline:hover {
+        text-decoration: none;
+    }
+    .products {
+        margin: 0;
+        
+    }
+    .info {
+        width: 68%;
+        display: inline-block;
+    }
+    .tocart {
+        display: inline-block;
+        width: 30%;   
+        text-align: right;
+    }
+    #sort_panel .btn {
+        vertical-align:top;
+        margin: 0 5px;
+    }
+
+    #add_all_button {
+        width: 200px;
+        float: right;
+    }
+    #alert_area {
+        position: fixed;
+        top: 20%;        
+        left: 50%; 
+        margin-left: -250px;
+        width: 500px;
+        z-index: 2;
+    }    
+
+/*Styles for slider*/
+    .counter_box {
+        text-align: left;
+    }
+    .price {
+        display: block;
+    }
+    .slider {
+        display: inline-block;
+        width: 200px;
+    }
+    .counter {
+        width: 50px;
+    }
+    .add_button {
+        display: inline-block;
+    }
+    .controls_wrapper {
+        display: inline-block;
+        width: 85%;
+    }
+    .price {
+        font-weight: bold;
+    }
+    .price_value {
+        font-weight: normal;
+    }

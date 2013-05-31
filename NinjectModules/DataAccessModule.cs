@@ -10,7 +10,6 @@ using Ninject.Infrastructure;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;
-using Ninject.Web.Common;
 
 namespace NinjectModules
 {

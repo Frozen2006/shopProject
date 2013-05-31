@@ -145,6 +145,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\js\cart.js" />
+    <Content Include="Content\js\productpage.js" />
     <Content Include="Content\js\TimeSlots.js" />
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
