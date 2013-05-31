@@ -1,47 +1,52 @@
 ﻿@model Entities.Product
+@using System.Globalization
 
-<div class="counter">
+<div class="counter_box">
+    @{
+        string sliderClass;
+        string measure;
+    }
 
-    <div class="slider"></div>
+    @switch (Model.SellByWeight)
+    {
+        case "W":
+            {
+                sliderClass = "float_slider";
+                measure = Model.UnitOfMeasure;
+                break;
+            }
+        case "P":
+            {
+                sliderClass = "int_slider";
+                measure = "packs";
+                break;
+            }
+        default:
+            {
+                sliderClass = "int_slider";
+                measure = "units";
+                break;
+            }                
+    }
 
-    <script>
-        $(function () {
-            $(".slider").slider({
-                range: "min",
-                min: 0,
-                max: 10,
-                value: 0,
-                step: 0.1,
-                slide: function (event, ui) {
-                    var counter = getCounter(event.target);
-                    counter.value = ui.value;
+    <div class="controls_wrapper">
 
-                    $(counter).change();
-                }
-            });
-        })
-    </script>
+        <span class="price">Price: <span class="price_value">@Model.Price.ToString("0.00")$</span></span>
 
-    <span>Price: </span>
-    <span class="price">0</span>                
+        <div class="slider @sliderClass"></div>
 
-    <input type="text" class="counter"  value="0" onchange="countInput(event)" onkeyup="countInput(event)"/>
-
-    <script>
-        function countInput(event)
-        {
-            slider = getSlider(event.target);            
-
-            var stringCount = event.target.value;
-            var count = parseFloat(stringCount.replace(",", ".")) || 0;            
-            $(slider).slider("value", count);
-
-            var price = getPrice(event.target);
-            price.innerHTML = count * @Model.Price;
+        @{
+            //calls countInput with the following params: event, price, slider class (to round the count value)
+            string changeHandler = "countInput(event, " + Model.Price.ToString(CultureInfo.InvariantCulture) + ", '" + sliderClass + "')";
+            string blurHandler = "correctInput(event, '" + sliderClass + "')";
         }
-    </script>
+        <input type="text" class="counter"  value="0" onchange="@changeHandler" onkeyup="@changeHandler" onblur="@blurHandler"/>
 
-    <input type="hidden" class="product_id" value="@Model.Id" />
+        <span class="estimated_price"> @measure for <span class="estimated_price_value">0</span>$</span>  
+
+        <input type="hidden" class="product_id" value="@Model.Id" />
+
+    </div>
 
     <input type="button" class="add_button btn btn-danger" value="Add" onclick="addToCart(event)" />
 </div>

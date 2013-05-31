@@ -1,7 +1,7 @@
 ﻿@using BLL
 @model TestProject.Models.ProductListModel
 
-
+@*Styles for product list*@
 <style>
     .no_underline:hover {
         text-decoration: none;
@@ -10,18 +10,48 @@
         margin: 0 auto;
     }
     .info {
-        width: 70%;
+        width: 68%;
         display: inline-block;
     }
     .tocart {
         display: inline-block;
-        width: 28%;
+        width: 30%;   
         text-align: right;
     }
     #sort_panel .btn {
         vertical-align:top;
         margin: 0 5px;
     }   
+</style>
+
+@*Styles for slider*@
+<style>
+    .counter_box {
+        text-align: left;
+    }
+    .price {
+        display: block;
+    }
+    .slider {
+        display: inline-block;
+        width: 200px;
+    }
+    .counter {
+        width: 50px;
+    }
+    .add_button {
+        display: inline-block;
+    }
+    .controls_wrapper {
+        display: inline-block;
+        width: 85%;
+    }
+    .price {
+        font-weight: bold;
+    }
+    .price_value {
+        font-weight: normal;
+    }
 </style>
 
 @Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
@@ -156,6 +186,77 @@
 <div id="alert-area" style="position: fixed; top: 200px; left: 50%; width: 500px;"></div>
 
 <script>
+
+    $(".float_slider").slider({
+        range: "min",
+        min: 0,
+        max: 10,
+        value: 0,
+        step: 0.1,
+        slide: function (event, ui) {
+            var counter = getCounter(event.target);
+            counter.value = ui.value;
+
+            $(counter).change();
+        }
+    });
+
+    $(".int_slider").slider({
+        range: "min",
+        min: 0,
+        max: 10,
+        value: 0,
+        step: 1 ,
+        slide: function (event, ui) {
+            var counter = getCounter(event.target);
+            counter.value = ui.value;
+
+            $(counter).change();
+        }
+    });
+
+    function countInput(event, price, sliderClass)
+    {
+        slider = getSlider(event.target);           
+
+        var stringCount = event.target.value;
+
+        //Parsing input value. 
+        var count;
+        if (sliderClass == "int_slider") {
+            count = parseInt(stringCount) || 0;
+        }
+        else {
+            count = parseFloat(stringCount.replace(",", ".")) || 0;
+        }
+
+        //If can't parse than set it to 0.
+        //event.target.value = count;
+        
+        
+        $(slider).slider("value", count);
+
+        //Set estimated price.
+        var pricespan = getPrice(event.target);
+        pricespan.innerHTML = (count * price).toFixed(2);
+    }
+
+    function correctInput(event, sliderClass) {
+        var stringCount = event.target.value;
+
+        //Trying to parse input
+        var count;
+        if (sliderClass == "int_slider") {
+            count = parseInt(stringCount) || 0;
+        }
+        else {
+            count = parseFloat(stringCount.replace(",", ".")).toFixed(1) || 0;
+        }
+
+        //If can't parse than set it to 0.
+        event.target.value = count;
+    }
+
     function newAlert(type, message) {
         $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
         $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
@@ -177,7 +278,7 @@
 
     //Returns price span by its sibling node (e.g. button event sender)
     function getPrice(element) {
-        return element.parentNode.getElementsByClassName("price")[0];
+        return element.parentNode.getElementsByClassName("estimated_price_value")[0];
     }
 
     //Increases counter value
