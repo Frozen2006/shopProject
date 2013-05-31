@@ -16,7 +16,7 @@ namespace Helpers
         public string SellByWeight;
         public double AverageWeight;
         public string UnitOfMeasure;
-        public int Count;
+        public double Count;
         public double TotalPrice;
     }
 }

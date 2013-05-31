@@ -26,7 +26,6 @@ namespace Entities
         }
     
         public DbSet<Buye> Buyes { get; set; }
-        public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<DeliverySpot> DeliverySpots { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -35,5 +34,6 @@ namespace Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Zip> Zips { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

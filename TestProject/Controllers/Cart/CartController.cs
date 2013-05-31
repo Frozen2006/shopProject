@@ -10,6 +10,7 @@ using TestProject.Models;
 
 namespace TestProject.Controllers.Cart
 {
+    [Filters.CustomAuthrize(Roles = "User")]
     public class CartController : Controller
     {
         //
@@ -24,8 +25,6 @@ namespace TestProject.Controllers.Cart
             _usersService = us;
         }
 
-
-        [Filters.CustomAuthrize(Roles = "User")]
         public ActionResult Index()
         {
 

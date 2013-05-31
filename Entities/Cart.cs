@@ -21,7 +21,7 @@ namespace Entities
     
         public int Id { get; set; }
         public int Product_Id { get; set; }
-        public int Count { get; set; }
+        public double Count { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual ICollection<User> Users { get; set; }

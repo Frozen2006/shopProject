@@ -92,7 +92,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Product_Id" Type="int" Nullable="false" />
-          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Count" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -358,7 +358,6 @@
       <Schema Namespace="ShopModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ShopContext" p1:LazyLoadingEnabled="true">
           <EntitySet Name="Buyes" EntityType="ShopModel.Buye" />
-          <EntitySet Name="Carts" EntityType="ShopModel.Cart" />
           <EntitySet Name="Categories" EntityType="ShopModel.Category" />
           <EntitySet Name="DeliverySpots" EntityType="ShopModel.DeliverySpot" />
           <EntitySet Name="Products" EntityType="ShopModel.Product" />
@@ -369,10 +368,6 @@
           <AssociationSet Name="FK_Buyes_ToProducts" Association="ShopModel.FK_Buyes_ToProducts">
             <End Role="Product" EntitySet="Products" />
             <End Role="Buye" EntitySet="Buyes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Carts_ToProducts" Association="ShopModel.FK_Carts_ToProducts">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Cart" EntitySet="Carts" />
           </AssociationSet>
           <AssociationSet Name="FK_Categories_ToCategories" Association="ShopModel.FK_Categories_ToCategories">
             <End Role="Category" EntitySet="Categories" />
@@ -394,10 +389,6 @@
             <End Role="DeliverySpot" EntitySet="DeliverySpots" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="UsersCarts" Association="ShopModel.UsersCarts">
-            <End Role="Cart" EntitySet="Carts" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           <EntitySet Name="Orders" EntityType="ShopModel.Order" />
           <AssociationSet Name="FK_Buyes_ToOrders" Association="ShopModel.FK_Buyes_ToOrders">
             <End Role="Order" EntitySet="Orders" />
@@ -411,6 +402,15 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <EntitySet Name="Carts" EntityType="ShopModel.Cart" />
+          <AssociationSet Name="FK_Carts_ToProducts" Association="ShopModel.FK_Carts_ToProducts">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="UsersCarts" Association="ShopModel.UsersCarts">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Buye">
           <Key>
@@ -422,16 +422,6 @@
           <Property Type="Int32" Name="OrderId" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ShopModel.FK_Buyes_ToProducts" FromRole="Buye" ToRole="Product" />
           <NavigationProperty Name="Order" Relationship="ShopModel.FK_Buyes_ToOrders" FromRole="Buye" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="Cart">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="Product_Id" Nullable="false" />
-          <Property Type="Int32" Name="Count" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Cart" ToRole="Product" />
-          <NavigationProperty Name="Users" Relationship="ShopModel.UsersCarts" FromRole="Cart" ToRole="User" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -468,8 +458,8 @@
           <Property Type="String" Name="UnitOfMeasure" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Buyes" Relationship="ShopModel.FK_Buyes_ToProducts" FromRole="Product" ToRole="Buye" />
-          <NavigationProperty Name="Carts" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="ShopModel.FK_Products_ToCategories" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Carts" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Product" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -508,8 +498,8 @@
           <NavigationProperty Name="Role" Relationship="ShopModel.FK_Users_ToRoles" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Sessions" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="User" ToRole="Session" />
           <NavigationProperty Name="DeliverySpots" Relationship="ShopModel.DeliverySpotsUsers" FromRole="User" ToRole="DeliverySpot" />
-          <NavigationProperty Name="Carts" Relationship="ShopModel.UsersCarts" FromRole="User" ToRole="Cart" />
           <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ToUsers" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Carts" Relationship="ShopModel.UsersCarts" FromRole="User" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Zip">
           <Key>
@@ -529,18 +519,6 @@
             </Principal>
             <Dependent Role="Buye">
               <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Carts_ToProducts">
-          <End Type="ShopModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="Product_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -596,10 +574,6 @@
           <End Type="ShopModel.DeliverySpot" Role="DeliverySpot" Multiplicity="*" />
           <End Type="ShopModel.User" Role="User" Multiplicity="*" />
         </Association>
-        <Association Name="UsersCarts">
-          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
-          <End Type="ShopModel.User" Role="User" Multiplicity="*" />
-        </Association>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
@@ -650,6 +624,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Product_Id" Nullable="false" />
+          <Property Type="Double" Name="Count" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Cart" ToRole="Product" />
+          <NavigationProperty Name="Users" Relationship="ShopModel.UsersCarts" FromRole="Cart" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Carts_ToProducts">
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersCarts">
+          <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
+          <End Type="ShopModel.User" Role="User" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -662,15 +662,6 @@
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="ShopModel.Cart">
-              <MappingFragment StoreEntitySet="Carts">
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -761,14 +752,6 @@
               <ScalarProperty Name="Id" ColumnName="DeliverySpots_Id" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="UsersCarts" TypeName="ShopModel.UsersCarts" StoreEntitySet="UsersCarts">
-            <EndProperty Name="User">
-              <ScalarProperty Name="Id" ColumnName="Users_Id" />
-            </EndProperty>
-            <EndProperty Name="Cart">
-              <ScalarProperty Name="Id" ColumnName="Carts_Id" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ShopModel.Order">
               <MappingFragment StoreEntitySet="Orders">
@@ -781,6 +764,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="ShopModel.Cart">
+              <MappingFragment StoreEntitySet="Carts">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersCarts" TypeName="ShopModel.UsersCarts" StoreEntitySet="UsersCarts">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="Cart">
+              <ScalarProperty Name="Id" ColumnName="Carts_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

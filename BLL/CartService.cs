@@ -25,7 +25,7 @@ namespace BLL
         // Add new product to user cart.
         // WARING: If you add one product > 1 times, finnaly product in cart is NOT replace. Only summarize new and old count
         //
-        public void Add(string UserEmail, int ProductId, int Count)
+        public void Add(string UserEmail, int ProductId, double Count)
         {
             if (String.IsNullOrWhiteSpace(UserEmail) || (ProductId == 0) || (Count <=0 ) )
                 throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
@@ -135,7 +135,7 @@ namespace BLL
         //Update count of any product
         //New count replace old count of ProductId
         //
-        public double UpateCount(string UserEmail, int ProductId, int NewCount)
+        public double UpateCount(string UserEmail, int ProductId, double NewCount)
         {
             if (String.IsNullOrWhiteSpace(UserEmail) || (NewCount <= 0))
                 throw new ArgumentException("Bad arguments. (Bad data, or null reference)");

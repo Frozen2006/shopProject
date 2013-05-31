@@ -17,7 +17,8 @@ namespace BLL
         private TimeSlotsRepository _timeRepository;
         private UserRepository _userRepository;
 
-        private const int usersPerSlotLimit = 4; 
+        private const int usersPerSlotLimit = 4;
+        private const int hoursToStopAcceptBook = 3;
 
         [Inject]
         public TimeSlotsService(TimeSlotsRepository repo, UserRepository us)
@@ -26,15 +27,18 @@ namespace BLL
             _userRepository = us;
         }
 
-
-        public List<DeliverySpot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type)
+        public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type)
         {
             var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == Convert.ToString(type))).ToList();
 
-            if (slots == null)
-                return new List<DeliverySpot>();
-            else
-                return slots.ToList();
+            List<BookinSlot> bookinSlots = new List<BookinSlot>();
+
+            foreach (var slot in slots)
+            {
+                bookinSlots.Add(DeliverySpotToBookingSlot(slot));
+            }
+
+            return bookinSlots;
         }
 
         public bool AddUserToSlot(DateTime startTime, SlotsType type, string userEmail)
@@ -48,6 +52,9 @@ namespace BLL
 
 
             if (findSlot.Users.Count >= usersPerSlotLimit)
+                return false;
+
+            if (DateTime.Now.AddHours(3) <= findSlot.StartTime)
                 return false;
 
             findSlot.Users.Add(us);
@@ -118,6 +125,43 @@ namespace BLL
                 throw new InstanceNotFoundException("User not found");
 
             return us;
+        }
+        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds)
+        {
+            BookinSlot bookinSlot = new BookinSlot() {StartTime = ds.StartTime, EndTime = ds.EndTime};
+
+            SlotsType st = SlotsType.OneHour;
+            switch (ds.Type)
+            {
+                case "OneHour":
+                   st = SlotsType.OneHour;
+                    break;
+                case "TwoHour":
+                    st = SlotsType.TwoHour;
+                    break;
+                case "FourHour":
+                    st = SlotsType.FourHour;
+                    break;
+            }
+
+            bookinSlot.Type = st;
+
+
+            SlotStatus slotStatus = SlotStatus.Free;
+
+            if (ds.Users.Count < usersPerSlotLimit)
+                slotStatus = SlotStatus.Middle;
+            if (ds.Users.Count >= usersPerSlotLimit)
+                slotStatus = SlotStatus.Fool;
+             if (DateTime.Now.AddHours(3) <= ds.StartTime)
+                 slotStatus = SlotStatus.Fool;
+
+
+            bookinSlot.Status = slotStatus;
+
+            return bookinSlot;
+
+
         }
 
     }

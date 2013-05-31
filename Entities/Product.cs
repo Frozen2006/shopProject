@@ -30,7 +30,7 @@ namespace Entities
         public string Description { get; set; }
     
         public virtual ICollection<Buye> Buyes { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
         public virtual Category Category { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

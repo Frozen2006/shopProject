@@ -9,13 +9,13 @@ namespace Interfaces
 {
     public interface ICart
     {
-        void Add(string UserEmail, int ProductId, int Count);
+        void Add(string UserEmail, int ProductId, double Count);
         List<Helpers.ProductInCart> GetAllChart(string UserEmail);
         void DeleteProduct(string UserEmail, int ProductId);
         void Clear(string UserEmail);
         
         //return finally cost of changed item
-        double UpateCount(string UserEmail, int ProductId, int NewCount);
+        double UpateCount(string UserEmail, int ProductId, double NewCount);
         double GetTotalPrice(string UserEmail);
         
         //Other methods be realize in future
