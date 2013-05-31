@@ -18,7 +18,7 @@ namespace ProductDescriptionGenerator
             var prodRep = new ProductRepository(context);
 
             int i = 0;
-            foreach (var prod in context.Products1)
+            foreach (var prod in context.Products)
             {
                 i++;
                 prod.Description = randText.Paragraph(10);

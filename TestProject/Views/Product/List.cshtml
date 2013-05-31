@@ -314,14 +314,18 @@
         var idInputs = document.getElementsByClassName("product_id");
 
         for (var i = 0; i < idInputs.length; i++) {
-            productArray.push(idInputs[i].value);
-            var count;
+            var count = getCounter(idInputs[i]);
+    
+            var numCount = parseFloat(count.value) || 0;
+
+            if (numCount > 0) {
+                productArray.push(idInputs[i].value);
+                countArray.push(numCount);
+            }
         }
 
-
-
         var postData = {
-            products: stringArray,
+            productIds: productArray,
             counts: countArray
         };
 
@@ -330,10 +334,14 @@
             url: "/Product/AddArrayToCart",
             data: postData,
             success: function (data) {
-                alert(data.Result);
+                newAlert('alert', data.report);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                newAlert('alert alert-error', XMLHttpRequest.responseText);
             },
             dataType: "json",
             traditional: true
         });
+
     }
 </script>
