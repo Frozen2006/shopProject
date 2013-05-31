@@ -25,7 +25,6 @@ namespace ProductDescriptionGenerator
             }
 
             context.SaveChanges();
-
         }
     }
 }
