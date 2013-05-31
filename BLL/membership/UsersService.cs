@@ -117,6 +117,19 @@ namespace BLL.membership
             }
         }
 
+        public string GetEmailIfLoginIn()
+        {
+            HttpRequest Request = HttpContext.Current.Request;
+            bool isLoginIn = (Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (CheckSession(Request.Cookies.Get("session_data").Value));
+
+            string foolTitle = null;
+            if (isLoginIn)
+            {
+                return GetUserEmailFromSession(Request.Cookies.Get("session_data").Value);
+            }
+            return null;
+        }
+
         public UserDetails GetUserDetails(string email)
         {
             User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);

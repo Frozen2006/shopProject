@@ -28,8 +28,7 @@ namespace TestProject.Controllers.Cart
         public ActionResult Index()
         {
 
-            string sessionId = Request.Cookies.Get("session_data").Value;
-            string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+            string userEmail = _usersService.GetEmailIfLoginIn();
 
             CartViewModel model = new CartViewModel();
             model.Products = _cart.GetAllChart(userEmail);
@@ -48,8 +47,7 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (productId.Length > 0))
             {
-                string sessionId = Request.Cookies.Get("session_data").Value;
-                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+                string userEmail = _usersService.GetEmailIfLoginIn();
 
                 _cart.DeleteProduct(userEmail, Convert.ToInt32(productId));
 
@@ -71,8 +69,7 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (productId.Length > 0))
             {
-                string sessionId = Request.Cookies.Get("session_data").Value;
-                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+                string userEmail = _usersService.GetEmailIfLoginIn();
 
                 double newPositionTotalPrice;
                 lock (_locker)
@@ -111,8 +108,7 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (Id.Count > 0))
             {
-                string sessionId = Request.Cookies.Get("session_data").Value;
-                string userEmail = _usersService.GetUserEmailFromSession(sessionId);
+                string userEmail = _usersService.GetEmailIfLoginIn();
 
                 List<jsonUpdateAll> outData = new List<jsonUpdateAll>();
 
@@ -131,14 +127,6 @@ namespace TestProject.Controllers.Cart
                 {
                     jsonUpdateAll.totalPrice = totalPrice;
                 }
-                /*var outData =
-                    new
-                    {
-                        positionPrice = Convert.ToString(newPositionTotalPrice),
-                        totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail))
-                    };*/
-
-
                 return Json(outData);
             }
             return View("Index");

@@ -1,0 +1,114 @@
+﻿@using Helpers
+@model TestProject.Models.TimeSlotsModel
+@Scripts.Render("~/Content/js/TimeSlots.js")
+
+<div class="row-fluid">
+    <div class="span6 offset3">
+        
+        
+        <table class="table table-bordered">
+            
+            <tr>
+                <th>
+                    TimeSlot
+                </th>
+               @for (int q = 0; q < 7; q++)
+               {
+                   <th>@Model.Today.AddDays(Convert.ToDouble(q)).DayOfWeek</th>
+               }
+            </tr>
+
+            <tr>
+                <td></td>
+               @for (int q = 0; q < 7; q++)
+               {
+                   int day = Model.Today.AddDays(Convert.ToDouble(q)).Day;
+                    if (day == Model.Today.Day)
+                    {
+                        <td style="background-color: green">@day</td>
+                    }
+                    else
+                    {
+                        <td>@day</td>
+                    }
+                }
+            </tr>
+            
+
+            @for (int row = 0; row < 13; row++)
+            {
+                <tr>
+                    @{
+                int hourStart = 9 + row * 1; //9.00 - working start time. 1 - period
+                int hourEnd = hourStart + 1;
+
+                        <td>@hourStart:00 - @hourEnd:00</td>
+                    }
+                
+               @for (int day = 0; day < 7; day++)
+               {
+                   DateTime current = Model.startDay[row].AddDays(Convert.ToDouble(day));
+
+                   BookinSlot bs = Model.SlotsOneHour.FirstOrDefault(m => m.StartTime == current);
+
+                   if (bs == null)
+                   {
+                       if (current < Model.Today)
+                       {
+                           <td style="background-color: #fff0f5"> </td>
+                       }
+                       else
+                       {
+                            <td id="@hourStart-@current.Day-@current.Month-@current.Year" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year)"> </td>
+                       }
+                   }
+                   else
+                   {
+                        if (bs.Status == SlotStatus.Free)
+                        {
+                            <td id="@hourStart-@current.Day-@current.Month-@current.Year" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year)"></td>
+                        }
+                        if (bs.Status == SlotStatus.Middle)
+                        {
+                            <td style="background-color: #fff7d7" id="@hourStart-@current.Day-@current.Month-@current.Year" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year)"> </td>
+                        }
+                        if (bs.Status == SlotStatus.Fool)
+                        {
+                            <td style="background-color: #fff0f5"> </td>
+                        }
+                   }
+                   
+               }
+
+            
+                </tr>
+            }
+
+        </table>
+        
+        
+        
+
+    </div>
+</div>
+
+
+       
+        
+               
+               
+
+<div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Bookig time</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure to book this time?</p> <br/>
+        <p id="time-place"></p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" onclick="closeModal()">No</a>
+        <a href="#" id="bookThis" class="btn btn-primary">Yes</a>
+    </div>
+</div>

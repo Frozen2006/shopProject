@@ -29,7 +29,9 @@ namespace BLL
 
         public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type)
         {
-            var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == Convert.ToString(type))).ToList();
+            string stringType = GetStringType(type);
+
+            var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == stringType)).ToList();
 
             List<BookinSlot> bookinSlots = new List<BookinSlot>();
 
@@ -43,11 +45,12 @@ namespace BLL
 
         public bool AddUserToSlot(DateTime startTime, SlotsType type, string userEmail)
         {
+            string stringType = GetStringType(type);
             User us = GetUser(userEmail);
 
             var findSlot =
                 _timeRepository.ReadAll()
-                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == Convert.ToString(type))) ??
+                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == stringType)) ??
                 CreateSlot(startTime, type);
 
 
@@ -67,9 +70,10 @@ namespace BLL
 
         public void RemoveUserFromSlot(DateTime startTime, SlotsType type, string userEmail)
         {
+            string stringType = GetStringType(type);
             var findSlot =
                 _timeRepository.ReadAll()
-                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == Convert.ToString(type)));
+                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == stringType));
 
             if (findSlot == null)
                 throw new InstanceNotFoundException("Slot not found");
@@ -164,7 +168,19 @@ namespace BLL
 
         }
 
+        private string GetStringType(SlotsType st)
+            {
+                    
+                if (st == SlotsType.TwoHour)
+                    return "TwoHour";
+                if (st == SlotsType.FourHour)
+                    return "FourHour";
+
+                return "OneHour";
+            }
+
     }
+
 
 
 }
