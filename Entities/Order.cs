@@ -23,9 +23,11 @@ namespace Entities
         public int DeliverySpotId { get; set; }
         public int UserId { get; set; }
         public string Status { get; set; }
+        public double TotalPrice { get; set; }
+        public int Discount { get; set; }
     
+        public virtual ICollection<Buye> Buyes { get; set; }
         public virtual DeliverySpot DeliverySpot { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Buye> Buyes { get; set; }
     }
 }

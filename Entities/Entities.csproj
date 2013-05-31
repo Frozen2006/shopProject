@@ -39,15 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buye.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cart.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
+    <Compile Include="DeliverySpot.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
     <Compile Include="IEntity.cs" />
+    <Compile Include="Order.cs">
+      <DependentUpon>Shop.tt</DependentUpon>
+    </Compile>
     <Compile Include="PartialEntities\Category.cs" />
     <Compile Include="PartialEntities\Cart.cs" />
+    <Compile Include="PartialEntities\DeliverySpot.cs" />
+    <Compile Include="PartialEntities\Order.cs" />
     <Compile Include="PartialEntities\Zip.cs" />
     <Compile Include="PartialEntities\Product.cs" />
     <Compile Include="PartialEntities\Role.cs" />

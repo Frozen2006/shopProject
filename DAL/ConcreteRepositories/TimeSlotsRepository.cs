@@ -19,7 +19,7 @@ namespace DAL.membership
 
         public override void Update(DeliverySpot tiem)
         {
-            DeliverySpot ds = CurrentDbSet.FirstOrDefault(m => m.Id == tiem.Id);
+            DeliverySpot ds = CurrentDbSet.FirstOrDefault(m => (m.StartTime == tiem.StartTime) && (m.Type == tiem.Type));
 
             if (ds != null)
             {

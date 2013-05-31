@@ -28,6 +28,8 @@ namespace NinjectModules
             Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
             Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
             Bind<DAL.membership.ZipRepository>().To<DAL.membership.ZipRepository>();
+            Bind<DAL.membership.TimeSlotsRepository>().ToSelf();
+            Bind<DAL.membership.OrdersRepository>().ToSelf();
 
             Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
             Bind<BLL.CategoryService>().ToSelf();

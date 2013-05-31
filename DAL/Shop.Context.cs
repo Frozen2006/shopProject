@@ -25,15 +25,15 @@ namespace Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Category> Categories1 { get; set; }
-        public DbSet<Product> Products1 { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Buye> Buyes { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<DeliverySpot> DeliverySpots { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Zip> Zips { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Buye> Buyes { get; set; }
-        public DbSet<DeliverySpot> DeliverySpots { get; set; }
         public DbSet<Order> Orders { get; set; }
     }
 }
