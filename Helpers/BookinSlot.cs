@@ -10,7 +10,8 @@ namespace Helpers
     {
         Free,
         Middle,
-        Fool
+        Fool,
+        My
     }
     public class BookinSlot
     {

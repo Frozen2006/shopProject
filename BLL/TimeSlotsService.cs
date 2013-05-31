@@ -27,7 +27,7 @@ namespace BLL
             _userRepository = us;
         }
 
-        public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type)
+        public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type, string userEmail)
         {
             string stringType = GetStringType(type);
 
@@ -37,7 +37,7 @@ namespace BLL
 
             foreach (var slot in slots)
             {
-                bookinSlots.Add(DeliverySpotToBookingSlot(slot));
+                bookinSlots.Add(DeliverySpotToBookingSlot(slot, userEmail));
             }
 
             return bookinSlots;
@@ -57,7 +57,7 @@ namespace BLL
             if (findSlot.Users.Count >= usersPerSlotLimit)
                 return false;
 
-            if (DateTime.Now.AddHours(3) <= findSlot.StartTime)
+            if (DateTime.Now.AddHours(3) >= findSlot.StartTime)
                 return false;
 
             findSlot.Users.Add(us);
@@ -130,7 +130,7 @@ namespace BLL
 
             return us;
         }
-        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds)
+        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds, string UserEmail)
         {
             BookinSlot bookinSlot = new BookinSlot() {StartTime = ds.StartTime, EndTime = ds.EndTime};
 
@@ -157,9 +157,12 @@ namespace BLL
                 slotStatus = SlotStatus.Middle;
             if (ds.Users.Count >= usersPerSlotLimit)
                 slotStatus = SlotStatus.Fool;
-             if (DateTime.Now.AddHours(3) <= ds.StartTime)
+             if (DateTime.Now.AddHours(3) >= ds.StartTime)
                  slotStatus = SlotStatus.Fool;
 
+            if (ds.Users.FirstOrDefault(m => m.email == UserEmail) != null)
+                slotStatus = SlotStatus.My;
+            
 
             bookinSlot.Status = slotStatus;
 
