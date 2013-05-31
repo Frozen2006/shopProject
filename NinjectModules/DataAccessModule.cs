@@ -40,6 +40,8 @@ namespace NinjectModules
 
             Bind<BLL.SearchService>().To<BLL.SearchService>();
 
+            Bind<BLL.TimeSlotsService>().ToSelf();
+
         }
     }
 }

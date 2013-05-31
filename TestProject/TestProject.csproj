@@ -145,6 +145,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\js\cart.js" />
+    <Content Include="Content\js\TimeSlots.js" />
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SearchPageModel.cs" />
+    <Compile Include="Models\TimeSlotsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +306,7 @@
     <Content Include="Views\Error\Unknown.cshtml" />
     <Content Include="Views\Error\NoAccess.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\TimeSlots\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

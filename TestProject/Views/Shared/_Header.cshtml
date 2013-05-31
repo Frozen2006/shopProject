@@ -1,16 +1,18 @@
 ﻿@using BLL.membership
 @using Ninject;
 @{ 
+    
     UsersService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<UsersService>();
     //check autorization
-    bool isLoginIn = (Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (us.CheckSession(Request.Cookies.Get("session_data").Value));
+    string email = us.GetEmailIfLoginIn();
+    bool isLoginIn =  (email != null);
 
-    string foolTitle = null;
+    string foolTitle = "";
     if (isLoginIn)
     {
-        string email = us.GetUserEmailFromSession(Request.Cookies.Get("session_data").Value);
         foolTitle = us.GetUserFoolTitle(email);
     }
+}
 }
 <div id="mainMenu" class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
