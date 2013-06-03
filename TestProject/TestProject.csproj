@@ -172,6 +172,7 @@
     <Compile Include="Models\ChangeDeliveryAddressModel.cs" />
     <Compile Include="Models\CategotyNavigationModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
@@ -307,11 +308,9 @@
     <Content Include="Views\Category\CategoryNavigation.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
-    <Content Include="Views\Error\Unknown.cshtml" />
-    <Content Include="Views\Error\NoAccess.cshtml" />
-    <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\TimeSlots\Index.cshtml" />
     <Content Include="Views\Payment\Pay.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

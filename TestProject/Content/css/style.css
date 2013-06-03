@@ -198,3 +198,8 @@
 {
     display: none;
 }
+
+.error_box {
+    width: 40%;
+    margin: 0 auto;
+}

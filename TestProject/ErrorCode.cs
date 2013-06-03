@@ -9,6 +9,7 @@ namespace TestProject
     {
         NotLoggedIn,
         NotFound,
-        Forbidden
+        Forbidden,
+        Unknown
     }
 }
