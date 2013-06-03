@@ -1,0 +1,29 @@
+﻿@model TestProject.Models.OrderDetailsModel
+
+<h2>ConfirmOrder</h2>
+
+@using (Html.BeginForm("ConfirmOrder", "Cart", FormMethod.Post, new { @class = "form-signin"  }))
+{
+    <h2 class="form-signin-heading">Change order details</h2>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <ol>
+        <li>
+            @Html.LabelFor(m=>m.TimeSlot)
+            <select name="Id">
+                @foreach (var slot in Model.TimeSlot)
+                {
+                    <option value="@slot.Id">@slot.StartTime-@slot.EndTime</option>
+                }
+            </select>
+             @Html.ValidationMessageFor(m => m.TimeSlot)
+        </li>
+        <li>
+            @Html.LabelFor(q => q.Comments)
+            @Html.TextAreaFor(m=>m.Comments)
+            @Html.ValidationMessageFor(m => m.Comments)
+        </li>
+    </ol>
+    
+    <input class="btn btn-large btn-primary" data-loading-text="Send..." type="submit" value="Next"/>
+}

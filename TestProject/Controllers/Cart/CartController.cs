@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL;
 using BLL.membership;
 using Interfaces;
 using Ninject;
@@ -17,12 +18,16 @@ namespace TestProject.Controllers.Cart
         // GET: /Cart/
         private readonly ICart _cart;
         private readonly UsersService _usersService;
+        private readonly TimeSlotsService _slotsService;
+        private readonly OrderService _orderService;
 
         [Inject]
-        public CartController(ICart cartInit, UsersService us)
+        public CartController(ICart cartInit, UsersService us, TimeSlotsService slotsService, OrderService os)
         {
             _cart = cartInit;
             _usersService = us;
+            _slotsService = slotsService;
+            _orderService = os;
         }
 
         public ActionResult Index()
@@ -91,6 +96,34 @@ namespace TestProject.Controllers.Cart
         }
 
 
+
+
+        public ActionResult ConfirmOrder()
+        {
+           string userEmail = _usersService.GetEmailIfLoginIn();
+
+           OrderDetailsModel odm = new OrderDetailsModel();
+
+            odm.TimeSlot = _slotsService.GetUserSlots(userEmail);
+            
+            return View(odm);
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmOrder(int? Id, string Comments)
+        {
+            if (Id == null)
+                return RedirectToAction("Index", "Home");
+
+            string userEmail = _usersService.GetEmailIfLoginIn();
+
+            _orderService.CreateOrder(userEmail, (int)Id, Comments);
+
+
+            return RedirectToAction("Pay", "Payment", new { orderId = Id });
+        }
+
+
         public class jsonUpdateAll
         {
             public string Id;
@@ -98,6 +131,7 @@ namespace TestProject.Controllers.Cart
             public string totalPrice;
             public string count;
         }
+
 
         //Ajax jquery responce method
         [HttpPost]

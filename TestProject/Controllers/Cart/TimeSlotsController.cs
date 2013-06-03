@@ -20,6 +20,7 @@ namespace TestProject.Controllers
         private TimeSlotsService _tss;
         private UsersService _usersService;
 
+
         [Inject]
         public TimeSlotsController(TimeSlotsService tsinp, UsersService us)
         {
@@ -71,10 +72,16 @@ namespace TestProject.Controllers
         public ActionResult CheckOut()
         {
             string userEmail = _usersService.GetEmailIfLoginIn();
-            
-            TimeSlotsModel model = GetModel(true);
 
-            return View("Index", model);
+            if (_tss.GetUserSlots(userEmail).Count == 0)
+            {
+                TimeSlotsModel model = GetModel(true);
+                return View("Index", model);
+            }
+            else
+            {
+                return RedirectToAction("ConfirmOrder", "Cart");
+            }
         }
 
         //Ajax jquery responce method
