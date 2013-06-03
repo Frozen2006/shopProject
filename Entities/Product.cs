@@ -16,8 +16,8 @@ namespace Entities
     {
         public Product()
         {
-            this.Buyes = new HashSet<Buye>();
             this.Carts = new HashSet<Cart>();
+            this.Buyes = new HashSet<Buye>();
         }
     
         public int Id { get; set; }
@@ -29,8 +29,8 @@ namespace Entities
         public string UnitOfMeasure { get; set; }
         public string Description { get; set; }
     
-        public virtual ICollection<Buye> Buyes { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
+        public virtual ICollection<Buye> Buyes { get; set; }
     }
 }

@@ -41,6 +41,9 @@
   <ItemGroup>
     <Compile Include="BookinSlot.cs" />
     <Compile Include="CategoriesInSearch.cs" />
+    <Compile Include="OrdersDetails.cs" />
+    <Compile Include="OrdersInList.cs" />
+    <Compile Include="OrderStatus.cs" />
     <Compile Include="ProductInCart.cs" />
     <Compile Include="ProductInSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
