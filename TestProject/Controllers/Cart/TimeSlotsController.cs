@@ -70,6 +70,8 @@ namespace TestProject.Controllers
 
         public ActionResult CheckOut()
         {
+            string userEmail = _usersService.GetEmailIfLoginIn();
+            
             TimeSlotsModel model = GetModel(true);
 
             return View("Index", model);
