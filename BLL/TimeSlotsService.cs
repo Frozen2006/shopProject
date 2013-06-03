@@ -171,10 +171,10 @@ namespace BLL
              if (DateTime.Now.AddHours(3) >= ds.StartTime)
                  slotStatus = SlotStatus.Fool;
 
-            if (ds.Users.FirstOrDefault(m => m.email == UserEmail) != null)
+             if ((ds.Users.FirstOrDefault(m => m.email == UserEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.email == UserEmail) == null))
                 slotStatus = SlotStatus.My;
             
-
+            
             bookinSlot.Status = slotStatus;
 
             return bookinSlot;
