@@ -95,7 +95,7 @@ namespace BLL
             foreach (var deliverySpot in us.DeliverySpots)
             {
                 if ((deliverySpot.StartTime > DateTime.Now.AddHours(4.0)) &&
-                    (us.Orders.Where(m => m.DeliverySpotId == deliverySpot.Id) == null))
+                    (us.Orders.FirstOrDefault(m => m.DeliverySpotId == deliverySpot.Id) == null))
                 {
                     lst.Add(deliverySpot);
                 }

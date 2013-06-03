@@ -51,7 +51,8 @@ namespace TestProject.Controllers
             }
 
             ViewBag.OrderId = orderId;
-            ViewBag.Price = _cartService.GetTotalPrice(email);
+            ViewBag.Price = order.TotalPrice;
+            ViewBag.FinalPrice = order.PriceWithDiscount;
 
             return View();
         }

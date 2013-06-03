@@ -3,7 +3,9 @@
 <div id="payment_box">
     <h2>Order @ViewBag.OrderId payment</h2>
 
-    <span class="price">Total price: <span class="price_value">@ViewBag.Price.ToString("0.00")$</span></span>   
+    <span class="price">Total price: <span class="price_value">@ViewBag.Price.ToString("0.00")$</span><br />
+                        Prise to pay (with discount): <span class="price_value">@ViewBag.FinalPrice.ToString("0.00")$</span>
+    </span>   
  
     @using (Html.BeginForm()) {
         @Html.ValidationSummary(true)

@@ -117,10 +117,10 @@ namespace TestProject.Controllers.Cart
 
             string userEmail = _usersService.GetEmailIfLoginIn();
 
-            _orderService.CreateOrder(userEmail, (int)Id, Comments);
+            int orderId = _orderService.CreateOrder(userEmail, (int)Id, Comments);
 
 
-            return RedirectToAction("Pay", "Payment", new { orderId = Id });
+            return RedirectToAction("Pay", "Payment", new { orderId = orderId });
         }
 
 
