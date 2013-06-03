@@ -175,6 +175,7 @@
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SearchPageModel.cs" />
     <Compile Include="Models\TimeSlotsModel.cs" />
+    <Compile Include="Models\TimeSlotsTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +309,7 @@
     <Content Include="Views\Error\NoAccess.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\TimeSlots\Index.cshtml" />
+    <Content Include="Views\TimeSlots\_particalTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

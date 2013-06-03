@@ -1,0 +1,95 @@
+﻿@using Helpers
+@model TestProject.Models.TimeSlotsTableModel
+
+@{ int step = Model.Step; }
+
+<table class="table table-bordered">
+            
+            <tr>
+                <th>
+                    TimeSlot
+                </th>
+               @for (int q = 0; q < 7; q++)
+               {
+                   <th>@Model.Today.AddDays(Convert.ToDouble(q)).DayOfWeek</th>
+               }
+            </tr>
+
+            <tr>
+                <td></td>
+               @for (int q = 0; q < 7; q++)
+               {
+                   int day = Model.Today.AddDays(Convert.ToDouble(q)).Day;
+                    if (day == Model.Today.Day)
+                    {
+                        <td style="background-color: green">@day</td>
+                    }
+                    else
+                    {
+                        <td>@day</td>
+                    }
+                }
+            </tr>
+            
+
+            @for (int row = 0; row < 13; row+=step)
+            {
+                <tr>
+                    @{
+                int hourStart = 9 + row * 1; //9.00 - working start time. 1 - period
+                int hourEnd = hourStart + step;
+
+                        if (hourEnd > 22)
+                        {
+                            break;
+
+                        }
+
+                        <td>@hourStart:00 - @hourEnd:00</td>
+                    }
+                
+               @for (int day = 0; day < 7; day++)
+               {
+                   DateTime current = Model.startDay[row].AddDays(Convert.ToDouble(day));
+
+                   BookinSlot bs = Model.Slots.FirstOrDefault(m => m.StartTime == current);
+
+                   if (bs == null)
+                   {
+                       //Book not correct, if then is less than 4 hour
+                       if (current < Model.Today.AddHours(4.0 - Convert.ToDouble(step) + 1.0))
+                       {
+                           <td style="background-color: #fff0f5"> </td>
+                       }
+                       else
+                       {
+                            <td id="@hourStart-@current.Day-@current.Month-@current.Year-@step" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year, @step)"> </td>
+                       }
+                   }
+                   else
+                   {
+                        if (bs.Status == SlotStatus.Free)
+                        {
+                            <td id="@hourStart-@current.Day-@current.Month-@current.Year-@step" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year, @step)"></td>
+                        }
+                        if (bs.Status == SlotStatus.Middle)
+                        {
+                            <td style="background-color: #fff7d7" id="@hourStart-@current.Day-@current.Month-@current.Year-@step" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year, @step)"> </td>
+                        }
+                        if (bs.Status == SlotStatus.Fool)
+                        {
+                            <td style="background-color: #fff0f5"> </td>
+                        }
+                        if (bs.Status == SlotStatus.My)
+                        {
+                            <td style="background-color: green"> </td>
+                        }
+                   }
+                   
+               }
+
+            
+                </tr>
+            }
+
+        </table>
