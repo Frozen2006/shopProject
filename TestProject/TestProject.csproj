@@ -153,6 +153,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\MembershipControllesr\MembershipController.cs" />
+    <Compile Include="Controllers\Payment.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Models\CategotyNavigationModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SearchPageModel.cs" />
@@ -308,6 +310,7 @@
     <Content Include="Views\Error\NoAccess.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\TimeSlots\Index.cshtml" />
+    <Content Include="Views\Payment\Pay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

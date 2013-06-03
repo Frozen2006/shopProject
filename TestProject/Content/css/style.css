@@ -183,3 +183,18 @@
     .price_value {
         font-weight: normal;
     }
+
+/*Payment styles*/
+    #payment_box {
+        margin: 0 auto;
+        width: 20%;
+    }
+
+.validation_message {
+    color: red;
+    display: block;
+}
+.validation-summary-valid
+{
+    display: none;
+}
