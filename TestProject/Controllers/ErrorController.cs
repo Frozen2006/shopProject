@@ -38,5 +38,13 @@ namespace TestProject.Controllers
 
             return View("Error", model);
         }
+
+        public ActionResult CustomError(string message)
+        {
+            var model = new ErrorModel();
+            model.Message = message;
+
+            return View("Error", model);
+        }
     }
 }

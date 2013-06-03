@@ -1,5 +1,7 @@
 ﻿using BLL;
 using BLL.membership;
+using Entities;
+using Helpers;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,19 +30,26 @@ namespace TestProject.Controllers
             string email = _userService.GetEmailIfLoginIn();
             if (email == null)
             {
-                return RedirectToAction("Error", "ErrorController", new { Code = ErrorCode.NotLoggedIn });
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
             }
 
-            //Get order by ID and check it whether it belongs to current user
-            //and it's status is "waiting for payment"
+            OrdersDetails order = _orderService.GetOrderDetails(orderId);
 
+            if (order == null)
+            {
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
+            }
 
-            //var order = _userService.GetOrder(orderId)
-            //if (order.Status == "WaitsForPayment" 
-            //&& order.User == CURRENT_USER)
-            //{            //
-            //  order.status = "Payed"
-            //}
+            if (order.userEmail != email)
+            {
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
+            }
+
+            if (order.OrderStatus == OrderStatus.Paid)
+            {
+                return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
+            }
+
             ViewBag.OrderId = orderId;
             ViewBag.Price = _cartService.GetTotalPrice(email);
 
@@ -53,9 +62,27 @@ namespace TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //payment to database
-                //redirece to somewhere
+                string email = _userService.GetEmailIfLoginIn();
+                if (email == null)
+                {
+                    return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
+                }
+
+                OrdersDetails order = _orderService.GetOrderDetails(model.OrderId);
+
+                if (order.userEmail != email)
+                {
+                    return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
+                }
+
+                if (order.OrderStatus == OrderStatus.Paid)
+                {
+                    return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
+                }
+
+                return RedirectToAction("Index", "History");
             }
+
             return View(model);
         }
 
