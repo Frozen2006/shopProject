@@ -153,11 +153,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\MembershipControllesr\MembershipController.cs" />
-    <Compile Include="Controllers\Payment.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimeSlotsController.cs" />
+    <Compile Include="ErrorCode.cs" />
     <Compile Include="Filters\AutorizeRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

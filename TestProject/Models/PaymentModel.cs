@@ -29,7 +29,7 @@ namespace TestProject.Models
         [DisplayName("Security code")]
         public int SecurityCode { get; set; }
 
-        [DisplayName("Delivery comments")]
-        public string DeliveryComment { get; set; }
+        public double Price { get; set; }
+        public int OrderId { get; set; }
     }
 }
