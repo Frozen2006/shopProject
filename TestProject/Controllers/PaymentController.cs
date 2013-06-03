@@ -34,7 +34,6 @@ namespace TestProject.Controllers
             //Get order by ID and check it whether it belongs to current user
             //and it's status is "waiting for payment"
 
-            var model = new PaymentModel();
 
             //var order = _userService.GetOrder(orderId)
             //if (order.Status == "WaitsForPayment" 
@@ -42,11 +41,10 @@ namespace TestProject.Controllers
             //{            //
             //  order.status = "Payed"
             //}
+            ViewBag.OrderId = orderId;
+            ViewBag.Price = _cartService.GetTotalPrice(email);
 
-            model.OrderId = orderId;
-            model.Price = _cartService.GetTotalPrice(email);
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]

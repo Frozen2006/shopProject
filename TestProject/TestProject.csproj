@@ -311,8 +311,8 @@
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\TimeSlots\Index.cshtml" />
     <Content Include="Views\TimeSlots\_particalTable.cshtml" />
-    <Content Include="Views\Payment\Pay.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Payment\Pay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

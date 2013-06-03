@@ -1,0 +1,60 @@
+﻿@model TestProject.Models.PaymentModel
+
+    <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<div id="payment_box">
+    <h2>Order @ViewBag.OrderId payment</h2>
+
+    <span class="price">Total price: <span class="price_value">@ViewBag.Price.ToString("0.00")$</span></span>   
+ 
+    @using (Html.BeginForm()) {
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>Payment data</legend>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CardNumber)
+            </div>
+            <div class="editor-field">
+                @Html.ValidationMessageFor(model => model.CardNumber, null, new { @class = "validation_message" })
+                @Html.EditorFor(model => model.CardNumber)
+                
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ExpirationMonth)
+            </div>
+            <div class="editor-field">
+                @Html.ValidationMessageFor(model => model.ExpirationMonth, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.ExpirationMonth)
+                
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ExpirationDay)
+            </div>
+            <div class="editor-field">
+                @Html.ValidationMessageFor(model => model.ExpirationDay, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.ExpirationDay)                
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.SecurityCode)
+            </div>
+            <div class="editor-field">
+                @Html.ValidationMessageFor(model => model.SecurityCode, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.SecurityCode)                
+            </div>
+
+            @Html.ValidationSummary("Data is invalid. Errors:")
+
+            <p>
+                <input class="btn btn-success" type="submit" value="Save" />
+            </p>
+
+        </fieldset>        
+    }
+</div>
