@@ -77,9 +77,11 @@ namespace TestProject.Controllers
                 }
 
                 if (order.OrderStatus == OrderStatus.Paid)
-                {
+                {                    
                     return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
                 }
+
+                _orderService.UpdateOrder(model.OrderId, OrderStatus.Paid);
 
                 return RedirectToAction("Index", "History");
             }

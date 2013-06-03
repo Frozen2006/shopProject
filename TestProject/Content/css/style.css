@@ -203,3 +203,17 @@
     width: 40%;
     margin: 0 auto;
 }
+
+/*History box*/
+#history_box {
+    text-align: center;
+    margin: 0 20%;
+}
+
+.order_table_header {
+    font-weight: bold;
+}
+.order_table_cell {
+    display: inline-block;
+    margin: 10px 5px;        
+}
