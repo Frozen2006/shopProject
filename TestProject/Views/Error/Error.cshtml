@@ -1,24 +1,14 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model TestProject.Models.ErrorModel
 
-<div class="list-header clearfix">
-<span>Error</span>
-</div>
-<div class="list-sfs-holder">
-    <div class="alert alert-error">
-        An unexpected error has occurred. Please contact the system administrator.</div>
-    @if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+<div class="error_box">
+    <h2>Sorry for that. Some errod occurded</h2>
+    <span>Description:</span>
+    <p>@Model.Message</p>
+
+    @if (Model.Exception != null)
     {
-        <div>
-            <p>
-                <b>Exception:</b> @Model.Exception.Message<br />
-                <b>Controller:</b> @Model.ControllerName<br />
-                <b>Action:</b> @Model.ActionName
-            </p>
-            <div style="overflow:scroll">
-                <pre>
-@Model.Exception.StackTrace
-                </pre>
-            </div>
-        </div>
+        <span>Exception:</span>
+        <p>Type: @Model.Exception.GetType().ToString()</p>
+        <p>Message: @Model.Exception.Message</p>
     }
 </div>
