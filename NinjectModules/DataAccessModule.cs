@@ -33,6 +33,7 @@ namespace NinjectModules
             Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
             Bind<BLL.CategoryService>().ToSelf();
             Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
+            Bind<BLL.OrderService>().ToSelf();
 
             //Cart
             Bind<Interfaces.ICart>().To<BLL.CartService>().InRequestScope();

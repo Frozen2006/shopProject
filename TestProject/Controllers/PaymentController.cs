@@ -14,8 +14,13 @@ namespace TestProject.Controllers
     [CustomAuthrize]
     public class PaymentController : BaseController
     {
-        public PaymentController(CategoryService ps, UsersService us, ICart cs)
-            : base(ps, us, cs) { } 
+        private readonly OrderService _orderService;
+
+        public PaymentController(CategoryService ps, UsersService us, ICart cs, OrderService os)
+            : base(ps, us, cs)
+        {
+            _orderService = os;
+        }
 
         [HttpGet]
         public ActionResult Pay(int orderId)

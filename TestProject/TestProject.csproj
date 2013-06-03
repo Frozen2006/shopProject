@@ -158,7 +158,6 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\Cart\TimeSlotsController.cs" />
-    <Compile Include="Controllers\TimeSlotsController.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="Filters\AutorizeRole.cs" />
     <Compile Include="Global.asax.cs">
