@@ -43,8 +43,8 @@
                                                 <span class="span-float-right">Price: </span>
                                             </div>
                                             <div class="span2">
-                                                <div id="price">@product.TotalPrice</div>
-                                                @{ string decFuncName = "decrement(" + product.Id + ")"; }
+                                                <div id="price">@product.PriceOfOneItem</div>
+                                                
                                             </div>
                                             <div class="span1">
                                                 @{ string delFuncName = "askRemove(" + product.Id + ")"; }
@@ -52,14 +52,8 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="offset7 span2">
-                                                <span class="span-float-right">Count:</span>
-                                            </div>
-                                            <div class="span2">
-                                                <input type="button"  class="btn btn-mini" value="-" onclick="@decFuncName"/>
-                                                <span id="count" class="badge">@product.Count</span>
-                                                @{ string incFuncName = "incriment(" + product.Id + ")"; }
-                                                <input type="button"  class="btn btn-mini" value="+" onclick="@incFuncName"/>
+                                            <div class="offset7 span4">
+                                                    @Html.Partial("_sliderPart", product)
                                             </div>
                                             <div id="updateArea" class="span1">
                                                     

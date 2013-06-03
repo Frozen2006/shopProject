@@ -44,6 +44,7 @@
                 counter.value = ui.value;
 
                 $(counter).change();
+                $(ui).change();
             }
         });
     }

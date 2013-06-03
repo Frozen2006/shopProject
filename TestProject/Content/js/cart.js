@@ -58,16 +58,14 @@ function updateAll() {
             var productBox = $("div.product_box");
             for (var i in data) {
                 var productId = data[i].Id;
-                var sss = $("div#" + productId).find("#count");
-                $("div#" + productId).find("#count")[0].innerHTML = data[i].count;
-                $("div#" + productId).find("#price")[0].innerHTML = data[i].positionPrice;
+                $("div#" + productId).find(".counter")[0].innerHTML = data[i].count;
+                $("div#" + productId).find(".estimated_price_value")[0].innerHTML = data[i].positionPrice;
 
                 var rem = $("div#" + productId).find("#update");
 
                 if (rem.length > 0) {
                     rem[0].remove();
                 }
-            $("div#" + productId).find("#count")[0].className = "badge";
             }
             $("#totalPrice")[0].innerHTML = data[0].totalPrice;
 
@@ -84,10 +82,9 @@ function updateAll() {
     });
 }
 
-
 function getDataFromId(productId) {
-    var boxWithCount = $("div#" + productId).find("#count")[0];
-    var val = boxWithCount.innerHTML;
+    var boxWithCount = $("div#" + productId).find(".counter")[0];
+    var val = boxWithCount.value;
 
     return { Id: productId, Count: val };
 }
@@ -143,10 +140,9 @@ function incriment(productId) {
     //sendAjaxToChange(productId, newVal);
 }
 
-
 function update(productId) {
-    var boxWithCount = $("div#" + productId).find("#count")[0];
-    var val = boxWithCount.innerHTML;
+    var boxWithCount = $("div#" + productId).find(".counter")[0];
+    var val = boxWithCount.value;
 
     sendAjaxToChange(productId, val);
 }
@@ -157,12 +153,11 @@ function sendAjaxToChange(productId, newVal) {
         data: { productId: productId, count: newVal },
         type: "POST",
         success: function (data) {
-            $("div#" + productId).find("#count")[0].innerHTML = newVal;
-            $("div#" + productId).find("#price")[0].innerHTML = data.positionPrice;
+            $("div#" + productId).find(".counter")[0].value = newVal;
+            $("div#" + productId).find(".estimated_price_value")[0].innerHTML = data.positionPrice;
             $("#totalPrice")[0].innerHTML = data.totalPrice;
 
             $("div#" + productId).find("#update")[0].remove();
-            $("div#" + productId).find("#count")[0].className = "badge";
             
             $("#UpdateAll").prop("disabled", true);
             
@@ -211,4 +206,112 @@ function brut2(times, id) {
             }
         });
     }
+}
+
+function constructSlider(sliderClass, step, min) {
+        $("." + sliderClass).slider({
+        range: "min",
+        min: min,
+        max: 10,
+        value: 0,
+        step: step,
+        slide: function (event, ui) {
+            var counter = event.target.parentNode.getElementsByClassName("counter")[0];
+            counter.value = ui.value;
+
+            $(counter).change();
+
+            enableUpdateBtn(counter.id);
+        }
+    });
+
+}
+
+function enableUpdateBtn(productId) {
+    $("#UpdateAll").prop("disabled", false);
+
+    if ($("div#" + productId).find("#update").length == 0) {
+        var btnCode = "<input type=\"button\" id=\"update\" class=\"btn btn-warning\" style=\"margin-right: 5px\" onclick=\"update(" + productId + ")\" value=\"Update\">";
+        var deleteBtn = $("div#" + productId).find("#updateArea")[0];
+        $(btnCode).appendTo(deleteBtn);
+    }
+}
+
+function updateSliders() {
+    var sliders = $(".slider");
+    
+    for (var sNum in sliders) {
+        if (!isNaN(sNum)) {
+            var count = getCounter(sliders[sNum]).value;
+
+
+            $(sliders[sNum]).slider("value", count);
+        }
+    }
+
+}
+
+$(function () {
+    constructSlider("int_slider", 1, 1);
+    constructSlider("float_slider", 0.1, 0.1);
+    updateSliders();
+});
+
+function countInput(event, price, sliderClass) {
+    slider = getSlider(event.target);
+
+    var stringCount = event.target.value;
+
+    //Parsing input value. 
+    var count;
+    if (sliderClass == "int_slider") {
+        count = parseInt(stringCount) || 0;
+    }
+    else {
+        count = parseFloat(stringCount.replace(",", ".")) || 0;
+    }
+
+    //If can't parse than set it to 0.
+    //event.target.value = count;
+
+
+    $(slider).slider("value", count);
+
+    //Set estimated price.
+    var pricespan = getPrice(event.target);
+    pricespan.innerHTML = (count * price).toFixed(2);
+}
+
+function correctInput(event, sliderClass) {
+
+    enableUpdateBtn(event.target.id);
+
+    var stringCount = event.target.value;
+
+    //Trying to parse input
+    var count;
+    if (sliderClass == "int_slider") {
+        count = parseInt(stringCount) || 0;
+    }
+    else {
+        count = parseFloat(stringCount.replace(",", ".")).toFixed(1) || 0;
+    }
+
+    //If can't parse than set it to 0.
+    event.target.value = count;
+}
+
+
+//Returns slider by its sibling node (e.g. button event sender)
+function getSlider(element) {
+    return element.parentNode.getElementsByClassName("slider")[0];
+}
+
+//Returns counter element by its sibling node (e.g. button event sender)
+function getCounter(element) {
+    return element.parentNode.getElementsByClassName("counter")[0];
+}
+
+function getPrice(element) {
+    return element.parentNode.getElementsByClassName("estimated_price_value")[0];
 }
