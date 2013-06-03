@@ -13,5 +13,6 @@ namespace TestProject.Models
         public List<BookinSlot> SlotsOneHour;
         public List<BookinSlot> SlotsTwoHour;
         public List<BookinSlot> SlotsFourHour;
+        public bool isButtonEnable = false;
     }
 }

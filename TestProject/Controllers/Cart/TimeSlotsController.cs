@@ -30,6 +30,13 @@ namespace TestProject.Controllers
 
         public ActionResult Index()
         {
+            TimeSlotsModel model = GetModel(false);
+                return View(model);
+        }
+
+
+        private TimeSlotsModel GetModel(bool whithBackBtn)
+        {
             string userEmail = _usersService.GetEmailIfLoginIn();
             TimeSlotsModel model = new TimeSlotsModel();
 
@@ -43,7 +50,7 @@ namespace TestProject.Controllers
             model.SlotsOneHour = _tss.GetSlots(start, end, SlotsType.OneHour, userEmail);
             model.SlotsTwoHour = _tss.GetSlots(start, end, SlotsType.TwoHour, userEmail);
             model.SlotsFourHour = _tss.GetSlots(start, end, SlotsType.FourHour, userEmail);
-            
+
             //colection with date times to Periods from 9.00 to 22.00 with step in 1 hour, setted to start date of the week
             model.startDay = new List<DateTime>();
 
@@ -55,11 +62,18 @@ namespace TestProject.Controllers
                 toList = toList.AddHours(1.0);
             }
 
+            model.isButtonEnable = whithBackBtn;
 
-
-                return View(model);
+            return model;
         }
 
+
+        public ActionResult CheckOut()
+        {
+            TimeSlotsModel model = GetModel(true);
+
+            return View("Index", model);
+        }
 
         //Ajax jquery responce method
         [HttpPost]

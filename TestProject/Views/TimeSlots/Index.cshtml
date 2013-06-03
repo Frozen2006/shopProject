@@ -28,7 +28,18 @@
 </div>       
         
                
-               
+ <div class="row-fluid">
+    <div class="span6 offset3">
+        @Html.ActionLink("To shop", "Index", "Category", new {}, new { @class="btn btn-success btn-large"})
+        
+        @if (Model.isButtonEnable)
+        {
+            @Html.ActionLink("Continue...", "Index", "Cart", new {}, new {@class = "btn btn-primary btn-large"});
+        }
+        
+    </div>
+</div>       
+                      
 
 <div id="myModal" class="modal hide fade">
     <div class="modal-header">

@@ -82,7 +82,7 @@
                                     <div style="display: inline" id="totalPrice">@Model.TotalPrice</div><span>$</span>
                                 </div>
                                 <div class="span1">
-                                    <input type="button" class="btn btn-success btn-large" value="Buy..."/>
+                                    @Html.ActionLink("Check out..", "CheckOut", "TimeSlots", new {}, new { @class="btn btn-success btn-large"})
                                 </div>
                             </div>
                         </div>
