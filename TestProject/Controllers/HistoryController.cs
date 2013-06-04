@@ -1,5 +1,6 @@
 ﻿using BLL;
 using BLL.membership;
+using Helpers;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,13 @@ namespace TestProject.Controllers
 
             var orders = _orderService.GetUserOrders(email);
             return View(orders);
+        }
+
+        public ActionResult Details(int id)
+        {
+            OrdersDetails order = _orderService.GetOrderDetails(id);
+
+            return View(order);
         }
 
     }
