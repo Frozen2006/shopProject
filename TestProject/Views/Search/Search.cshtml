@@ -1,8 +1,6 @@
 ﻿@model TestProject.Models.SearchPageModel
 
-@{
-    ViewBag.Title = "Search";
-}
+@Scripts.Render("~/Content/js/productpage.js")
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -97,13 +95,13 @@
                                     </div>
                 
                                     <div class="tocart">
-                                        <span>Price:</span>
-                                        @product.Price
                                         @Html.Partial("../Counter", product)  
                                     </div>
                                 }     
                             </div>
+                            
                         }
+
 
                         @{
                             int pageSize = Model.PageSize;
@@ -112,6 +110,7 @@
 
                             int pageCount = productCount / pageSize + 1;
                         }
+                           <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
 
                         <div class="pagination pagination-centered">
                             <ul>
@@ -164,55 +163,3 @@
                     
                 
 
-<script>
-    function newAlert(type, message) {
-        $("#alert-area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
-        $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
-    }
-
-    function getCounter(element) {
-        return element.parentNode.getElementsByClassName("counter")[0];
-    }
-
-    function increase(event) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
-        count += 1;
-
-        counter.innerHTML = count;
-    }
-
-    function decrease(event) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
-
-        if (count > 1) {
-            count -= 1;
-            counter.innerHTML = count;
-        }
-    }
-
-    //public ActionResult AddToCart(int productId, int count)
-    function sendRequest(id, c) {
-        if (c > 0) {
-            $.ajax({
-                url: "/Category/AddToCart",
-                data: { productId: id, count: c },
-                type: "POST",
-                success: function(data) {
-                    newAlert('alert', data);
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(textStatus);
-                }
-            });
-        }
-    }
-
-    function addToCart(event, productId) {
-        var counter = getCounter(event.target);
-        var count = parseInt(counter.innerHTML);
-
-        sendRequest(productId, count);
-    }
-</script>
