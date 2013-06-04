@@ -19,8 +19,7 @@ namespace DAL.membership
 
         public override void Update(Cart tiem)
         {
-            
-
+          
             Cart cart = CurrentDbSet.FirstOrDefault(m => m.Product_Id == tiem.Product_Id);
 
             if (cart != null)

@@ -24,8 +24,8 @@ namespace DAL.membership
 
         public override void Update(User tiem)
         {
-            lock (_lock)
-            {
+
+        
                 User us = CurrentDbSet.FirstOrDefault(m => m.Id == tiem.Id);
 
                 if (us != null)
@@ -42,9 +42,11 @@ namespace DAL.membership
                     us.title = tiem.title;
                     us.zip = tiem.zip;
 
-                    Context.SaveChanges();
+                    Debug.WriteLine("Now try use context: "+Context.GetHashCode());
+                    lock(_lock)
+                        Context.SaveChanges();
                 }
-            }
+
 
         }
     }

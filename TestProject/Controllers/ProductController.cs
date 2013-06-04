@@ -81,52 +81,56 @@ namespace TestProject.Controllers
             return View(product);
         }
 
-
+        private static object _lock = new object();
         public ActionResult AddArrayToCart(string[] productIds, string[] counts)        
         {
-            string email = _userService.GetEmailIfLoginIn();            
-            if (email == null)
+            lock (_lock)
             {
-                Response.StatusCode = 403;
-                return Content("User is not logged in");
+                string email = _userService.GetEmailIfLoginIn();
+                //  string email = bkmz2
+                if (email == null)
+                {
+                    Response.StatusCode = 403;
+                    return Content("User is not logged in");
+                }
+
+                Product[] products;
+                double[] doubleCounts;
+
+                try
+                {
+                    products = productIds.Select(id => int.Parse(id))
+                                         .Select(id => _prodService.GetProduct(id))
+                                         .ToArray();
+
+                    doubleCounts = counts.Select(c => double.Parse(c))
+                                         .ToArray();
+                }
+                catch (Exception ex)
+                {
+                    Response.StatusCode = 400;
+                    return Content("Incorrect arguments:<br>" + ex.Message);
+                }
+
+                if (products.Contains(null))
+                {
+                    Response.StatusCode = 404;
+                    return Content("Some products were not found");
+                }
+
+                StringBuilder respons = new StringBuilder();
+                for (int i = 0; i < products.Length; i++)
+                {
+                    _cartService.Add(email, products[i].Id, doubleCounts[i]);
+
+                    respons.Append(string.Format("{0} units of {1},<br>",
+                                                 doubleCounts[i], products[i].Name));
+                }
+
+                respons.Append("were successfully added!");
+
+                return Json(new {report = respons.ToString()});
             }
-            
-            Product[] products;
-            double[] doubleCounts;
-
-            try
-            {
-                products = productIds.Select(id => int.Parse(id))
-                    .Select(id => _prodService.GetProduct(id))
-                    .ToArray();
-
-                doubleCounts = counts.Select(c => double.Parse(c))
-                    .ToArray();
-            }
-            catch (Exception ex)
-            {
-                Response.StatusCode = 400;
-                return Content("Incorrect arguments:<br>" + ex.Message);
-            }
-            
-            if (products.Contains(null))
-            {
-                Response.StatusCode = 404;
-                return Content("Some products were not found");
-            }
-
-            StringBuilder respons = new StringBuilder();
-            for (int i = 0; i < products.Length; i++)
-            {
-                _cartService.Add(email, products[i].Id, doubleCounts[i]);
-
-                respons.Append(string.Format("{0} units of {1},<br>",
-                    doubleCounts[i], products[i].Name));
-            }
-
-            respons.Append("were successfully added!");
-
-            return Json(new { report = respons.ToString() });
         }
     }
 }

@@ -55,6 +55,41 @@ namespace BLL
 
         }
 
+        // Add new product to user cart.
+        // WARING: If you add one product > 1 times, finnaly product in cart is NOT replace. Only summarize new and old count
+        //
+        public void AddArray(string UserEmail, int[] ProductsId, double[] Counts)
+        {
+            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
+
+            if (us == null)
+                throw new InstanceNotFoundException("User not found");
+
+            for (int q = 0; q < ProductsId.Length; q++)
+            {
+                Cart _tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductsId[q]);
+
+                //Product add first time
+                if (_tmpCart == null)
+                {
+                    _tmpCart = new Cart();
+                    _tmpCart.Product_Id = ProductsId[q];
+                    _tmpCart.Count = Counts[q];
+
+                    us.Carts.Add(_tmpCart);
+                }
+                else //product exist
+                {
+                    _tmpCart.Count += Counts[q];
+                }
+            }
+
+
+            _repo.Update(us);
+
+        }
+
+
         // Get list of product's in cart with additional information (count, total price)
         // 
         //

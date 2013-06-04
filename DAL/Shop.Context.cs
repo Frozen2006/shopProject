@@ -7,13 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
+
 namespace Entities
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ShopContext : DbContext
+    public partial class ShopContext : DbContext, IDisposable
     {
         public ShopContext()
             : base("name=ShopContext")
@@ -35,5 +37,12 @@ namespace Entities
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Buye> Buyes { get; set; }
         public DbSet<Order> Orders { get; set; }
+
+        protected override void Dispose(bool disposing)
+        {
+            Debug.WriteLine("Context "+this.GetHashCode()+" was disposed");
+            base.Dispose(disposing);
+        }
+
     }
 }
