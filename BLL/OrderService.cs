@@ -67,7 +67,7 @@ namespace BLL
             ord.TotalPrice = totalCost;
             ord.Discount = DiscountValue;
             ord.User = user;
-            ord.Status = "in process...";
+            ord.Status = OrderStatusToString(OrderStatus.WaitForPaid);
             ord.CreationTime = DateTime.Now;
             user.Orders.Add(ord);
 
@@ -176,7 +176,6 @@ namespace BLL
 
             _ordersRepository.Update(order);
         }
-
 
         private string OrderStatusToString(OrderStatus os)
         {
