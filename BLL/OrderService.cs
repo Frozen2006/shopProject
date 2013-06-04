@@ -68,6 +68,7 @@ namespace BLL
             ord.Discount = DiscountValue;
             ord.User = user;
             ord.Status = "in process...";
+            ord.CreationTime = DateTime.Now;
             user.Orders.Add(ord);
 
             //clear user chart
@@ -97,11 +98,11 @@ namespace BLL
                 ordList.Add(new OrdersInList()
                     {
                         Id = order.Id,
-                        Status = order.Status,
                         startOrderTime = order.DeliverySpot.StartTime,
                         endOrderTime = order.DeliverySpot.EndTime,
                         OrderStatus = StringToOrderStatus(order.Status),
-                        price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0
+                        price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0,
+                        CreationTime = (DateTime)order.CreationTime
                     });
             }
 
@@ -146,7 +147,8 @@ namespace BLL
                     Products = prod,
                     startDeliveryTime = order.DeliverySpot.StartTime,
                     endErliveryTime = order.DeliverySpot.EndTime,
-                    OrderStatus = StringToOrderStatus(order.Status)
+                    OrderStatus = StringToOrderStatus(order.Status),
+                    CreationTime = (DateTime)order.CreationTime
                 };
 
             return od;

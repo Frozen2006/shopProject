@@ -130,6 +130,7 @@
           <Property Name="TotalPrice" Type="float" Nullable="false" />
           <Property Name="Discount" Type="int" Nullable="false" />
           <Property Name="Comments" Type="nvarchar(max)" />
+          <Property Name="CreationTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -394,7 +395,16 @@
             <End Role="Cart" EntitySet="Carts" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Buyes" EntityType="ShopModel.Buye" />
+          <AssociationSet Name="FK_Buyes_ToProducts" Association="ShopModel.FK_Buyes_ToProducts">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Buye" EntitySet="Buyes" />
+          </AssociationSet>
           <EntitySet Name="Orders" EntityType="ShopModel.Order" />
+          <AssociationSet Name="FK_Buyes_ToOrders" Association="ShopModel.FK_Buyes_ToOrders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Buye" EntitySet="Buyes" />
+          </AssociationSet>
           <AssociationSet Name="FK_Orders_ToDeliverySpots" Association="ShopModel.FK_Orders_ToDeliverySpots">
             <End Role="DeliverySpot" EntitySet="DeliverySpots" />
             <End Role="Order" EntitySet="Orders" />
@@ -402,15 +412,6 @@
           <AssociationSet Name="FK_Orders_ToUsers" Association="ShopModel.FK_Orders_ToUsers">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <EntitySet Name="Buyes" EntityType="ShopModel.Buye" />
-          <AssociationSet Name="FK_Buyes_ToOrders" Association="ShopModel.FK_Buyes_ToOrders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Buye" EntitySet="Buyes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Buyes_ToProducts" Association="ShopModel.FK_Buyes_ToProducts">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Buye" EntitySet="Buyes" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -578,6 +579,29 @@
           <End Type="ShopModel.Cart" Role="Cart" Multiplicity="*" />
           <End Type="ShopModel.User" Role="User" Multiplicity="*" />
         </Association>
+        <EntityType Name="Buye">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
+          <Property Type="Double" Name="Count" Nullable="false" />
+          <Property Type="Int32" Name="OrderId" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="ShopModel.FK_Buyes_ToProducts" FromRole="Buye" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="ShopModel.FK_Buyes_ToOrders" FromRole="Buye" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Buyes_ToProducts">
+          <End Type="ShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="ShopModel.Buye" Role="Buye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Buye">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
@@ -589,10 +613,23 @@
           <Property Type="Double" Name="TotalPrice" Nullable="false" />
           <Property Type="Int32" Name="Discount" Nullable="false" />
           <Property Type="String" Name="Comments" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreationTime" Precision="3" />
+          <NavigationProperty Name="Buyes" Relationship="ShopModel.FK_Buyes_ToOrders" FromRole="Order" ToRole="Buye" />
           <NavigationProperty Name="DeliverySpot" Relationship="ShopModel.FK_Orders_ToDeliverySpots" FromRole="Order" ToRole="DeliverySpot" />
           <NavigationProperty Name="User" Relationship="ShopModel.FK_Orders_ToUsers" FromRole="Order" ToRole="User" />
-          <NavigationProperty Name="Buyes" Relationship="ShopModel.FK_Buyes_ToOrders" FromRole="Order" ToRole="Buye" />
         </EntityType>
+        <Association Name="FK_Buyes_ToOrders">
+          <End Type="ShopModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="ShopModel.Buye" Role="Buye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Buye">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Orders_ToDeliverySpots">
           <End Type="ShopModel.DeliverySpot" Role="DeliverySpot" Multiplicity="1" />
           <End Type="ShopModel.Order" Role="Order" Multiplicity="*" />
@@ -614,41 +651,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Buye">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ProductId" Nullable="false" />
-          <Property Type="Double" Name="Count" Nullable="false" />
-          <Property Type="Int32" Name="OrderId" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="ShopModel.FK_Buyes_ToOrders" FromRole="Buye" ToRole="Order" />
-          <NavigationProperty Name="Product" Relationship="ShopModel.FK_Buyes_ToProducts" FromRole="Buye" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_Buyes_ToOrders">
-          <End Type="ShopModel.Order" Role="Order" Multiplicity="1" />
-          <End Type="ShopModel.Buye" Role="Buye" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Buye">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Buyes_ToProducts">
-          <End Type="ShopModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="ShopModel.Buye" Role="Buye" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Buye">
-              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -761,25 +763,26 @@
               <ScalarProperty Name="Id" ColumnName="Carts_Id" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="ShopModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="DeliverySpotId" ColumnName="DeliverySpotId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Buyes">
             <EntityTypeMapping TypeName="ShopModel.Buye">
               <MappingFragment StoreEntitySet="Buyes">
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ShopModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="CreationTime" ColumnName="CreationTime" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DeliverySpotId" ColumnName="DeliverySpotId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

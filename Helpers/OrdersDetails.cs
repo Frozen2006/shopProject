@@ -17,5 +17,6 @@ namespace Helpers
         public string Comments;
         public string userEmail;
         public OrderStatus OrderStatus;
+        public DateTime CreationTime;
     }
 }

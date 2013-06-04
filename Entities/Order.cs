@@ -26,9 +26,10 @@ namespace Entities
         public double TotalPrice { get; set; }
         public int Discount { get; set; }
         public string Comments { get; set; }
+        public Nullable<System.DateTime> CreationTime { get; set; }
     
+        public virtual ICollection<Buye> Buyes { get; set; }
         public virtual DeliverySpot DeliverySpot { get; set; }
         public virtual User User { get; set; }
-        public virtual ICollection<Buye> Buyes { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace Helpers
         public int Id;
         public DateTime startOrderTime;
         public DateTime endOrderTime;
-        public string Status;
         public OrderStatus OrderStatus;
         public double price;
+        public DateTime CreationTime;
     }
 }
