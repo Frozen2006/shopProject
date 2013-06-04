@@ -118,11 +118,11 @@ namespace TestProject.Controllers
                     return Content("Some products were not found");
                 }
 
+                _cartService.AddArray(email, products.Select(p => p.Id).ToArray(), doubleCounts);
+
                 StringBuilder respons = new StringBuilder();
                 for (int i = 0; i < products.Length; i++)
                 {
-                    _cartService.Add(email, products[i].Id, doubleCounts[i]);
-
                     respons.Append(string.Format("{0} units of {1},<br>",
                                                  doubleCounts[i], products[i].Name));
                 }

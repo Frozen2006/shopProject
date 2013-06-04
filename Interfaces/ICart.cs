@@ -10,6 +10,7 @@ namespace Interfaces
     public interface ICart
     {
         void Add(string UserEmail, int ProductId, double Count);
+        void AddArray(string UserEmail, int[] ProductsId, double[] Counts);
         List<Helpers.ProductInCart> GetAllChart(string UserEmail);
         void DeleteProduct(string UserEmail, int ProductId);
         void Clear(string UserEmail);
