@@ -206,7 +206,6 @@
 
 /*History box*/
 #history_box {
-    text-align: center;
     margin: 0 20%;
 }
 
@@ -216,4 +215,14 @@
 .order_table_cell {
     display: inline-block;
     margin: 10px 5px;        
+}
+
+
+/*Order details*/
+.order_details_box {
+    margin: 0 20%;
+}
+
+.more_button {
+    float: right;
 }

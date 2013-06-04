@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<Helpers.OrdersInList>
 
 <div id="history_box">
+    <h2>Order history</h2>
 
-    @foreach (var item in Model) {
+    @foreach (var item in Model.OrderByDescending(order => order.Id)) {
        <div class="order-box well">
             <div class="order_table_cell">
             <span class="order_table_header">Id:</span>
@@ -22,8 +23,11 @@
             <div class="order_table_cell">
             <span class="order_table_header">End time:</span>
                 @item.endOrderTime    
-            </div>      
+            </div>    
+           
+            @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn more_button" }) 
         </div>
     }
 
+    @Html.ActionLink("To the shop", "Details", "Category", new { Id = 0 }, new { @class = "btn btn-success" })
 </div>

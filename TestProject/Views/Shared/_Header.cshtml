@@ -62,8 +62,7 @@
                     <li>@Html.ActionLink("Shop", "Index", "Category")</li>
                     @if (isLoginIn)
                     {
-                        <li><a href="#contact">History</a></li>
-                        <li><a href="#contact">Orders</a></li>
+                        <li>@Html.ActionLink("Orders", "Index", "History")</li>
                         <li>@Html.ActionLink("Delivery Types", "Index", "TimeSlots")</li>
                     }
                 </ul>
