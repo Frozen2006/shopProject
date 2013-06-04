@@ -23,7 +23,7 @@
 
     @if (Model.OrderStatus == Helpers.OrderStatus.WaitForPaid)
     {
-        @Html.ActionLink("Payment", "Pay", "Payment", new { orderId=Model.Id })
+        @Html.ActionLink("Payment", "Pay", "Payment", new { orderId = Model.Id }, new { @class="btn btn-danger"})
     }
 
     <h3>Products:</h3>

@@ -3,7 +3,7 @@
 <div id="history_box">
     <h2>Order history</h2>
 
-    @foreach (var item in Model.OrderByDescending(order => order.Id)) {
+    @foreach (var item in Model.OrderBy(order => order.CreationTime)) {
        <div class="order-box well">
             <div class="order_table_cell">
             <span class="order_table_header">Id:</span>
