@@ -100,7 +100,8 @@ namespace BLL
                         Status = order.Status,
                         startOrderTime = order.DeliverySpot.StartTime,
                         endOrderTime = order.DeliverySpot.EndTime,
-                        OrderStatus = StringToOrderStatus(order.Status)
+                        OrderStatus = StringToOrderStatus(order.Status),
+                        price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0
                     });
             }
 

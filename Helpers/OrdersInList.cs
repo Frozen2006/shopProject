@@ -13,5 +13,6 @@ namespace Helpers
         public DateTime endOrderTime;
         public string Status;
         public OrderStatus OrderStatus;
+        public double price;
     }
 }
