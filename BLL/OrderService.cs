@@ -95,6 +95,12 @@ namespace BLL
 
             foreach (var order in user.Orders)
             {
+                DateTime dt;
+                if (order.CreationTime != null)
+                    dt = (DateTime)order.CreationTime;
+                else
+                     dt = DateTime.Now;
+
                 ordList.Add(new OrdersInList()
                     {
                         Id = order.Id,
@@ -102,7 +108,7 @@ namespace BLL
                         endOrderTime = order.DeliverySpot.EndTime,
                         OrderStatus = StringToOrderStatus(order.Status),
                         price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0,
-                        CreationTime = (DateTime)order.CreationTime
+                        CreationTime = dt
                     });
             }
 
@@ -136,6 +142,11 @@ namespace BLL
                     });
             }
 
+            DateTime dt;
+            if (order.CreationTime != null)
+                dt = (DateTime)order.CreationTime;
+            else
+                dt = DateTime.Now;
 
             OrdersDetails od = new OrdersDetails()
                 {
@@ -148,7 +159,7 @@ namespace BLL
                     startDeliveryTime = order.DeliverySpot.StartTime,
                     endErliveryTime = order.DeliverySpot.EndTime,
                     OrderStatus = StringToOrderStatus(order.Status),
-                    CreationTime = (DateTime)order.CreationTime
+                    CreationTime = dt
                 };
 
             return od;
