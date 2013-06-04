@@ -5,6 +5,14 @@
 
 <div class="row-fluid">
     <div class="span6 offset3">
+        <div class="well well-large">To book time - click on the table cell.</div>
+    </div>
+</div>
+
+
+
+<div class="row-fluid">
+    <div class="span6 offset3">
         <h2>Fast delivery</h2>
         @{TimeSlotsTableModel tstm = new TimeSlotsTableModel() {Slots = Model.SlotsOneHour, Step = 1, Today = Model.Today, startDay = Model.startDay};}
         @Html.Partial("_particalTable", tstm)
