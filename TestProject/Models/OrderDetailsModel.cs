@@ -13,7 +13,6 @@ namespace TestProject.Models
         [Display(Name = "Delivery Time")]
         public List<DeliverySpot> TimeSlot { get; set; }
 
-        [Required]
         [Display(Name = "Comments for curier")]
         public string Comments { get; set; }
     }

@@ -17,7 +17,7 @@ namespace NinjectModules
     {
         public override void Load()
         {
-            Bind<DbContext>().To<Entities.ShopContext>().InRequestScope();
+            Bind<DbContext>().To<Entities.ShopContext>().InThreadScope();
           //  Bind<DbContext>().To<Entities.ShopContext>().InScope( ctx => StandardScopeCallbacks.Request ?? StandardScopeCallbacks.Thread)
             Bind<ICategoryRepository>().To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
             Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>(); 

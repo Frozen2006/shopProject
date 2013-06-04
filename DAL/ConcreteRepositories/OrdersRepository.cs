@@ -19,7 +19,7 @@ namespace DAL.membership
 
         public override void Update(Order tiem)
         {
-            Order ord = CurrentDbSet.FirstOrDefault(m => m.Id == m.Id);
+            Order ord = CurrentDbSet.FirstOrDefault(m => m.Id == tiem.Id);
 
             if (ord != null)
             {
@@ -27,6 +27,7 @@ namespace DAL.membership
                 ord.DeliverySpot = tiem.DeliverySpot;
                 ord.Status = tiem.Status;
                 ord.User = tiem.User;
+                
             }
             Context.SaveChanges();
         }
