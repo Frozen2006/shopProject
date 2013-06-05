@@ -6,6 +6,10 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AutoMapper;
+using Entities;
+using Helpers;
+using TestProject.Models;
 
 namespace TestProject
 {
@@ -16,6 +20,11 @@ namespace TestProject
     {
         protected void Application_Start()
         {
+            Mapper.CreateMap<Product, ProductInCart>();
+            Mapper.CreateMap<RegisterModel, User>();
+            Mapper.CreateMap<User, UserDetails>();
+            Mapper.CreateMap<DeliverySpot, BookinSlot>();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

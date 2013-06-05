@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
 using Helpers;
 
 namespace Interfaces
 {
     public interface IUserService
     {
-        bool CeateUser(string email, string password, string title, string firstName, string lastName,
-                       string address, string address2, string phone, string phone2, int zip, string city, RolesType role);
+        bool CeateUser(User newUser);
 
         bool CheckUser(string email, string password);
         bool LogIn(string email, string password);

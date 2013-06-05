@@ -34,7 +34,7 @@
 
         @{
             //calls countInput with the following params: event, price, slider class (to round the count value)
-            string changeHandler = "countInput(event, " + Model.PriceOfOneItem.ToString(CultureInfo.InvariantCulture) + ", '" + sliderClass + "')";
+            string changeHandler = "countInput(event, " + Model.Price.ToString(CultureInfo.InvariantCulture) + ", '" + sliderClass + "')";
             string blurHandler = "correctInput(event, '" + sliderClass + "')";
         }
         <input type="text" class="counter" id="@Model.Id" value="@Model.Count" onchange="@changeHandler" onkeyup="@changeHandler" onblur="@blurHandler"/>

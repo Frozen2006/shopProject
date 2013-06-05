@@ -1,7 +1,8 @@
 ﻿@using BLL.membership
+@using Interfaces
 @using Ninject;
 @{ 
-    UsersService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<UsersService>(); 
+    IUserService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<IUserService>(); 
 }
 @{
     ViewBag.Title = "Index";

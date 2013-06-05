@@ -8,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Caching;
+using AutoMapper;
 using DAL;
 using DAL.Repositories.DbFirstRepository;
 using DAL.membership;
@@ -36,38 +37,17 @@ namespace BLL.membership
         // Create new user
         // Argument's adress2 and phone2 may be null.
         //
-        public bool CeateUser(string email, string password, string title, string firstName, string lastName,
-                              string address, string address2, string phone, string phone2, int zip, string city, RolesType role)
+        public bool CeateUser(User newUser)
         {
-            if ((email == null) || (password == null) || (title == null) || (firstName == null) || (lastName == null) ||
-                (address == null) || (phone == null) || (zip == 0) || (city == null))
-            {
-                throw new InvalidDataException("Somethind argument's is not set");
-            }
-
-            User exUser = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+           
+            User exUser = _repository.ReadAll().FirstOrDefault(m => m.email == newUser.email);
 
             if (exUser != null)
                 return false;
 
-            User nUser = new User();
+            newUser.password = GetHash(newUser.password); //hashing pass
 
-            nUser.email = email;
-            nUser.password = GetHash(password);
-            nUser.title = title;
-            nUser.first_name = firstName;
-            nUser.last_name = lastName;
-            nUser.address = address;
-            nUser.address2 = address2;
-            nUser.phone = phone;
-            nUser.phone2 = phone2;
-            nUser.zip = zip;
-            nUser.city = city;
-
-            nUser.Role = (int) role;
-
-
-            _repository.Create(nUser);
+            _repository.Create(newUser);
 
             return true;
         }
@@ -131,23 +111,8 @@ namespace BLL.membership
             {
                 throw new InstanceNotFoundException("User not found");
             }
-                
-
-            UserDetails userDetails = new UserDetails()
-            {
-                    Id = us.Id,
-                    Role = (RolesType)us.Role,
-                    address = us.address,
-                    address2 = us.address2,
-                    city = us.city,
-                    zip = us.zip,
-                    email = us.email,
-                    phone = us.phone,
-                    phone2 = us.phone2,
-                    first_name = us.first_name,
-                    last_name = us.last_name,
-                    title = us.title
-                };
+       
+            UserDetails userDetails = Mapper.Map<User, UserDetails>(us);
 
             return userDetails;
         }

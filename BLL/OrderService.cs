@@ -138,7 +138,7 @@ namespace BLL
                         Name = buye.Product.Name,
                         UnitOfMeasure = buye.Product.UnitOfMeasure,
                         SellByWeight = buye.Product.SellByWeight,
-                        PriceOfOneItem = buye.Product.Price,
+                        Price = buye.Product.Price,
                         TotalPrice = buye.Product.Price*buye.Count
                     });
             }

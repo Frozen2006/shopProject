@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DAL.membership;
 using Entities;
 using Helpers;
@@ -111,18 +112,7 @@ namespace BLL
 
             DateTime endTime = new DateTime();
 
-            switch (type)
-            {
-                case SlotsType.OneHour:
-                    endTime = startTime.AddHours(1.0);
-                    break;
-                case SlotsType.TwoHour:
-                    endTime = startTime.AddHours(2.0);
-                    break;
-                case SlotsType.FourHour:
-                    endTime = startTime.AddHours(4.0);
-                    break;
-            }
+            endTime = startTime.AddHours(Convert.ToDouble((int)type)); //type - enum. Every record it them associated whith count of hours
 
             slot.EndTime = endTime;
 
@@ -140,10 +130,12 @@ namespace BLL
         }
         private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds, string UserEmail)
         {
-            BookinSlot bookinSlot = new BookinSlot() {StartTime = ds.StartTime, EndTime = ds.EndTime};
+            //map all parameters
+            BookinSlot bookinSlot = Mapper.Map<DeliverySpot, BookinSlot>(ds);
 
+
+            //generatin status field
             bookinSlot.Type = (SlotsType)ds.Type;
-
 
             SlotStatus slotStatus = SlotStatus.Free;
 

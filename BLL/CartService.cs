@@ -4,6 +4,7 @@ using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DAL.membership;
 using Entities;
 using Helpers;
@@ -27,13 +28,7 @@ namespace BLL
         //
         public void Add(string UserEmail, int ProductId, double Count)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail) || (ProductId == 0) || (Count <=0 ) )
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
-            
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             Cart _tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
 
@@ -60,10 +55,7 @@ namespace BLL
         //
         public void AddArray(string UserEmail, int[] ProductsId, double[] Counts)
         {
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             for (int q = 0; q < ProductsId.Length; q++)
             {
@@ -89,37 +81,19 @@ namespace BLL
 
         }
 
-
         // Get list of product's in cart with additional information (count, total price)
         // 
         //
         public List<ProductInCart> GetAllChart(string UserEmail)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
-
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             List<ProductInCart> outChart = new List<ProductInCart>();
 
             foreach (var cart in us.Carts)
             {
-                ProductInCart tmpPic = new ProductInCart()
-                    {
-                        Id = cart.Product.Id,
-                        Name = cart.Product.Name,
-                        CategoryName = cart.Product.Category.Name,
-                        CategoryId = cart.Product.CategoryId,
-                        PriceOfOneItem = cart.Product.Price,
-                        AverageWeight = cart.Product.AverageWeight,
-                        SellByWeight = cart.Product.SellByWeight,
-                        UnitOfMeasure = cart.Product.UnitOfMeasure,
-                        Count = cart.Count,
-                        TotalPrice = cart.Product.Price * cart.Count
-                    };
+                ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(cart.Product);
+                tmpPic.TotalPrice = cart.Product.Price*cart.Count; //automapper don't calculate total price ;)
 
                 outChart.Add(tmpPic);
             }
@@ -130,13 +104,8 @@ namespace BLL
         // Delete product record from user's cart by Product ID
         public void DeleteProduct(string UserEmail, int ProductId)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail) || (ProductId == 0))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
 
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             Cart findCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
 
@@ -152,13 +121,7 @@ namespace BLL
         // Clear user's cart completely
         public void Clear(string UserEmail)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
-
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             us.Carts.Clear();
 
@@ -172,13 +135,7 @@ namespace BLL
         //
         public double UpateCount(string UserEmail, int ProductId, double NewCount)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail) || (NewCount <= 0))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
-
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             Cart currentCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
 
@@ -194,13 +151,7 @@ namespace BLL
 
         public double GetTotalPrice(string UserEmail)
         {
-            if (String.IsNullOrWhiteSpace(UserEmail))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
-
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, UserEmail) == 0);
-
-            if (us == null)
-                throw new InstanceNotFoundException("User not found");
+            User us = GetUser(UserEmail);
 
             double totalPrice = 0.0;
 
@@ -210,6 +161,19 @@ namespace BLL
             }
 
             return totalPrice;
+        }
+
+        private User GetUser(string userEmail)
+        {
+            if (String.IsNullOrWhiteSpace(userEmail))
+                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
+
+            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, userEmail) == 0);
+
+            if (us == null)
+                throw new InstanceNotFoundException("User not found");
+
+            return us;
         }
     }
 }

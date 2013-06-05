@@ -75,8 +75,8 @@
         </li>
         <li>
             @Html.Label("Enter you main adress to delivery")
-            @Html.TextBoxFor(m => m.Address1, new { @class = "input-block-level", @placeholder = "Adress" })
-            @Html.ValidationMessageFor(m => m.Address1)
+            @Html.TextBoxFor(m => m.Address, new { @class = "input-block-level", @placeholder = "Adress" })
+            @Html.ValidationMessageFor(m => m.Address)
         </li>
         <li>
             @Html.Label("Enter you secondary adress (additional)")
@@ -85,8 +85,8 @@
         </li>
         <li>
             @Html.Label("You phone")
-            @Html.TextBoxFor(m => m.Phone1, new { @class = "input-block-level", @placeholder = "Phone" })
-            @Html.ValidationMessageFor(m => m.Phone1)
+            @Html.TextBoxFor(m => m.Phone, new { @class = "input-block-level", @placeholder = "Phone" })
+            @Html.ValidationMessageFor(m => m.Phone)
         </li>
         <li>
             @Html.Label("You secondary phone (additional)")

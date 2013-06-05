@@ -12,7 +12,7 @@ namespace Helpers
         public string Name;
         public string CategoryName;
         public int CategoryId;
-        public double PriceOfOneItem;
+        public double Price;
         public string SellByWeight;
         public double AverageWeight;
         public string UnitOfMeasure;

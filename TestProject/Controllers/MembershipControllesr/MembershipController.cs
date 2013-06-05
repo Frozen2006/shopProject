@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using BLL;
 using BLL.membership;
+using Entities;
 using Helpers;
 using Interfaces;
 using Ninject;
+using TestProject.Models;
 
 namespace TestProject.Controllers.MembershipControllesr
 {
@@ -36,11 +39,14 @@ namespace TestProject.Controllers.MembershipControllesr
         }
 
         [HttpPost]
-        public ActionResult Register(Models.RegisterModel model)
+        public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                if (_userService.CeateUser(model.Email, model.Password, model.Title, model.firstName, model.lastName, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City, RolesType.User))
+                User us = Mapper.Map<RegisterModel, User>(model);
+                us.Role = (int) RolesType.User;
+
+                if (_userService.CeateUser(us))
                 {
                     return RedirectToAction("Index");
                 }
