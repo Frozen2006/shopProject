@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces;
 
 namespace DAL.membership
 {
-    public class OrdersRepository : RepositoryBase<Order>
+    public class OrdersRepository : RepositoryBase<Order>, IOrdersRepository
     {
         public OrdersRepository(DbContext context)
             : base(context)

@@ -16,7 +16,7 @@ namespace TestProject.Controllers
     public class CategoryController : BaseController
     {
         [Inject]
-        public CategoryController(CategoryService ps, UsersService us, ICart cs)
+        public CategoryController(ICategoryService ps, IUserService us, ICart cs)
             : base(ps, us, cs) { }
 
 

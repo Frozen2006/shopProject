@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces;
 
 namespace DAL.membership
 {
-    public class SessionRepository : RepositoryBase<Session>
+    public class SessionRepository : RepositoryBase<Session>, ISessionRepository
     {
         public SessionRepository(DbContext context)
             : base(context)

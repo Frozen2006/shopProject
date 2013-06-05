@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,7 +48,9 @@
     <Compile Include="ProductInCart.cs" />
     <Compile Include="ProductInSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RolesType.cs" />
     <Compile Include="SlotsType.cs" />
+    <Compile Include="SortType.cs" />
     <Compile Include="UserDetails.cs" />
   </ItemGroup>
   <ItemGroup>

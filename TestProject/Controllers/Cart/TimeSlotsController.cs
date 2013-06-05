@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BLL;
 using BLL.membership;
 using Helpers;
-using Ninject;
+using Interfaces;
+using TestProject.Filters;
 using TestProject.Models;
 
-namespace TestProject.Controllers
+namespace TestProject.Controllers.Cart
 {
-    [Filters.CustomAuthrize(Roles = "User")]
-    public class TimeSlotsController : Controller
+    [CustomAuthrize(Roles = RolesType.User)]
+    public class TimeSlotsController : BaseController
     {
         //
         // GET: /TimeSlots/
 
-        private TimeSlotsService _tss;
-        private UsersService _usersService;
+        private ITimeSlotsService _tss;
 
 
-        [Inject]
-        public TimeSlotsController(TimeSlotsService tsinp, UsersService us)
+        public TimeSlotsController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService tss) : base(ps, us, cs)
         {
-            _tss = tsinp;
-            _usersService = us;
+            _tss = tss;
         }
-
 
         public ActionResult Index()
         {
@@ -38,7 +33,7 @@ namespace TestProject.Controllers
 
         private TimeSlotsModel GetModel(bool whithBackBtn)
         {
-            string userEmail = _usersService.GetEmailIfLoginIn();
+            string userEmail = GetUserEmail();
             TimeSlotsModel model = new TimeSlotsModel();
 
             model.Today = DateTime.Now;
@@ -71,7 +66,7 @@ namespace TestProject.Controllers
 
         public ActionResult CheckOut()
         {
-            string userEmail = _usersService.GetEmailIfLoginIn();
+            string userEmail = GetUserEmail();
 
             if (_tss.GetUserSlots(userEmail).Count == 0)
             {
@@ -90,7 +85,7 @@ namespace TestProject.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                string userEmail = _usersService.GetEmailIfLoginIn();
+                string userEmail = GetUserEmail();
                 DateTime bookTime = new DateTime(year, mounth, day, hour, 0, 0);
                 SlotsType st = SlotsType.OneHour;
 

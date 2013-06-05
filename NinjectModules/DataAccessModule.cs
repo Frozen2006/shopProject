@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL;
+using BLL.membership;
 using DAL;
+using DAL.Repositories.DbFirstRepository;
+using DAL.membership;
 using Entities;
+using Helpers;
+using Interfaces;
 using Interfaces.Repositories;
 using Ninject.Infrastructure;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;
+using TestProject.Helpers;
 
 namespace NinjectModules
 {
@@ -17,30 +24,29 @@ namespace NinjectModules
     {
         public override void Load()
         {
-            Bind<DbContext>().To<Entities.ShopContext>().InRequestScope();
+            Bind<DbContext>().To<ShopContext>().InRequestScope();
           //  Bind<DbContext>().To<Entities.ShopContext>().InScope( ctx => StandardScopeCallbacks.Request ?? StandardScopeCallbacks.Thread)
-            Bind<ICategoryRepository>().To<DAL.Repositories.DbFirstRepository.CategoryRepository>();
-            Bind<IRepository<Product>>().To<DAL.Repositories.DbFirstRepository.ProductRepository>(); 
-            
+            Bind<ICategoryRepository>().To<CategoryRepository>();
+            Bind<IRepository<Product>>().To<ProductRepository>();
+            Bind<ISessionContext>().To<SessionContextMapper>();
 
-            Bind<DAL.membership.UserRepository>().To<DAL.membership.UserRepository>();
-            Bind<DAL.membership.RoleRepository>().To<DAL.membership.RoleRepository>();
-            Bind<DAL.membership.SessionRepository>().To<DAL.membership.SessionRepository>();
-            Bind<DAL.membership.ZipRepository>().To<DAL.membership.ZipRepository>();
-            Bind<DAL.membership.TimeSlotsRepository>().ToSelf();
-            Bind<DAL.membership.OrdersRepository>().ToSelf();
+            Bind<IUserRepository>().To<UserRepository>();
+            Bind<ISessionRepository>().To<SessionRepository>();
+            Bind<IZipRepository>().To<ZipRepository>();
+            Bind<TimeSlotsRepository>().To<TimeSlotsRepository>();
+            Bind<IOrdersRepository>().To <OrdersRepository>();
 
-            Bind<Interfaces.IZipCode>().To<BLL.membership.ZipCodeService>();
-            Bind<BLL.CategoryService>().ToSelf();
-            Bind<BLL.membership.UsersService>().To<BLL.membership.UsersService>();
-            Bind<BLL.OrderService>().ToSelf();
+            Bind<IZipCode>().To<ZipCodeService>();
+            Bind<ICategoryService>().To<CategoryService>();
+            Bind<IUserService>().To<UsersService>();
+            Bind<IOrderService>().To<OrderService>();
 
             //Cart
-            Bind<Interfaces.ICart>().To<BLL.CartService>().InRequestScope();
+            Bind<ICart>().To<CartService>().InRequestScope();
 
-            Bind<BLL.SearchService>().To<BLL.SearchService>();
+            Bind<ISearchService>().To<SearchService>();
 
-            Bind<BLL.TimeSlotsService>().ToSelf();
+            Bind<ITimeSlotsService>().To<TimeSlotsService>();
 
         }
     }

@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL;
 using BLL.membership;
+using Helpers;
+using Interfaces;
 using Ninject;
 
 namespace TestProject.Controllers.MembershipControllesr
 {
-    public class MembershipController : Controller
+    public class MembershipController : BaseController
     {
         //
         // GET: /Membership/
 
-        [Inject]
-        public MembershipController(UsersService uservice, Interfaces.IZipCode zip)
+
+
+        private readonly IZipCode _myZip;
+
+        public MembershipController(ICategoryService ps, IUserService us, ICart cs, IZipCode zip) : base(ps, us, cs)
         {
-            us = uservice;
             _myZip = zip;
         }
-
-        private readonly UsersService us;
-        private Interfaces.IZipCode _myZip;
 
         public ActionResult Index()
         {
@@ -38,7 +40,7 @@ namespace TestProject.Controllers.MembershipControllesr
         {
             if (ModelState.IsValid)
             {
-                if (us.CeateUser(model.Email, model.Password, model.Title, model.firstName, model.lastName, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City))
+                if (_userService.CeateUser(model.Email, model.Password, model.Title, model.firstName, model.lastName, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City, RolesType.User))
                 {
                     return RedirectToAction("Index");
                 }
@@ -91,7 +93,7 @@ namespace TestProject.Controllers.MembershipControllesr
         {
             if (ModelState.IsValid)
             {
-                if (us.LogIn(model.Email, model.Password))
+                if (_userService.LogIn(model.Email, model.Password))
                 {
                     return RedirectToAction("Index");
                 }
@@ -104,7 +106,7 @@ namespace TestProject.Controllers.MembershipControllesr
 
         public ActionResult LogOut()
         {
-            us.LogOut(HttpContext.Request.Cookies.Get("session_data").Value);
+            _userService.LogOut(HttpContext.Request.Cookies.Get("session_data").Value);
             return RedirectToAction("Index", "Home");
         }
 

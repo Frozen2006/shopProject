@@ -4,25 +4,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BLL;
+using BLL.membership;
 using Entities;
 using Helpers;
+using Interfaces;
 using TestProject.Models;
 
 namespace TestProject.Controllers
 {
-    public class SearchController : Controller
+    public class SearchController : BaseController
     {
         //
         // GET: /Search/
 
-        public SearchController(SearchService ss)
+
+        private ISearchService _search;
+
+
+        public SearchController(ICategoryService ps, IUserService us, ICart cs, ISearchService ss) : base(ps, us, cs)
         {
             _search = ss;
         }
-
-
-        private SearchService _search;
-
 
         public ActionResult Index()
         {

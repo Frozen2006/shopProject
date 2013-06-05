@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
 using Helpers;
+using Interfaces;
 using Interfaces.Repositories;
 using Ninject;
 
 namespace BLL
 {
-    public class SearchService
+    public class SearchService : ISearchService
     {
         private readonly ProductRepository _productRepo;
 

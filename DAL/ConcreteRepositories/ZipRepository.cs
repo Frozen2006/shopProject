@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces;
 
 namespace DAL.membership
 {
-    public class ZipRepository : RepositoryBase<Zip>
+    public class ZipRepository : RepositoryBase<Zip>, IZipRepository
     {
         public ZipRepository(DbContext context)
             : base(context)

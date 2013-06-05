@@ -52,9 +52,6 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="SecurityGuard">
-      <HintPath>..\packages\SecurityGuard.MVC4.1.0.10\lib\net40\SecurityGuard.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -164,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SessionContextMapper.cs" />
     <Compile Include="Mailers\IPasswordResetMailer.cs" />
     <Compile Include="Mailers\Models\MailerModel.cs" />
     <Compile Include="Mailers\PasswordResetMailer.cs" />
@@ -343,10 +341,6 @@
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
       <Name>Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NinjectModules\NinjectModules.csproj">
-      <Project>{015a49e5-be88-4f22-ab80-f11e17b12353}</Project>
-      <Name>NinjectModules</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

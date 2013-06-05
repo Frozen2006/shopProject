@@ -39,10 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICategoryService.cs" />
+    <Compile Include="IOrderService.cs" />
+    <Compile Include="ISearchService.cs" />
+    <Compile Include="ITimeSlotsService.cs" />
+    <Compile Include="IUserService.cs" />
+    <Compile Include="Repositories\IOrdersRepository.cs" />
+    <Compile Include="Repositories\ITimeSlotsRepository.cs" />
+    <Compile Include="Repositories\IZipRepository.cs" />
+    <Compile Include="Repositories\ISessionRepository.cs" />
     <Compile Include="ICart.cs" />
-    <Compile Include="ICategoryRepository.cs" />
-    <Compile Include="IProductRepository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="Repositories\ICategoryRepository.cs" />
+    <Compile Include="Repositories\IProductRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="ISessionContext.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="IZipCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

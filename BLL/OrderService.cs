@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.membership;
 using Entities;
+using Interfaces;
 using Ninject;
 using Helpers;
 
 namespace BLL
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private UserRepository _userRepository;
         private TimeSlotsRepository _timeSlots;
@@ -41,7 +42,7 @@ namespace BLL
             if (timeSlot == null)
                 throw new InstanceNotFoundException("Time slot not found");
 
-            int DiscountValue = GetDiscountValue(timeSlot.Type);
+            int DiscountValue = timeSlot.Type;
 
             ICollection<Buye> buyes = new Collection<Buye>();
 
@@ -67,7 +68,7 @@ namespace BLL
             ord.TotalPrice = totalCost;
             ord.Discount = DiscountValue;
             ord.User = user;
-            ord.Status = OrderStatusToString(OrderStatus.WaitForPaid);
+            ord.Status = (int)OrderStatus.WaitForPaid;
             ord.CreationTime = DateTime.Now;
             user.Orders.Add(ord);
 
@@ -106,7 +107,7 @@ namespace BLL
                         Id = order.Id,
                         startOrderTime = order.DeliverySpot.StartTime,
                         endOrderTime = order.DeliverySpot.EndTime,
-                        OrderStatus = StringToOrderStatus(order.Status),
+                        OrderStatus = (OrderStatus)order.Status,
                         price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0,
                         CreationTime = dt
                     });
@@ -158,7 +159,7 @@ namespace BLL
                     Products = prod,
                     startDeliveryTime = order.DeliverySpot.StartTime,
                     endErliveryTime = order.DeliverySpot.EndTime,
-                    OrderStatus = StringToOrderStatus(order.Status),
+                    OrderStatus = (OrderStatus)(order.Status),
                     CreationTime = dt
                 };
 
@@ -172,46 +173,10 @@ namespace BLL
             if (order == null)
                 throw new InstanceNotFoundException("Order not found");
 
-            order.Status = OrderStatusToString(orderStatus);
+            order.Status =(int)orderStatus;
 
             _ordersRepository.Update(order);
         }
-
-        private string OrderStatusToString(OrderStatus os)
-        {
-            if (os == OrderStatus.WaitForPaid)
-                return "WaitForPaid";
-            if (os == OrderStatus.Paid)
-                return "Paid";
-                return "Compleat";
-        }
-
-        private OrderStatus StringToOrderStatus(string os)
-        {
-            if (os.CompareTo("WaitForPaid") == 0)
-                return OrderStatus.WaitForPaid;
-            if (os.CompareTo("Paid") == 0)
-                return OrderStatus.Paid;
-
-            return OrderStatus.Compleat;
-            
-        }
-
-        private int GetDiscountValue(string type)
-        {
-            if (type.CompareTo("OneHour") == 0)
-                return 0;
-
-            if (type.CompareTo("TwoHour") == 0)
-                return 3;
-
-            if (type.CompareTo("FourHour") == 0)
-                return 6;
-
-            return 0;
-
-        }
-
 
     }
 }

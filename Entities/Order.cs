@@ -22,7 +22,7 @@ namespace Entities
         public int Id { get; set; }
         public int DeliverySpotId { get; set; }
         public int UserId { get; set; }
-        public string Status { get; set; }
+        public int Status { get; set; }
         public double TotalPrice { get; set; }
         public int Discount { get; set; }
         public string Comments { get; set; }

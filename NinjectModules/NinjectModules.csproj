@@ -74,9 +74,17 @@
       <Project>{56d9fb78-9f87-436e-baf4-1103b694c4f3}</Project>
       <Name>Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
       <Name>Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestProject\TestProject.csproj">
+      <Project>{c1708af9-68a2-447b-81e4-8706361172ce}</Project>
+      <Name>TestProject</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

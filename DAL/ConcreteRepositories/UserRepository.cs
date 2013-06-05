@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces;
 
 
 namespace DAL.membership
 {
-    public class UserRepository : RepositoryBase<User>
+    public class UserRepository : RepositoryBase<User>, IUserRepository
     {
 
         private static object _lock = new object();

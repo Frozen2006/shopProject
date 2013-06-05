@@ -14,29 +14,30 @@ using DAL.membership;
 using System.Web;
 using Entities;
 using Helpers;
+using Interfaces;
 
 namespace BLL.membership
 {
     //class to work with users db: create user, manage user, delete user, etc...
-    public class UsersService
+    public class UsersService : IUserService
     {
-        private UserRepository _repository;
-        private RoleRepository _roleRepository;
-        private SessionRepository _sessionRepository;
+        private IUserRepository _repository;
+        private ISessionRepository _sessionRepository;
+        private ISessionContext _sessionContext;
 
         //constructor to ninjecting
-        public UsersService(UserRepository repository, RoleRepository roleRepository, SessionRepository sessionRepository)
+        public UsersService(IUserRepository repository, ISessionRepository sessionRepository, ISessionContext sc)
         {
             _repository = repository;
-            _roleRepository = roleRepository;
             _sessionRepository = sessionRepository;
+            _sessionContext = sc;
         }
 
         // Create new user
         // Argument's adress2 and phone2 may be null.
         //
         public bool CeateUser(string email, string password, string title, string firstName, string lastName,
-                              string address, string address2, string phone, string phone2, int zip, string city)
+                              string address, string address2, string phone, string phone2, int zip, string city, RolesType role)
         {
             if ((email == null) || (password == null) || (title == null) || (firstName == null) || (lastName == null) ||
                 (address == null) || (phone == null) || (zip == 0) || (city == null))
@@ -63,7 +64,7 @@ namespace BLL.membership
             nUser.zip = zip;
             nUser.city = city;
 
-            nUser.RoleId = 1; // 1 - user, 2 - administrator
+            nUser.Role = (int) role;
 
 
             _repository.Create(nUser);
@@ -78,12 +79,8 @@ namespace BLL.membership
             User user =
                 _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
 
-            if (user == null)
-                return false;
-            else
-                return true;
+            return user != null;
         }
-
 
         public bool LogIn(string email, string password)
         {
@@ -97,36 +94,32 @@ namespace BLL.membership
                 return false;
             else
             {
-                HttpCookie cookie = new HttpCookie("session_data");
-                cookie.Value = StartSession(user.email);
-                HttpContext.Current.Response.Cookies.Add(cookie);
+                string guid = StartSession(user.email);
+                _sessionContext.SetSessionData(guid);
                 return true;
             }
         }
 
         public void LogOut(string email)
         {
-            if (HttpContext.Current.Request.Cookies["session_data"] != null)
+            string guid = _sessionContext.GetSessionDataIfExist();
+            if (guid != null)
             {
-                RemoveSession(HttpContext.Current.Request.Cookies["session_data"].Value);
-                var cookie = new HttpCookie("session_data")
-                {
-                    Expires = DateTime.Now.AddDays(-1d)
-                };
-                HttpContext.Current.Response.Cookies.Add(cookie); 
+                RemoveSession(guid);
+
+                _sessionContext.RemoveSessionData(); //remove cookie
             }
         }
 
         public string GetEmailIfLoginIn()
         {
-            HttpRequest Request = HttpContext.Current.Request;
-            bool isLoginIn = (Request.Cookies.Get("session_data") != null) && (Request.Cookies.Get("session_data").Value != String.Empty) && (CheckSession(Request.Cookies.Get("session_data").Value));
+            string guid = _sessionContext.GetSessionDataIfExist();
 
-            string foolTitle = null;
-            if (isLoginIn)
+            if (guid != null)
             {
-                return GetUserEmailFromSession(Request.Cookies.Get("session_data").Value);
+                return GetUserEmailFromSession(guid);
             }
+
             return null;
         }
 
@@ -135,12 +128,15 @@ namespace BLL.membership
             User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
 
             if (us == null)
+            {
                 throw new InstanceNotFoundException("User not found");
+            }
+                
 
             UserDetails userDetails = new UserDetails()
-                {
+            {
                     Id = us.Id,
-                    RoleId = us.RoleId,
+                    Role = (RolesType)us.Role,
                     address = us.address,
                     address2 = us.address2,
                     city = us.city,
@@ -171,19 +167,20 @@ namespace BLL.membership
             user.password = GetHash(newPassword);
 
             _repository.Update(user);
+
             return true;
         }
 
         // Get User role name
         //
         //
-        public string GetUserRole(string userEmail)
+        public RolesType GetUserRole(string userEmail)
         {
             User user = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
 
             if (user != null)
             {
-                return user.Role.name;
+                return (RolesType)user.Role;
             }
             else
             {
@@ -191,14 +188,8 @@ namespace BLL.membership
             }
         }
 
-        public void ChangeRole(string userEmail, string newRoleName)
+        public void ChangeRole(string userEmail, RolesType newRole)
         {
-            Role role = _roleRepository.ReadAll().FirstOrDefault(m => m.name == newRoleName);
-
-            if (role == null)
-            {
-                throw new InstanceNotFoundException("Role not found!");
-            }
             User user = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
 
             if (user == null)
@@ -206,7 +197,7 @@ namespace BLL.membership
                 throw new InstanceNotFoundException("User not found!");
             }
 
-            user.Role = role;
+            user.Role = (int) newRole;
 
             _repository.Update(user);
         }
@@ -214,30 +205,40 @@ namespace BLL.membership
         //Method to check user role 
         //
         //
-        public bool AtributeCheck(string roleName)
+        public string AtributeCheck(RolesType roleName)
         {
-            if (HttpContext.Current.Request.Cookies.Get("session_data") != null)
+            string guid = _sessionContext.GetSessionDataIfExist();
+
+            if (guid != null)
             {
-                string guid = HttpContext.Current.Request.Cookies.Get("session_data").Value;
                 if (!string.IsNullOrWhiteSpace(guid) && CheckSession(guid))
                 {
                     //role check disabled
-                    if (string.IsNullOrWhiteSpace(roleName))
-                        return true;
+                    if ((int)roleName == -1)
+                    { 
+                        var user = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+
+                        if (user != null)
+                        {
+                            return user.User.email;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
 
                     //role check
                     var firstOrDefault = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
                     if (firstOrDefault != null)
                     {
                         User tmpoUser = firstOrDefault.User;
-                        string nowUserRole = tmpoUser.Role.name;
-                        nowUserRole = nowUserRole.Replace(" ", "");
-                        if (nowUserRole.CompareTo(roleName) == 0)
-                            return true;
+                        if (tmpoUser.Role == (int)roleName)
+                            return tmpoUser.email;
                     }
                 }
             }
-            return false;
+            return null;
         }
 
         public void ChangeDeliveryData(string email, string address, string address2, string phone, string phone2,
@@ -277,8 +278,6 @@ namespace BLL.membership
         //
         public void RemoveSession(string guid)
         {
-            HttpContext.Current.Cache.Remove(guid);
-
             var session = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
             _sessionRepository.Delete(session);
         }
@@ -289,7 +288,7 @@ namespace BLL.membership
         public bool CheckSession(string guid)
         {
             //part 1 - find in cash
-            string userName = (string)HttpContext.Current.Cache.Get(guid);
+            string userName = _sessionContext.GetUserDataFromCash(guid);
             if (userName != null)
             {
                 return true;
@@ -300,8 +299,7 @@ namespace BLL.membership
             if (session != null)
             {
                 
-                HttpContext.Current.Cache.Add(guid, session.User.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
-                                              CacheItemPriority.Normal, null);
+                _sessionContext.AddUserDataToCash(guid, session.User.email);
                 return true;
             }
             return false;
@@ -323,7 +321,7 @@ namespace BLL.membership
         public string GetUserEmailFromSession(string guid)
         {
             //part 1 - find in cash
-            string UserEmail = (string)HttpContext.Current.Cache.Get(guid);
+            string UserEmail = _sessionContext.GetUserDataFromCash(guid);
             if (UserEmail != null)
             {
                 return UserEmail;
@@ -334,8 +332,8 @@ namespace BLL.membership
             if (session != null)
             {
 
-                HttpContext.Current.Cache.Add(guid, session.User.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
-                                              CacheItemPriority.Normal, null);
+                _sessionContext.AddUserDataToCash(guid, session.User.email);
+
                 return session.User.email;
             }
 

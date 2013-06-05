@@ -16,16 +16,16 @@ namespace Entities
     {
         public DeliverySpot()
         {
-            this.Users = new HashSet<User>();
             this.Orders = new HashSet<Order>();
+            this.Users = new HashSet<User>();
         }
     
         public int Id { get; set; }
         public System.DateTime StartTime { get; set; }
         public System.DateTime EndTime { get; set; }
-        public string Type { get; set; }
+        public int Type { get; set; }
     
-        public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

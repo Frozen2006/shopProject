@@ -16,9 +16,9 @@ namespace TestProject.Controllers
     [CustomAuthrize]
     public class PaymentController : BaseController
     {
-        private readonly OrderService _orderService;
+        private readonly IOrderService _orderService;
 
-        public PaymentController(CategoryService ps, UsersService us, ICart cs, OrderService os)
+        public PaymentController(ICategoryService ps, IUserService us, ICart cs, IOrderService os)
             : base(ps, us, cs)
         {
             _orderService = os;
@@ -27,7 +27,7 @@ namespace TestProject.Controllers
         [HttpGet]
         public ActionResult Pay(int orderId)
         {
-            string email = _userService.GetEmailIfLoginIn();
+            string email = GetUserEmail();
             if (email == null)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
@@ -63,7 +63,7 @@ namespace TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                string email = _userService.GetEmailIfLoginIn();
+                string email = GetUserEmail();
                 if (email == null)
                 {
                     return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });

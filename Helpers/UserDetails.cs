@@ -20,6 +20,6 @@ namespace Helpers
         public string phone2 { get; set; }
         public int zip { get; set; }
         public string city { get; set; }
-        public int RoleId { get; set; }
+        public RolesType Role { get; set; }
     }
 }

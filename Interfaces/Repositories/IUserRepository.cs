@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
+using Interfaces.Repositories;
 
-namespace Entities
+namespace Interfaces
 {
-    partial class Role : IEntity
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

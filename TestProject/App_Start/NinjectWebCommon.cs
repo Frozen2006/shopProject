@@ -1,6 +1,10 @@
 using System.Data.Entity;
+using System.IO;
+using System.Reflection;
 using BLL;
-using NinjectModules;
+using Interfaces;
+using Ninject.Modules;
+
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(TestProject.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(TestProject.App_Start.NinjectWebCommon), "Stop")]
@@ -61,8 +65,16 @@ namespace TestProject.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load(new DataAccessModule());
-            var s = kernel.Get<CategoryService>();            
+            //kernel.Load(new DataAccessModule());
+            string path = AppDomain.CurrentDomain.BaseDirectory + "bin\\NinjectModules.dll";
+            Assembly asem = Assembly.LoadFile(path);
+
+            Type dam = asem.GetType("NinjectModules.DataAccessModule");
+            NinjectModule nm = (NinjectModule) Activator.CreateInstance(dam);
+
+            kernel.Load(nm);
+
+            var s = kernel.Get<ICategoryService>();            
 
             Kernel = kernel;
         }        

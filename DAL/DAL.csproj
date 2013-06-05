@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="ConcreteRepositories\CartRepository.cs" />
     <Compile Include="ConcreteRepositories\OrdersRepository.cs" />
-    <Compile Include="ConcreteRepositories\RoleRepository.cs" />
     <Compile Include="ConcreteRepositories\SessionRepository.cs" />
     <Compile Include="ConcreteRepositories\TimeSlotsRepository.cs" />
     <Compile Include="ConcreteRepositories\UserRepository.cs" />

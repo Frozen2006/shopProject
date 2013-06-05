@@ -6,26 +6,24 @@
     <edmx:Diagrams>
       <Diagram DiagramId="b3797f6c675a493fafb14a9182af2f91" Name="Diagram1" ZoomLevel="65">
         <EntityTypeShape EntityType="ShopModel.Category" Width="1.5" PointX="7.6481304781735542" PointY="31.328113749310429" />
-        <EntityTypeShape EntityType="ShopModel.DeliverySpot" Width="1.5" PointX="1.5571231569895163" PointY="1.6284265227748205" />
         <EntityTypeShape EntityType="ShopModel.Product" Width="1.5" PointX="11.092465789566035" PointY="10.495236535787226" />
-        <EntityTypeShape EntityType="ShopModel.Role" Width="1.5" PointX="0.35825237089686673" PointY="18.989895337722217" />
         <EntityTypeShape EntityType="ShopModel.Session" Width="1.5" PointX="2.430388196571911" PointY="19.508933329726073" />
-        <EntityTypeShape EntityType="ShopModel.User" Width="1.5" PointX="7.64054592309545" PointY="6.7273586870764186" />
         <EntityTypeShape EntityType="ShopModel.Zip" Width="1.5" PointX="6.37906957342246" PointY="30.047780274435777" />
         <AssociationConnector Association="ShopModel.FK_Categories_ToCategories" />
         <AssociationConnector Association="ShopModel.FK_Products_ToCategories" />
-        <AssociationConnector Association="ShopModel.FK_Users_ToRoles" />
-        <AssociationConnector Association="ShopModel.FK_Sessions_ToUsers" />
-        <AssociationConnector Association="ShopModel.DeliverySpotsUsers" />
         <EntityTypeShape EntityType="ShopModel.Cart" Width="1.5" PointX="2.788956593158169" PointY="30.692149161683464" />
         <AssociationConnector Association="ShopModel.FK_Carts_ToProducts" />
-        <AssociationConnector Association="ShopModel.UsersCarts" />
         <EntityTypeShape EntityType="ShopModel.Buye" Width="1.5" PointX="6.8792216809835383" PointY="15.994549669322813" />
         <AssociationConnector Association="ShopModel.FK_Buyes_ToProducts" />
-        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="2.6458659892184038" PointY="14.034999555924442" />
+        <EntityTypeShape EntityType="ShopModel.Order" Width="1.5" PointX="5.8985402108628957" PointY="4.0855259765337806" />
         <AssociationConnector Association="ShopModel.FK_Buyes_ToOrders" />
+        <EntityTypeShape EntityType="ShopModel.DeliverySpot" Width="1.5" PointX="7.8872172757458019" PointY="16.348399080498329" />
         <AssociationConnector Association="ShopModel.FK_Orders_ToDeliverySpots" />
+        <EntityTypeShape EntityType="ShopModel.User" Width="1.5" PointX="0.69596006567401814" PointY="21.361695076041713" />
         <AssociationConnector Association="ShopModel.FK_Orders_ToUsers" />
+        <AssociationConnector Association="ShopModel.FK_Sessions_ToUsers" />
+        <AssociationConnector Association="ShopModel.DeliverySpotsUsers" />
+        <AssociationConnector Association="ShopModel.UsersCarts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

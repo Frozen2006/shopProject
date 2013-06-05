@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities;
+using Interfaces.Repositories;
 
-namespace Helpers
+namespace Interfaces
 {
-    public enum SlotsType
+    public interface IZipRepository : IRepository<Zip>
     {
-        OneHour=1,
-        TwoHour=2,
-        FourHour=4,
     }
 }

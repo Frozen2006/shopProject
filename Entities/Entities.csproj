@@ -61,16 +61,12 @@
     <Compile Include="PartialEntities\Order.cs" />
     <Compile Include="PartialEntities\Zip.cs" />
     <Compile Include="PartialEntities\Product.cs" />
-    <Compile Include="PartialEntities\Role.cs" />
     <Compile Include="PartialEntities\Session.cs" />
     <Compile Include="PartialEntities\User.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs">
-      <DependentUpon>Shop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Session.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>

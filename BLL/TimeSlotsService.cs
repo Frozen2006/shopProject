@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 using DAL.membership;
 using Entities;
 using Helpers;
+using Interfaces;
 using Ninject;
 
 namespace BLL
 {
-    public class TimeSlotsService
+    public class TimeSlotsService : ITimeSlotsService
     {
         private TimeSlotsRepository _timeRepository;
         private UserRepository _userRepository;
@@ -29,9 +30,7 @@ namespace BLL
 
         public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type, string userEmail)
         {
-            string stringType = GetStringType(type);
-
-            var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == stringType)).ToList();
+            var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == (int)(type))).ToList();
 
             List<BookinSlot> bookinSlots = new List<BookinSlot>();
 
@@ -45,12 +44,11 @@ namespace BLL
 
         public bool AddUserToSlot(DateTime startTime, SlotsType type, string userEmail)
         {
-            string stringType = GetStringType(type);
             User us = GetUser(userEmail);
 
             var findSlot =
                 _timeRepository.ReadAll()
-                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == stringType)) ??
+                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == (int)(type))) ??
                 CreateSlot(startTime, type);
 
 
@@ -70,10 +68,9 @@ namespace BLL
 
         public void RemoveUserFromSlot(DateTime startTime, SlotsType type, string userEmail)
         {
-            string stringType = GetStringType(type);
             var findSlot =
                 _timeRepository.ReadAll()
-                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == stringType));
+                               .FirstOrDefault(m => (m.StartTime == startTime) && (m.Type == (int)(type)));
 
             if (findSlot == null)
                 throw new InstanceNotFoundException("Slot not found");
@@ -109,7 +106,7 @@ namespace BLL
             DeliverySpot slot = new DeliverySpot();
 
             slot.StartTime = startTime;
-            slot.Type = Convert.ToString(type);
+            slot.Type = (int) type;
             slot.Users = new Collection<User>();
 
             DateTime endTime = new DateTime();
@@ -145,21 +142,7 @@ namespace BLL
         {
             BookinSlot bookinSlot = new BookinSlot() {StartTime = ds.StartTime, EndTime = ds.EndTime};
 
-            SlotsType st = SlotsType.OneHour;
-            switch (ds.Type)
-            {
-                case "OneHour":
-                   st = SlotsType.OneHour;
-                    break;
-                case "TwoHour":
-                    st = SlotsType.TwoHour;
-                    break;
-                case "FourHour":
-                    st = SlotsType.FourHour;
-                    break;
-            }
-
-            bookinSlot.Type = st;
+            bookinSlot.Type = (SlotsType)ds.Type;
 
 
             SlotStatus slotStatus = SlotStatus.Free;
@@ -181,17 +164,6 @@ namespace BLL
 
 
         }
-
-        private string GetStringType(SlotsType st)
-            {
-                    
-                if (st == SlotsType.TwoHour)
-                    return "TwoHour";
-                if (st == SlotsType.FourHour)
-                    return "FourHour";
-
-                return "OneHour";
-            }
 
     }
 

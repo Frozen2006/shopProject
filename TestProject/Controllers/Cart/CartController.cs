@@ -5,40 +5,49 @@ using System.Web;
 using System.Web.Mvc;
 using BLL;
 using BLL.membership;
+using Helpers;
 using Interfaces;
 using Ninject;
+using TestProject.Filters;
 using TestProject.Models;
 
 namespace TestProject.Controllers.Cart
 {
-    [Filters.CustomAuthrize(Roles = "User")]
-    public class CartController : Controller
+    [CustomAuthrize(Roles = RolesType.User)]
+    public class CartController : BaseController
     {
         //
         // GET: /Cart/
-        private readonly ICart _cart;
-        private readonly UsersService _usersService;
-        private readonly TimeSlotsService _slotsService;
-        private readonly OrderService _orderService;
+        private readonly ITimeSlotsService _slotsService;
+        private readonly IOrderService _orderService;
 
-        [Inject]
+     /*   [Inject]
         public CartController(ICart cartInit, UsersService us, TimeSlotsService slotsService, OrderService os)
         {
             _cart = cartInit;
             _usersService = us;
             _slotsService = slotsService;
             _orderService = os;
+        }*/
+
+
+        public CartController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService slotsService, IOrderService os)
+            : base(ps, us, cs)
+        {
+            _orderService = os;
+            _slotsService = slotsService;
         }
 
         public ActionResult Index()
         {
 
-            string userEmail = _usersService.GetEmailIfLoginIn();
+            string userEmail = GetUserEmail();
 
             CartViewModel model = new CartViewModel();
-            model.Products = _cart.GetAllChart(userEmail);
-            model.TotalPrice = _cart.GetTotalPrice(userEmail);
-
+            model.Products = _cartService.GetAllChart(userEmail);
+            model.TotalPrice = _cartService.GetTotalPrice(userEmail);
+            
+           
 
             return View(model);
         }
@@ -52,18 +61,14 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (productId.Length > 0))
             {
-                string userEmail = _usersService.GetEmailIfLoginIn();
+                string userEmail = GetUserEmail();
 
-                _cart.DeleteProduct(userEmail, Convert.ToInt32(productId));
+                _cartService.DeleteProduct(userEmail, Convert.ToInt32(productId));
 
-                return Content(Convert.ToString(_cart.GetTotalPrice(userEmail)));
+                return Content(Convert.ToString(_cartService.GetTotalPrice(userEmail)));
             }
             return View("Index");
         }
-
-        private static object _locker = new object();
-
-        
 
         //Ajax jquery responce method
         [HttpPost]
@@ -74,19 +79,17 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (productId.Length > 0))
             {
-                string userEmail = _usersService.GetEmailIfLoginIn();
+                string userEmail = GetUserEmail();
 
                 double newPositionTotalPrice;
-                lock (_locker)
-                {
-                    newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(productId), count);
-                }
+
+                    newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(productId), count);
 
                 var outData =
                     new
                         {
                             positionPrice = Convert.ToString(newPositionTotalPrice),
-                            totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail))
+                            totalPrice = Convert.ToString(_cartService.GetTotalPrice(userEmail))
                         };
 
 
@@ -100,10 +103,8 @@ namespace TestProject.Controllers.Cart
 
         public ActionResult ConfirmOrder()
         {
-           string userEmail = _usersService.GetEmailIfLoginIn();
-
-           OrderDetailsModel odm = new OrderDetailsModel();
-
+            string userEmail = GetUserEmail();
+            OrderDetailsModel odm = new OrderDetailsModel();
             odm.TimeSlot = _slotsService.GetUserSlots(userEmail);
             
             return View(odm);
@@ -115,10 +116,8 @@ namespace TestProject.Controllers.Cart
             if (Id == null)
                 return RedirectToAction("Index", "Home");
 
-            string userEmail = _usersService.GetEmailIfLoginIn();
-
+            string userEmail = GetUserEmail();
             int orderId = _orderService.CreateOrder(userEmail, (int)Id, Comments);
-
 
             return RedirectToAction("Pay", "Payment", new { orderId = orderId });
         }
@@ -142,20 +141,17 @@ namespace TestProject.Controllers.Cart
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (Id.Count > 0))
             {
-                string userEmail = _usersService.GetEmailIfLoginIn();
+                string userEmail = GetUserEmail();
 
                 List<jsonUpdateAll> outData = new List<jsonUpdateAll>();
 
                 for (int q = 0; q < Id.Count; q++)
                 {
-                    lock (_locker)
-                    {
-                        double newPositionTotalPrice = _cart.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
+                        double newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
                         outData.Add(new jsonUpdateAll { Id = Convert.ToString(Id[q]), positionPrice = Convert.ToString(newPositionTotalPrice), count = Convert.ToString(Count[q])});
-                    }
                 }
 
-                string totalPrice = Convert.ToString(_cart.GetTotalPrice(userEmail));
+                string totalPrice = Convert.ToString(_cartService.GetTotalPrice(userEmail));
 
                 foreach (var jsonUpdateAll in outData)
                 {

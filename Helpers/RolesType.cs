@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Helpers
 {
-    public enum SlotsType
+    public enum RolesType
     {
-        OneHour=1,
-        TwoHour=2,
-        FourHour=4,
+        Admin,
+        User
     }
 }

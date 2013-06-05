@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using TestProject.Filters;
 using TestProject.Models;
 
 namespace TestProject.Controllers
@@ -16,7 +17,7 @@ namespace TestProject.Controllers
     public class ProductController : BaseController
     {
         [Inject]
-        public ProductController(CategoryService ps, UsersService us, ICart cs)
+        public ProductController(ICategoryService ps, IUserService us, ICart cs)
             : base(ps, us, cs) { } 
         
         public ActionResult List(int categoryId, int? page, int? pageSize, SortType? sort, bool? reverse)
@@ -80,13 +81,15 @@ namespace TestProject.Controllers
             //if(product == null)
             return View(product);
         }
-
+      
         private static object _lock = new object();
-        public ActionResult AddArrayToCart(string[] productIds, string[] counts)        
+
+        [CustomAuthrize]
+        public ActionResult AddArrayToCart(string[] productIds, string[] counts)
         {
             lock (_lock)
             {
-                string email = _userService.GetEmailIfLoginIn();
+                string email = GetUserEmail();
                 //  string email = bkmz2
                 if (email == null)
                 {

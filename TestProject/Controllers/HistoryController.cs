@@ -14,9 +14,9 @@ namespace TestProject.Controllers
     [CustomAuthrize]
     public class HistoryController : BaseController
     {
-        private readonly  OrderService _orderService;
+        private readonly  IOrderService _orderService;
 
-        public HistoryController(CategoryService ps, UsersService us, ICart cs, OrderService os)
+        public HistoryController(ICategoryService ps, IUserService us, ICart cs, IOrderService os)
             : base(ps, us, cs)
         {
             _orderService = os;
@@ -24,7 +24,7 @@ namespace TestProject.Controllers
 
         public ActionResult Index()
         {
-            var email = _userService.GetEmailIfLoginIn();
+            var email = GetUserEmail();
 
             if (email == null)
             {

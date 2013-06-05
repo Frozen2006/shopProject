@@ -8,12 +8,13 @@ using DAL;
 using DAL.Repositories;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
+using Interfaces;
 using Interfaces.Repositories;
 using Ninject;
 
 namespace BLL
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         [Inject]
         public IRepository<Product> ProductRepository { get; set; }

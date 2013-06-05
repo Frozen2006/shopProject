@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BLL;
 using BLL.membership;
 using Helpers;
+using Interfaces;
 using Ninject;
+using TestProject.Filters;
 using TestProject.Models;
 
 namespace TestProject.Controllers
 {
-    [Filters.CustomAuthrize(Roles = "User")]
-    public class SettingsController : Controller
+    [CustomAuthrize(Roles = RolesType.User)]
+    public class SettingsController : BaseController
     {
         //
         // GET: /Settings/
-         [Inject]
-        public SettingsController(UsersService uservice)
-        {
-            us = uservice;
-        }
 
-        private readonly UsersService us;
+
+        public SettingsController(ICategoryService ps, IUserService us, ICart cs) : base(ps, us, cs)
+        {}
 
         public ActionResult Index()
         {
@@ -37,10 +37,9 @@ namespace TestProject.Controllers
         {
             Models.ChangeDeliveryAddressModel model = new ChangeDeliveryAddressModel();
 
-           string sessionId = Request.Cookies.Get("session_data").Value;
-           string userEmail = us.GetUserEmailFromSession(sessionId);
+            string userEmail = GetUserEmail();
 
-            UserDetails userDetails = us.GetUserDetails(userEmail);
+            UserDetails userDetails = _userService.GetUserDetails(userEmail);
 
             model.Address1 = userDetails.address;
             model.Address2 = userDetails.address2;
@@ -59,10 +58,9 @@ namespace TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                string sessionId = Request.Cookies.Get("session_data").Value;
-                string userEmail = us.GetUserEmailFromSession(sessionId);
+                string userEmail = GetUserEmail();
 
-               us.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
+               _userService.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
             }
             ModelState.AddModelError("", "Input data is bad");
             ViewBag.Data = "BAD";
@@ -75,12 +73,11 @@ namespace TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                string sessionId = Request.Cookies.Get("session_data").Value;
-                string userEmail = us.GetUserEmailFromSession(sessionId);
+                string userEmail = GetUserEmail();
 
-                if (us.CheckUser(userEmail, model.OldPassword))
+                if (_userService.CheckUser(userEmail, model.OldPassword))
                 {
-                    us.ChangePassword(userEmail, model.OldPassword, model.Password);
+                    _userService.ChangePassword(userEmail, model.OldPassword, model.Password);
                     ModelState.AddModelError("", "Success!");
                     return View(new Models.ChangePasswordModel{});
                 }
