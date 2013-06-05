@@ -93,7 +93,8 @@ namespace BLL
             foreach (var cart in us.Carts)
             {
                 ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(cart.Product);
-                tmpPic.TotalPrice = cart.Product.Price*cart.Count; //automapper don't calculate total price ;)
+                tmpPic.Count = cart.Count; //automapper map Products, but no all cart
+                tmpPic.TotalPrice = cart.Product.Price*cart.Count; //automapper don't calculate total price
 
                 outChart.Add(tmpPic);
             }
