@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
 using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Caching;
 using AutoMapper;
-using DAL;
-using DAL.Repositories.DbFirstRepository;
-using DAL.membership;
 using System.Web;
 using Entities;
 using Helpers;
@@ -22,9 +15,9 @@ namespace BLL.membership
     //class to work with users db: create user, manage user, delete user, etc...
     public class UsersService : IUserService
     {
-        private IUserRepository _repository;
-        private ISessionRepository _sessionRepository;
-        private ISessionContext _sessionContext;
+        private readonly IUserRepository _repository;
+        private readonly ISessionRepository _sessionRepository;
+        private readonly ISessionContext _sessionContext;
 
         //constructor to ninjecting
         public UsersService(IUserRepository repository, ISessionRepository sessionRepository, ISessionContext sc)
@@ -71,13 +64,13 @@ namespace BLL.membership
                 _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
 
             if (user == null)
-                return false;
-            else
             {
-                string guid = StartSession(user.email);
-                _sessionContext.SetSessionData(guid);
-                return true;
+                return false;
             }
+
+            string guid = StartSession(user.email);
+            _sessionContext.SetSessionData(guid);
+            return true;
         }
 
         public void LogOut(string email)
@@ -147,10 +140,7 @@ namespace BLL.membership
             {
                 return (RolesType)user.Role;
             }
-            else
-            {
-                throw new InstanceNotFoundException("No user with this email adress");
-            }
+            throw new InstanceNotFoundException("No user with this email adress");
         }
 
         public void ChangeRole(string userEmail, RolesType newRole)
@@ -187,10 +177,7 @@ namespace BLL.membership
                         {
                             return user.User.email;
                         }
-                        else
-                        {
-                            return null;
-                        }
+                        return null;
                     }
 
                     //role check
@@ -229,7 +216,8 @@ namespace BLL.membership
         {
             string guid = Guid.NewGuid().ToString();
             User userAccount = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
-            Session currentSession = new Session() { guid = guid, UserId = userAccount.Id };
+            if (userAccount == null) throw new ArgumentNullException("userEmail");
+            var currentSession = new Session { guid = guid, UserId = userAccount.Id };
             _sessionRepository.Create(currentSession);
 
             HttpContext.Current.Cache.Add(guid, userAccount.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
@@ -286,10 +274,10 @@ namespace BLL.membership
         public string GetUserEmailFromSession(string guid)
         {
             //part 1 - find in cash
-            string UserEmail = _sessionContext.GetUserDataFromCash(guid);
-            if (UserEmail != null)
+            string userEmail = _sessionContext.GetUserDataFromCash(guid);
+            if (userEmail != null)
             {
-                return UserEmail;
+                return userEmail;
             }
 
             //part 2 - DB req
@@ -312,16 +300,11 @@ namespace BLL.membership
         {
             byte[] bytes = Encoding.Unicode.GetBytes(input);
 
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            var md5 = new MD5CryptoServiceProvider();
             byte[] byteHash = md5.ComputeHash(bytes);
 
-            string hash = String.Empty;
-
             //convert bytes to string
-            foreach (byte b in byteHash)
-                hash += string.Format("{0:x2}", b);
-
-            return hash;
+            return byteHash.Aggregate(String.Empty, (current, b) => current + string.Format("{0:x2}", b));
         }
 
     }

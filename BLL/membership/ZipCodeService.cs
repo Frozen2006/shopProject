@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAL.membership;
 using Entities;
 
@@ -10,7 +8,7 @@ namespace BLL.membership
 {
     public class ZipCodeService : Interfaces.IZipCode
     {
-        private ZipRepository _repo;
+        private readonly ZipRepository _repo;
 
         public ZipCodeService(ZipRepository zr)
         {
@@ -32,15 +30,8 @@ namespace BLL.membership
                 {
                     return String.Empty;
                 }
-                else
-                {
-                    return city.city + ", " + city.sub_city;
-                }
             }
-            else
-            {
-                return city.city + ", " + city.sub_city;
-            }
+            return city.city + ", " + city.sub_city;
         }
 
         // Return list of possible sity
@@ -48,30 +39,20 @@ namespace BLL.membership
         // Item2 = ciy name
         public List<Tuple<string,string>> GetCities(string particalZip)
         {
-            Entities.Zip oneTCity = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) == 0);
+            Zip oneTCity = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) == 0);
 
             if (oneTCity != null)
             {
-                List<Tuple<string, string>> outDataF = new List<Tuple<string, string>>();
+                var outDataF = new List<Tuple<string, string>>();
                 outDataF.Add(Tuple.Create(oneTCity.zip1, oneTCity.city + ", " + oneTCity.sub_city));
                 return outDataF;
             }
 
-            IQueryable<Entities.Zip> citys = null;
+            IQueryable<Zip> citys = null;
 
-            if (oneTCity == null)
-            {
-                citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
-            }
+            citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
 
-            List<Tuple<string, string>> outData = new List<Tuple<string, string>>();
-
-            foreach (var oneCity in citys)
-            {
-                outData.Add(Tuple.Create(oneCity.zip1,oneCity.city+", "+oneCity.sub_city));
-            }
-
-            return outData;
+            return citys.Select(oneCity => Tuple.Create(oneCity.zip1, oneCity.city + ", " + oneCity.sub_city)).ToList();
         }
     }
 }
