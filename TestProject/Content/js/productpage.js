@@ -93,11 +93,12 @@ function getPrice(element) {
             data: { productId: id, count: c.toString().replace(".",",") },
             type: "POST",
             success: function (data) {
-                newAlert('alert', data);
+                newAlert('alert', data.Report);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 newAlert('alert alert-error', errorThrown);
-            }
+            },
+            dataType: "json"
         })
     }
 
@@ -156,7 +157,7 @@ function addAll() {
             url: "/Product/AddArrayToCart",
             data: postData,
             success: function (data) {
-                newAlert('alert', data.report);
+                newAlert('alert', data.Report);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 newAlert('alert alert-error', XMLHttpRequest.responseText);

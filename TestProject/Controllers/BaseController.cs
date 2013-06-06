@@ -22,5 +22,10 @@ namespace TestProject.Controllers
         {
             return (string)HttpContext.Items["email"];
         }
+
+        public JsonResult JsonReport(string report)
+        {
+            return Json(new { Report = report });
+        }
     }
 }

@@ -39,7 +39,6 @@ namespace TestProject.Controllers
             model.Zip = userDetails.zip;
             model.City = userDetails.city;
 
-
             return View(model);
         }
 
