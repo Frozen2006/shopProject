@@ -226,3 +226,14 @@
 .more_button {
     float: right;
 }
+    
+/*Product details*/
+.counter_wrapper {
+    display: inline-block;
+    width: 50%;
+}
+.price_wrapper {
+                display: inline-block;
+    width: 48%;
+}
+

@@ -1,4 +1,5 @@
 ﻿@model Entities.Product
+@Scripts.Render("~/Content/js/product-details.js")
 
 @Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
 
@@ -13,12 +14,31 @@
     <h3>Description:</h3>
     <p>@Model.Description</p>    
     
-    <div class="display-label">
-            @Html.DisplayNameFor(model => model.Price)
-    </div>
-    <h2>Price</h2>
-    <p>@Model.Price</p>
 
+    
+    <style>
+        .counter_wrapper {
+            display: inline-block;
+            width: 50%;
+        }
+        .price_wrapper {
+                        display: inline-block;
+            width: 48%;
+        }
+    </style>
+    
+    <div class="price_wrapper">
+        <div class="display-label">
+                @Html.DisplayNameFor(model => model.Price)
+        </div>
+        <h2>Price</h2>
+        <p>@Model.Price$</p>
+    </div>
+
+    <div class="counter_wrapper">
+        @Html.Partial("../Counter", Model)  
+    </div>
+    
     @Html.ActionLink("To Category", "List", "Product", new { categoryId = Model.Category.Id }, new { @class = "btn" })
 
 </div>

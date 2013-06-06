@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{C1708AF9-68A2-447B-81E4-8706361172CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Web", "TestProject\iTechArt.Shop.Web.csproj", "{C1708AF9-68A2-447B-81E4-8706361172CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{D99D1DDA-8208-4F98-AB36-95A913FC315A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.DataAccess", "DAL\iTechArt.Shop.DataAccess.csproj", "{D99D1DDA-8208-4F98-AB36-95A913FC315A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{645B9A20-F7C5-49DE-AC0D-B70B6AC12F85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Logic", "BLL\iTechArt.Shop.Logic.csproj", "{645B9A20-F7C5-49DE-AC0D-B70B6AC12F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{11D294D9-19A7-486E-A788-6032EBF9E90B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Helpers", "Helpers\iTechArt.Shop.Helpers.csproj", "{11D294D9-19A7-486E-A788-6032EBF9E90B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{F0BCAD9F-72FB-40EC-A6F8-111C5E6C4493}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Interfaces", "Interfaces\iTechArt.Shop.Interfaces.csproj", "{F0BCAD9F-72FB-40EC-A6F8-111C5E6C4493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{56D9FB78-9F87-436E-BAF4-1103B694C4F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Entities", "Entities\iTechArt.Shop.Entities.csproj", "{56D9FB78-9F87-436E-BAF4-1103B694C4F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinjectModules", "NinjectModules\NinjectModules.csproj", "{015A49E5-BE88-4F22-AB80-F11E17B12353}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.NinjectModules", "NinjectModules\iTechArt.Shop.NinjectModules.csproj", "{015A49E5-BE88-4F22-AB80-F11E17B12353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductDescriptionGenerator", "ProductDescriptionGenerator\ProductDescriptionGenerator.csproj", "{53B8E2ED-3CAF-4950-855C-306FB63CE4D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.ProductDescriptionGenerator", "ProductDescriptionGenerator\iTechArt.Shop.ProductDescriptionGenerator.csproj", "{53B8E2ED-3CAF-4950-855C-306FB63CE4D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,11 +1,5 @@
-﻿using BLL;
-using BLL.membership;
-using Helpers;
+﻿using Helpers;
 using Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Ninject;
 using TestProject.Filters;
