@@ -169,6 +169,7 @@
     <Compile Include="Mailers\Models\MailerModel.cs" />
     <Compile Include="Mailers\PasswordResetMailer.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Models\CardInfo.cs" />
     <Compile Include="Models\CartViewModel.cs" />
     <Compile Include="Models\CategoryDetailsModel.cs" />
     <Compile Include="Models\ChangeDeliveryAddressModel.cs" />

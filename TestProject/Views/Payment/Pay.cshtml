@@ -1,10 +1,10 @@
 ﻿@model TestProject.Models.PaymentModel
 
 <div id="payment_box">
-    <h2>Order @ViewBag.OrderId payment</h2>
+    <h2>Order @Model.OrderId payment</h2>
 
-    <span class="price">Total price: <span class="price_value">@ViewBag.Price.ToString("0.00")$</span><br />
-                        Prise to pay (with discount): <span class="price_value">@ViewBag.FinalPrice.ToString("0.00")$</span>
+    <span class="price">Total price: <span class="price_value">@Model.Price.ToString("0.00")$</span><br />
+                        Prise to pay (with discount): <span class="price_value">@Model.FinalPrice.ToString("0.00")$</span>
     </span>   
  
     @using (Html.BeginForm()) {
@@ -16,37 +16,37 @@
             <legend>Payment data</legend>
     
             <div class="editor-label">
-                @Html.LabelFor(model => model.CardNumber)
+                @Html.LabelFor(model => model.Card.CardNumber)
             </div>
             <div class="editor-field">
-                @Html.ValidationMessageFor(model => model.CardNumber, null, new { @class = "validation_message" })
-                @Html.EditorFor(model => model.CardNumber)
+                @Html.ValidationMessageFor(model => model.Card.CardNumber, null, new { @class = "validation_message" })
+                @Html.EditorFor(model => model.Card.CardNumber)
                 
             </div>
     
             <div class="editor-label">
-                @Html.LabelFor(model => model.ExpirationMonth)
+                @Html.LabelFor(model => model.Card.ExpirationMonth)
             </div>
             <div class="editor-field">
-                @Html.ValidationMessageFor(model => model.ExpirationMonth, null, new { @class = "validation_message" })
-                @Html.TextBoxFor(model => model.ExpirationMonth)
+                @Html.ValidationMessageFor(model => model.Card.ExpirationMonth, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.Card.ExpirationMonth)
                 
             </div>
     
             <div class="editor-label">
-                @Html.LabelFor(model => model.ExpirationDay)
+                @Html.LabelFor(model => model.Card.ExpirationDay)
             </div>
             <div class="editor-field">
-                @Html.ValidationMessageFor(model => model.ExpirationDay, null, new { @class = "validation_message" })
-                @Html.TextBoxFor(model => model.ExpirationDay)                
+                @Html.ValidationMessageFor(model => model.Card.ExpirationDay, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.Card.ExpirationDay)                
             </div>
     
             <div class="editor-label">
-                @Html.LabelFor(model => model.SecurityCode)
+                @Html.LabelFor(model => model.Card.SecurityCode)
             </div>
             <div class="editor-field">
-                @Html.ValidationMessageFor(model => model.SecurityCode, null, new { @class = "validation_message" })
-                @Html.TextBoxFor(model => model.SecurityCode)                
+                @Html.ValidationMessageFor(model => model.Card.SecurityCode, null, new { @class = "validation_message" })
+                @Html.TextBoxFor(model => model.Card.SecurityCode)                
             </div>
 
             @Html.ValidationSummary("Data is invalid. Errors:")

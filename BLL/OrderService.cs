@@ -18,12 +18,16 @@ namespace BLL
         private readonly TimeSlotsRepository _timeSlots;
         private readonly OrdersRepository _ordersRepository;
 
+        private IUserService UserService { get; set; }
+
         [Inject]
-        public OrderService(UserRepository userRepository, TimeSlotsRepository tsr, OrdersRepository or)
+        public OrderService(UserRepository userRepository, TimeSlotsRepository tsr, OrdersRepository or, IUserService userService)
         {
             _userRepository = userRepository;
             _timeSlots = tsr;
             _ordersRepository = or;
+
+            UserService = userService;
         }
 
         // Create order from user cart
@@ -118,12 +122,35 @@ namespace BLL
             return ordList;
         }
 
+        /// <summary>
+        /// Throws exception if user is not logged in.
+        /// </summary>
+        /// <param name="orderId">Id of the order for payment</param>
+        /// <returns>Order detail</returns>
+        public OrdersDetails GetOrderForPayment(int orderId)
+        {
+            OrdersDetails order = GetOrderDetails(orderId);
+
+            //Order not found
+            if (order == null)
+                return null;
+
+            string email = UserService.GetEmailIfLoginIn();
+            //Access forbidden
+            if (order.userEmail != email)
+                return null;
+
+            return order;
+        }
+
         public OrdersDetails GetOrderDetails(int id)
         {
             Order order = _ordersRepository.ReadAll().FirstOrDefault(m => m.Id == id);
 
             if (order == null)
-                throw new InstanceNotFoundException("Order not found");
+            {
+                return null;
+            }
 
             //generate list of products 
             var prod = new List<ProductInCart>();

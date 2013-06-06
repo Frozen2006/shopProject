@@ -13,5 +13,6 @@ namespace Interfaces
         List<OrdersInList> GetUserOrders(string userEmail);
         OrdersDetails GetOrderDetails(int id);
         void UpdateOrder(int id, OrderStatus orderStatus);
+        OrdersDetails GetOrderForPayment(int orderId);
     }
 }

@@ -22,34 +22,21 @@ namespace TestProject.Controllers
         [HttpGet]
         public ActionResult Pay(int orderId)
         {
-            string email = GetUserEmail();
-            if (email == null)
-            {
-                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
-            }
-
-            OrdersDetails order = OrderService.GetOrderDetails(orderId);
-
+            OrdersDetails order = OrderService.GetOrderForPayment(orderId);
+            
             if (order == null)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
             }
 
-            if (order.userEmail != email)
-            {
-                return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
-            }
+            var model = new PaymentModel()
+                {
+                    FinalPrice = order.PriceWithDiscount,
+                    OrderId = order.Id,
+                    Price = order.TotalPrice
+                };
 
-            if (order.OrderStatus == OrderStatus.Paid)
-            {
-                return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
-            }
-
-            ViewBag.OrderId = orderId;
-            ViewBag.Price = order.TotalPrice;
-            ViewBag.FinalPrice = order.PriceWithDiscount;
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -58,25 +45,15 @@ namespace TestProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                string email = GetUserEmail();
-                if (email == null)
+                OrdersDetails order = OrderService.GetOrderForPayment(model.OrderId);
+
+                if (order == null)
                 {
-                    return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
+                    return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
                 }
 
-                OrdersDetails order = OrderService.GetOrderDetails(model.OrderId);
-
-                if (order.userEmail != email)
-                {
-                    return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
-                }
-
-                if (order.OrderStatus == OrderStatus.Paid)
-                {                    
-                    return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
-                }
-
-                OrderService.UpdateOrder(model.OrderId, OrderStatus.Paid);
+                //TODO: bank service with profit logging
+                OrderService.UpdateOrder(order.Id, OrderStatus.Paid);
 
                 return RedirectToAction("Index", "History");
             }

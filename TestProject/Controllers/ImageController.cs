@@ -5,9 +5,6 @@ namespace TestProject.Controllers
 {
     public class ImageController : Controller
     {
-        //
-        // GET: /Image/
-
         public ActionResult Index()
         {
             return null;

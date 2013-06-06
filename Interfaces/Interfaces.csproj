@@ -58,6 +58,7 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="IZipCodeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShopExceptoion.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj">
