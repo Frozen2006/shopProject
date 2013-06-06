@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using BLL;
-using BLL.membership;
 using Helpers;
 using Interfaces;
-using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -21,16 +16,6 @@ namespace TestProject.Controllers.Cart
         private readonly ITimeSlotsService _slotsService;
         private readonly IOrderService _orderService;
 
-     /*   [Inject]
-        public CartController(ICart cartInit, UsersService us, TimeSlotsService slotsService, OrderService os)
-        {
-            _cart = cartInit;
-            _usersService = us;
-            _slotsService = slotsService;
-            _orderService = os;
-        }*/
-
-
         public CartController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService slotsService, IOrderService os)
             : base(ps, us, cs)
         {
@@ -43,11 +28,12 @@ namespace TestProject.Controllers.Cart
 
             string userEmail = GetUserEmail();
 
-            CartViewModel model = new CartViewModel();
-            model.Products = _cartService.GetAllChart(userEmail);
-            model.TotalPrice = _cartService.GetTotalPrice(userEmail);
-            
-           
+            var model = new CartViewModel
+                {
+                    Products = _cartService.GetAllChart(userEmail),
+                    TotalPrice = _cartService.GetTotalPrice(userEmail)
+                };
+
 
             return View(model);
         }
@@ -81,9 +67,7 @@ namespace TestProject.Controllers.Cart
             {
                 string userEmail = GetUserEmail();
 
-                double newPositionTotalPrice;
-
-                    newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(productId), count);
+                double newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(productId), count);
 
                 var outData =
                     new
@@ -104,9 +88,8 @@ namespace TestProject.Controllers.Cart
         public ActionResult ConfirmOrder()
         {
             string userEmail = GetUserEmail();
-            OrderDetailsModel odm = new OrderDetailsModel();
-            odm.TimeSlot = _slotsService.GetUserSlots(userEmail);
-            
+            var odm = new OrderDetailsModel {TimeSlot = _slotsService.GetUserSlots(userEmail)};
+
             return View(odm);
         }
 
@@ -143,7 +126,7 @@ namespace TestProject.Controllers.Cart
             {
                 string userEmail = GetUserEmail();
 
-                List<jsonUpdateAll> outData = new List<jsonUpdateAll>();
+                var outData = new List<jsonUpdateAll>();
 
                 for (int q = 0; q < Id.Count; q++)
                 {

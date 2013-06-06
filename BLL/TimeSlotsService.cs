@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Instrumentation;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using DAL.membership;
 using Entities;
@@ -16,11 +14,11 @@ namespace BLL
 {
     public class TimeSlotsService : ITimeSlotsService
     {
-        private TimeSlotsRepository _timeRepository;
-        private UserRepository _userRepository;
+        private readonly TimeSlotsRepository _timeRepository;
+        private readonly UserRepository _userRepository;
 
-        private const int usersPerSlotLimit = 4;
-        private const int hoursToStopAcceptBook = 3;
+        private const int UsersPerSlotLimit = 4;
+        private const int HoursToStopAcceptBook = 4;
 
         [Inject]
         public TimeSlotsService(TimeSlotsRepository repo, UserRepository us)
@@ -33,14 +31,7 @@ namespace BLL
         {
             var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == (int)(type))).ToList();
 
-            List<BookinSlot> bookinSlots = new List<BookinSlot>();
-
-            foreach (var slot in slots)
-            {
-                bookinSlots.Add(DeliverySpotToBookingSlot(slot, userEmail));
-            }
-
-            return bookinSlots;
+            return slots.Select(m => DeliverySpotToBookingSlot(m, userEmail)).ToList();
         }
 
         public bool AddUserToSlot(DateTime startTime, SlotsType type, string userEmail)
@@ -53,7 +44,7 @@ namespace BLL
                 CreateSlot(startTime, type);
 
 
-            if (findSlot.Users.Count >= usersPerSlotLimit)
+            if (findSlot.Users.Count >= UsersPerSlotLimit)
                 return false;
 
             if (DateTime.Now.AddHours(3) >= findSlot.StartTime)
@@ -88,31 +79,17 @@ namespace BLL
         {
             var us = GetUser(email);
 
-            List<DeliverySpot> lst = new List<DeliverySpot>();
-
-            foreach (var deliverySpot in us.DeliverySpots)
-            {
-                if ((deliverySpot.StartTime > DateTime.Now.AddHours(4.0)) &&
-                    (us.Orders.FirstOrDefault(m => m.DeliverySpotId == deliverySpot.Id) == null))
-                {
-                    lst.Add(deliverySpot);
-                }
-            }
-
-            return lst;
+            return us.DeliverySpots.Where(
+                m =>
+                (m.StartTime > DateTime.Now.AddHours(Convert.ToDouble(HoursToStopAcceptBook)) &&
+                 (us.Orders.FirstOrDefault(q => q.DeliverySpotId == m.Id) == null))).ToList();
         }
 
         private DeliverySpot CreateSlot(DateTime startTime, SlotsType type)
         {
-            DeliverySpot slot = new DeliverySpot();
+            var slot = new DeliverySpot {StartTime = startTime, Type = (int) type, Users = new Collection<User>()};
 
-            slot.StartTime = startTime;
-            slot.Type = (int) type;
-            slot.Users = new Collection<User>();
-
-            DateTime endTime = new DateTime();
-
-            endTime = startTime.AddHours(Convert.ToDouble((int)type)); //type - enum. Every record it them associated whith count of hours
+            DateTime endTime = startTime.AddHours(Convert.ToDouble((int)type)); //type - enum. Every record of them associated whith count of hours
 
             slot.EndTime = endTime;
 
@@ -128,7 +105,7 @@ namespace BLL
 
             return us;
         }
-        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds, string UserEmail)
+        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds, string userEmail)
         {
             //map all parameters
             BookinSlot bookinSlot = Mapper.Map<DeliverySpot, BookinSlot>(ds);
@@ -137,16 +114,16 @@ namespace BLL
             //generatin status field
             bookinSlot.Type = (SlotsType)ds.Type;
 
-            SlotStatus slotStatus = SlotStatus.Free;
+            var slotStatus = SlotStatus.Free;
 
-            if (ds.Users.Count < usersPerSlotLimit)
+            if (ds.Users.Count < UsersPerSlotLimit)
                 slotStatus = SlotStatus.Middle;
-            if (ds.Users.Count >= usersPerSlotLimit)
+            if (ds.Users.Count >= UsersPerSlotLimit)
                 slotStatus = SlotStatus.Fool;
              if (DateTime.Now.AddHours(3) >= ds.StartTime)
                  slotStatus = SlotStatus.Fool;
 
-             if ((ds.Users.FirstOrDefault(m => m.email == UserEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.email == UserEmail) == null))
+             if ((ds.Users.FirstOrDefault(m => m.email == userEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.email == userEmail) == null))
                 slotStatus = SlotStatus.My;
             
             

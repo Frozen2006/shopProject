@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using BLL;
-using BLL.membership;
 using Entities;
 using Helpers;
 using Interfaces;
@@ -18,7 +16,7 @@ namespace TestProject.Controllers
         // GET: /Search/
 
 
-        private ISearchService _search;
+        private readonly ISearchService _search;
 
 
         public SearchController(ICategoryService ps, IUserService us, ICart cs, ISearchService ss) : base(ps, us, cs)
@@ -28,7 +26,7 @@ namespace TestProject.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return null;
         }
 
 
@@ -64,7 +62,7 @@ namespace TestProject.Controllers
                 count = pis.AllCount;
             }
 
-            Models.SearchPageModel model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category(), Page = (int)page, CountAll = count };
+            var model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category(), Page = (int)page, CountAll = count };
 
             return View(model);
         }
@@ -77,18 +75,10 @@ namespace TestProject.Controllers
             {
                 List<Product> findedProducts = _search.GetTop10Results(data);
 
-                List<ajaxResponce> resp = new List<ajaxResponce>();
-
-                foreach (var findedProduct in findedProducts)
-                {
-                    resp.Add(new ajaxResponce
-                        {
-                            value = findedProduct.Name,
-                            ProductId = findedProduct.Id,
-                            label = findedProduct.Name,
-                            price = Convert.ToString(findedProduct.Price)
-                        });
-                }
+                List<ajaxResponce> resp = findedProducts.Select(findedProduct => new ajaxResponce
+                    {
+                        value = findedProduct.Name, ProductId = findedProduct.Id, label = findedProduct.Name, price = Convert.ToString(findedProduct.Price)
+                    }).ToList();
 
                 return Json(resp);
             }

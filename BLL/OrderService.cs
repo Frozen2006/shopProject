@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Instrumentation;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using DAL.membership;
 using Entities;
 using Interfaces;
@@ -15,15 +14,15 @@ namespace BLL
 {
     public class OrderService : IOrderService
     {
-        private UserRepository _userRepository;
-        private TimeSlotsRepository _timeSlots;
-        private OrdersRepository _ordersRepository;
+        private readonly UserRepository _userRepository;
+        private readonly TimeSlotsRepository _timeSlots;
+        private readonly OrdersRepository _ordersRepository;
 
         [Inject]
         public OrderService(UserRepository userRepository, TimeSlotsRepository tsr, OrdersRepository or)
         {
-            this._userRepository = userRepository;
-            this._timeSlots = tsr;
+            _userRepository = userRepository;
+            _timeSlots = tsr;
             _ordersRepository = or;
         }
 
@@ -42,16 +41,16 @@ namespace BLL
             if (timeSlot == null)
                 throw new InstanceNotFoundException("Time slot not found");
 
-            int DiscountValue = timeSlot.Type;
+            int discountValue = timeSlot.Type;
 
             ICollection<Buye> buyes = new Collection<Buye>();
 
-            Order ord = new Order();
+            var ord = new Order();
             double totalCost = 0.0;
             //copy all products from cart to order
             foreach (var cart in user.Carts)
             {
-                Buye tmpBuye = new Buye()
+                var tmpBuye = new Buye
                     {
                         Count = cart.Count,
                         Product = cart.Product,
@@ -66,7 +65,7 @@ namespace BLL
             ord.Comments = comments;
             ord.DeliverySpot = timeSlot;
             ord.TotalPrice = totalCost;
-            ord.Discount = DiscountValue;
+            ord.Discount = discountValue;
             ord.User = user;
             ord.Status = (int)OrderStatus.WaitForPaid;
             ord.CreationTime = DateTime.Now;
@@ -77,12 +76,15 @@ namespace BLL
 
 
             _userRepository.Update(user);
-            int orderId = _userRepository.ReadAll()
-                           .FirstOrDefault(m => m.email == userEmail)
-                           .Orders.Last(m => (m.TotalPrice == totalCost) && (m.DeliverySpotId == timeSlot.Id))
-                           .Id;
+            var firstOrDefault = _userRepository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            if (firstOrDefault != null)
+            {
+                int orderId = firstOrDefault.Orders.Last(m => (Math.Abs(m.TotalPrice - totalCost) < 0.001) && (m.DeliverySpotId == timeSlot.Id)) //m.TotalPrice AND totalCost is float. We muct compare this by epsilon value (this is 0.001)
+                                             .Id;
 
-            return orderId;
+                return orderId;
+            }
+            return -1;
         }
 
         public List<OrdersInList> GetUserOrders(string userEmail)
@@ -92,7 +94,7 @@ namespace BLL
             if (user == null)
                 throw new InstanceNotFoundException("User not found");
 
-            List<OrdersInList> ordList = new List<OrdersInList>();
+            var ordList = new List<OrdersInList>();
 
             foreach (var order in user.Orders)
             {
@@ -102,7 +104,7 @@ namespace BLL
                 else
                      dt = DateTime.Now;
 
-                ordList.Add(new OrdersInList()
+                ordList.Add(new OrdersInList
                     {
                         Id = order.Id,
                         startOrderTime = order.DeliverySpot.StartTime,
@@ -116,59 +118,39 @@ namespace BLL
             return ordList;
         }
 
-        public OrdersDetails GetOrderDetails(int Id)
+        public OrdersDetails GetOrderDetails(int id)
         {
-            Order order = _ordersRepository.ReadAll().FirstOrDefault(m => m.Id == Id);
+            Order order = _ordersRepository.ReadAll().FirstOrDefault(m => m.Id == id);
 
             if (order == null)
                 throw new InstanceNotFoundException("Order not found");
 
             //generate list of products 
-            List<ProductInCart> prod = new List<ProductInCart>();
+            var prod = new List<ProductInCart>();
 
             foreach (var buye in order.Buyes)
             {
-                prod.Add(new ProductInCart()
-                    {
-                        Count = buye.Count,
-                        AverageWeight = buye.Product.AverageWeight,
-                        CategoryId = buye.Product.CategoryId,
-                        CategoryName = buye.Product.Category.Name,
-                        Id = buye.Product.Id,
-                        Name = buye.Product.Name,
-                        UnitOfMeasure = buye.Product.UnitOfMeasure,
-                        SellByWeight = buye.Product.SellByWeight,
-                        Price = buye.Product.Price,
-                        TotalPrice = buye.Product.Price*buye.Count
-                    });
+                ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(buye.Product);
+                tmpPic.Count = buye.Count; //automapper map Products, but no all cart
+                tmpPic.TotalPrice = buye.Product.Price * buye.Count; //automapper don't calculate total price
+
+                prod.Add(tmpPic);
             }
 
-            DateTime dt;
-            if (order.CreationTime != null)
-                dt = (DateTime)order.CreationTime;
-            else
-                dt = DateTime.Now;
-
-            OrdersDetails od = new OrdersDetails()
-                {
-                    Comments = order.Comments,
-                    userEmail = order.User.email,
-                    Id = Id,
-                    TotalPrice = order.TotalPrice,
-                    PriceWithDiscount = order.TotalPrice*Convert.ToDouble(100 - order.Discount)/100.0,
-                    Products = prod,
-                    startDeliveryTime = order.DeliverySpot.StartTime,
-                    endErliveryTime = order.DeliverySpot.EndTime,
-                    OrderStatus = (OrderStatus)(order.Status),
-                    CreationTime = dt
-                };
+            var od = Mapper.Map<Order, OrdersDetails>(order);
+            //map field's, wich not mapped
+            od.startDeliveryTime = order.DeliverySpot.StartTime;
+            od.endErliveryTime = order.DeliverySpot.EndTime;
+            od.OrderStatus = (OrderStatus) (order.Status);
+            od.PriceWithDiscount = order.TotalPrice*Convert.ToDouble(100 - order.Discount)/100.0;
+            od.Products = prod;
 
             return od;
         }
 
-        public void UpdateOrder(int Id, OrderStatus orderStatus)
+        public void UpdateOrder(int id, OrderStatus orderStatus)
         {
-            Order order = _ordersRepository.ReadAll().FirstOrDefault(m => m.Id == Id);
+            Order order = _ordersRepository.ReadAll().FirstOrDefault(m => m.Id == id);
 
             if (order == null)
                 throw new InstanceNotFoundException("Order not found");

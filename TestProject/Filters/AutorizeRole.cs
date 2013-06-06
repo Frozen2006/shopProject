@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using BLL.membership;
 using Helpers;
@@ -17,7 +14,7 @@ namespace TestProject.Filters
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            UsersService us = App_Start.NinjectWebCommon.Kernel.Get<UsersService>();
+            var us = App_Start.NinjectWebCommon.Kernel.Get<UsersService>();
 
             string email = us.AtributeCheck(Roles);
 

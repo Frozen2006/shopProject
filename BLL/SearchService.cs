@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DAL.Repositories.DbFirstRepository;
 using Entities;
 using Helpers;
 using Interfaces;
-using Interfaces.Repositories;
 using Ninject;
 
 namespace BLL
@@ -26,21 +23,14 @@ namespace BLL
         //Method to search autocompleat
         public List<Product> GetTop10Results(string searchData)
         {
-            List<Product> outData = new List<Product>();
-
             var searchDara = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData)).Take(10);
 
-            foreach (var product in searchDara)
-            {
-                outData.Add(product);
-            }
-
-            return outData;
+            return searchDara.ToList();
         }
 
         public List<CategoriesInSearch> GetCategories(string searchData)
         {
-            List<CategoriesInSearch> allCat = new List<CategoriesInSearch>();
+            var allCat = new List<CategoriesInSearch>();
             var q = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData));
 
             foreach (var product in q)
@@ -65,7 +55,7 @@ namespace BLL
             var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
 
 
-            ProductInSearch pis = new ProductInSearch()
+            var pis = new ProductInSearch
                 {
                     AllCount = searchedData.Count(),
                     Products = searchedData.ToList()
@@ -105,11 +95,11 @@ namespace BLL
 
 
 
-            int countOfAllProducts = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData)).Count();
+            int countOfAllProducts = _productRepo.ReadAll().Count(m => m.Name.Contains(searchData));
 
 
 
-            ProductInSearch pis = new ProductInSearch() { Products = products.ToList(), AllCount = countOfAllProducts};
+            var pis = new ProductInSearch { Products = products.ToList(), AllCount = countOfAllProducts};
 
             return pis;
         }

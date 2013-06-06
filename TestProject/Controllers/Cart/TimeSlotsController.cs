@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using BLL;
-using BLL.membership;
 using Helpers;
 using Interfaces;
 using TestProject.Filters;
@@ -16,7 +14,7 @@ namespace TestProject.Controllers.Cart
         //
         // GET: /TimeSlots/
 
-        private ITimeSlotsService _tss;
+        private readonly ITimeSlotsService _tss;
 
 
         public TimeSlotsController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService tss) : base(ps, us, cs)
@@ -34,9 +32,7 @@ namespace TestProject.Controllers.Cart
         private TimeSlotsModel GetModel(bool whithBackBtn)
         {
             string userEmail = GetUserEmail();
-            TimeSlotsModel model = new TimeSlotsModel();
-
-            model.Today = DateTime.Now;
+            var model = new TimeSlotsModel {Today = DateTime.Now};
 
             DateTime date = DateTime.Now;
             DateTime start = date;
@@ -48,17 +44,17 @@ namespace TestProject.Controllers.Cart
             model.SlotsFourHour = _tss.GetSlots(start, end, SlotsType.FourHour, userEmail);
 
             //colection with date times to Periods from 9.00 to 22.00 with step in 1 hour, setted to start date of the week
-            model.startDay = new List<DateTime>();
+            model.StartDay = new List<DateTime>();
 
-            DateTime toList = new DateTime(start.Year, start.Month, start.Day, 9, 0, 0);
+            var toList = new DateTime(start.Year, start.Month, start.Day, 9, 0, 0);
 
             for (int q = 0; q < 13; q++)
             {
-                model.startDay.Add(toList);
+                model.StartDay.Add(toList);
                 toList = toList.AddHours(1.0);
             }
 
-            model.isButtonEnable = whithBackBtn;
+            model.IsButtonEnable = whithBackBtn;
 
             return model;
         }
@@ -73,10 +69,7 @@ namespace TestProject.Controllers.Cart
                 TimeSlotsModel model = GetModel(true);
                 return View("Index", model);
             }
-            else
-            {
-                return RedirectToAction("ConfirmOrder", "Cart");
-            }
+            return RedirectToAction("ConfirmOrder", "Cart");
         }
 
         //Ajax jquery responce method
@@ -86,8 +79,8 @@ namespace TestProject.Controllers.Cart
             if (Request.IsAjaxRequest())
             {
                 string userEmail = GetUserEmail();
-                DateTime bookTime = new DateTime(year, mounth, day, hour, 0, 0);
-                SlotsType st = SlotsType.OneHour;
+                var bookTime = new DateTime(year, mounth, day, hour, 0, 0);
+                var st = SlotsType.OneHour;
 
                 switch (slotType)
                 {
@@ -106,10 +99,7 @@ namespace TestProject.Controllers.Cart
                 {
                     return Content("true");
                 }
-                else
-                {
-                    return Content("false");
-                }
+                return Content("false");
             }
             return null;
         }

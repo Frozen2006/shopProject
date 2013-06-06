@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using BLL;
-using BLL.membership;
 using Entities;
 using Helpers;
 using Interfaces;
-using Ninject;
 using TestProject.Models;
 
 namespace TestProject.Controllers.MembershipControllesr
@@ -18,8 +14,6 @@ namespace TestProject.Controllers.MembershipControllesr
     {
         //
         // GET: /Membership/
-
-
 
         private readonly IZipCode _myZip;
 
@@ -66,17 +60,11 @@ namespace TestProject.Controllers.MembershipControllesr
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (term.Length > 0))
             {
-                //string outData = _myZip.GetFirstCityPartical(q);
                 List<Tuple<string,string>> dataList = _myZip.GetCities(term);
 
-                List<jsonOutData> ooo = new List<jsonOutData>();
+                var jsonOutZips = dataList.Select(dL => new jsonOutData {label = dL.Item1 + " " + dL.Item2, value = dL.Item1, city = dL.Item2}).ToList();
 
-                foreach (var dL in dataList)
-                {
-                    ooo.Add(new jsonOutData(){label = dL.Item1+" "+dL.Item2, value = dL.Item1, city = dL.Item2});
-                }
-
-                return Json(ooo);
+                return Json(jsonOutZips);
             }
             return View("Register");
         }
@@ -95,7 +83,7 @@ namespace TestProject.Controllers.MembershipControllesr
         }
 
         [HttpPost]
-        public ActionResult Login(TestProject.Models.LoginModel model)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -112,9 +100,10 @@ namespace TestProject.Controllers.MembershipControllesr
 
         public ActionResult LogOut()
         {
-            _userService.LogOut(HttpContext.Request.Cookies.Get("session_data").Value);
+            var httpCookie = HttpContext.Request.Cookies.Get("session_data");
+            if (httpCookie != null)
+                _userService.LogOut(httpCookie.Value);
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

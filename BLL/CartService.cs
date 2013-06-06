@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Instrumentation;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using DAL.membership;
 using Entities;
@@ -26,24 +24,21 @@ namespace BLL
         // Add new product to user cart.
         // WARING: If you add one product > 1 times, finnaly product in cart is NOT replace. Only summarize new and old count
         //
-        public void Add(string UserEmail, int ProductId, double Count)
+        public void Add(string userEmail, int productId, double count)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            Cart _tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
+            Cart tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
 
             //Product add first time
-            if (_tmpCart == null)
+            if (tmpCart == null)
             {
-                _tmpCart = new Cart();
-                _tmpCart.Product_Id = ProductId;
-                _tmpCart.Count = Count;
-
-                us.Carts.Add(_tmpCart);
+                tmpCart = new Cart {Product_Id = productId, Count = count};
+                us.Carts.Add(tmpCart);
             }
             else //product exist
             {
-                _tmpCart.Count += Count;
+                tmpCart.Count += count;
             }
 
             _repo.Update(us);
@@ -53,26 +48,26 @@ namespace BLL
         // Add new product to user cart.
         // WARING: If you add one product > 1 times, finnaly product in cart is NOT replace. Only summarize new and old count
         //
-        public void AddArray(string UserEmail, int[] ProductsId, double[] Counts)
+        public void AddArray(string userEmail, int[] productsId, double[] counts)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            for (int q = 0; q < ProductsId.Length; q++)
+            for (int q = 0; q < productsId.Length; q++)
             {
-                Cart _tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductsId[q]);
+                Cart tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == productsId[q]);
 
                 //Product add first time
-                if (_tmpCart == null)
+                if (tmpCart == null)
                 {
-                    _tmpCart = new Cart();
-                    _tmpCart.Product_Id = ProductsId[q];
-                    _tmpCart.Count = Counts[q];
+                    tmpCart = new Cart();
+                    tmpCart.Product_Id = productsId[q];
+                    tmpCart.Count = counts[q];
 
-                    us.Carts.Add(_tmpCart);
+                    us.Carts.Add(tmpCart);
                 }
                 else //product exist
                 {
-                    _tmpCart.Count += Counts[q];
+                    tmpCart.Count += counts[q];
                 }
             }
 
@@ -84,11 +79,11 @@ namespace BLL
         // Get list of product's in cart with additional information (count, total price)
         // 
         //
-        public List<ProductInCart> GetAllChart(string UserEmail)
+        public List<ProductInCart> GetAllChart(string userEmail)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            List<ProductInCart> outChart = new List<ProductInCart>();
+            var outChart = new List<ProductInCart>();
 
             foreach (var cart in us.Carts)
             {
@@ -103,12 +98,12 @@ namespace BLL
         }
 
         // Delete product record from user's cart by Product ID
-        public void DeleteProduct(string UserEmail, int ProductId)
+        public void DeleteProduct(string userEmail, int productId)
         {
 
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            Cart findCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
+            Cart findCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
 
             if (findCart == null)
                 throw new InstanceNotFoundException("User not have this product");
@@ -120,9 +115,9 @@ namespace BLL
         }
 
         // Clear user's cart completely
-        public void Clear(string UserEmail)
+        public void Clear(string userEmail)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
             us.Carts.Clear();
 
@@ -134,34 +129,27 @@ namespace BLL
         //Update count of any product
         //New count replace old count of ProductId
         //
-        public double UpateCount(string UserEmail, int ProductId, double NewCount)
+        public double UpateCount(string userEmail, int productId, double newCount)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            Cart currentCart = us.Carts.FirstOrDefault(m => m.Product_Id == ProductId);
+            Cart currentCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
 
             if (currentCart == null)
                 throw new InstanceNotFoundException("This product is not exist in this user account");
 
-            currentCart.Count = NewCount;
+            currentCart.Count = newCount;
 
             _repo.Update(us);
 
             return currentCart.Product.Price*currentCart.Count;
         }
 
-        public double GetTotalPrice(string UserEmail)
+        public double GetTotalPrice(string userEmail)
         {
-            User us = GetUser(UserEmail);
+            User us = GetUser(userEmail);
 
-            double totalPrice = 0.0;
-
-            foreach (var cartItem in us.Carts)
-            {
-                totalPrice += cartItem.Product.Price*cartItem.Count;
-            }
-
-            return totalPrice;
+            return us.Carts.Sum(cartItem => cartItem.Product.Price*cartItem.Count);
         }
 
         private User GetUser(string userEmail)
@@ -169,7 +157,7 @@ namespace BLL
             if (String.IsNullOrWhiteSpace(userEmail))
                 throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
 
-            User us = _repo.ReadAll().FirstOrDefault(m => String.Compare(m.email, userEmail) == 0);
+            var us = _repo.ReadAll().FirstOrDefault(m => String.CompareOrdinal(m.email, userEmail) == 0);
 
             if (us == null)
                 throw new InstanceNotFoundException("User not found");

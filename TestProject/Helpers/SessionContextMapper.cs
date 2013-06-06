@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
 using Interfaces;
@@ -13,40 +9,35 @@ namespace TestProject.Helpers
     {
         public void SetSessionData(string guid)
         {
-            HttpCookie cookie = new HttpCookie("session_data");
-            cookie.Value = guid;
+            var cookie = new HttpCookie("session_data") {Value = guid};
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
 
         public string GetSessionDataIfExist()
         {
             //Find cookie, and if exist - return cookie value
-            HttpRequest Request = HttpContext.Current.Request;
-            if ((Request.Cookies.Get("session_data") != null) &&
-                (Request.Cookies.Get("session_data").Value != String.Empty))
+            HttpCookie cookie = HttpContext.Current.Request.Cookies.Get("session_data");
+            if ( (cookie != null) && (cookie.Value != String.Empty))
             {
-                return Request.Cookies.Get("session_data").Value;
+                return cookie.Value;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public void RemoveSessionData()
         {
+            HttpCookie httpCookie = HttpContext.Current.Request.Cookies.Get("session_data");
             
-            if (HttpContext.Current.Request.Cookies["session_data"] != null)
-            {
-                HttpContext.Current.Cache.Remove(HttpContext.Current.Request.Cookies.Get("session_data").Value);
+            if (httpCookie == null) return;
+            
+            HttpContext.Current.Cache.Remove(httpCookie.Value);
 
-                var cookie = new HttpCookie("session_data")
+            var cookie = new HttpCookie("session_data")
                 {
                     Expires = DateTime.Now.AddDays(-1d)
                 };
 
-                HttpContext.Current.Response.Cookies.Add(cookie);
-            }
+            HttpContext.Current.Response.Cookies.Add(cookie);
         }
 
         public string GetUserDataFromCash(string guid)

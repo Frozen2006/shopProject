@@ -39,7 +39,7 @@
 <div class="row-fluid">
     <div class="span6 offset3">
         <h2>Fast delivery</h2>
-        @{TimeSlotsTableModel tstm = new TimeSlotsTableModel() {Slots = Model.SlotsOneHour, Step = 1, Today = Model.Today, startDay = Model.startDay};}
+        @{TimeSlotsTableModel tstm = new TimeSlotsTableModel() {Slots = Model.SlotsOneHour, Step = 1, Today = Model.Today, StartDay = Model.StartDay};}
         @Html.Partial("_particalTable", tstm)
     </div>
 </div>
@@ -47,7 +47,7 @@
 <div class="row-fluid">
     <div class="span6 offset3">
         <h2>Save 3% !</h2>
-        @{tstm = new TimeSlotsTableModel() {Slots = Model.SlotsTwoHour, Step = 2, Today = Model.Today, startDay = Model.startDay};}
+        @{tstm = new TimeSlotsTableModel() {Slots = Model.SlotsTwoHour, Step = 2, Today = Model.Today, StartDay = Model.StartDay};}
         @Html.Partial("_particalTable", tstm)
     </div>
 </div>
@@ -55,7 +55,7 @@
 <div class="row-fluid">
     <div class="span6 offset3">
         <h2>Save 6% !</h2>
-        @{tstm = new TimeSlotsTableModel() {Slots = Model.SlotsFourHour, Step = 4, Today = Model.Today, startDay = Model.startDay};}
+        @{tstm = new TimeSlotsTableModel() {Slots = Model.SlotsFourHour, Step = 4, Today = Model.Today, StartDay = Model.StartDay};}
         @Html.Partial("_particalTable", tstm)
     </div>
 </div>       
@@ -65,7 +65,7 @@
     <div class="span6 offset3">
         @Html.ActionLink("To shop", "Index", "Category", new {}, new { @class="btn btn-success btn-large"})
         
-        @if (Model.isButtonEnable)
+        @if (Model.IsButtonEnable)
         {
             @Html.ActionLink("Continue...", "CheckOut", "TimeSlots", new {}, new {@class = "btn btn-primary btn-large"})
             ;

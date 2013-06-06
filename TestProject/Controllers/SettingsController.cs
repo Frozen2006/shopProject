@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using BLL;
-using BLL.membership;
+﻿using System.Web.Mvc;
 using Helpers;
 using Interfaces;
-using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -35,7 +28,7 @@ namespace TestProject.Controllers
 
         public ActionResult Delivery()
         {
-            Models.ChangeDeliveryAddressModel model = new ChangeDeliveryAddressModel();
+            var model = new ChangeDeliveryAddressModel();
 
             string userEmail = GetUserEmail();
 
@@ -54,7 +47,7 @@ namespace TestProject.Controllers
 
 
         [HttpPost]
-        public ActionResult Delivery(Models.ChangeDeliveryAddressModel model)
+        public ActionResult Delivery(ChangeDeliveryAddressModel model)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +62,7 @@ namespace TestProject.Controllers
 
 
         [HttpPost]
-        public ActionResult Account(Models.ChangePasswordModel model)
+        public ActionResult Account(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
             {
@@ -79,12 +72,9 @@ namespace TestProject.Controllers
                 {
                     _userService.ChangePassword(userEmail, model.OldPassword, model.Password);
                     ModelState.AddModelError("", "Success!");
-                    return View(new Models.ChangePasswordModel{});
+                    return View(new ChangePasswordModel());
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Wrong old password.");
-                }
+                ModelState.AddModelError("", "Wrong old password.");
             }
             ModelState.AddModelError("", "Input data is bad");
             ViewBag.Data = "BAD";

@@ -11,7 +11,7 @@ namespace Interfaces
     {
         int CreateOrder(string userEmail, int timeSlotId, string comments);
         List<OrdersInList> GetUserOrders(string userEmail);
-        OrdersDetails GetOrderDetails(int Id);
-        void UpdateOrder(int Id, OrderStatus orderStatus);
+        OrdersDetails GetOrderDetails(int id);
+        void UpdateOrder(int id, OrderStatus orderStatus);
     }
 }

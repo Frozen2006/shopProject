@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace TestProject.Controllers
@@ -13,37 +10,29 @@ namespace TestProject.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return null;
         }
 
         public ActionResult CategoryImg(int id)
         {
-            string FilePath = Server.MapPath("~/Content/images/categories/" + Convert.ToString(id) + ".jpg");
+            string filePath = Server.MapPath("~/Content/images/categories/" + Convert.ToString(id) + ".jpg");
 
-            if (System.IO.File.Exists(FilePath))
+            if (System.IO.File.Exists(filePath))
             {
-                return File(FilePath, "image");
+                return File(filePath, "image");
             }
-            else
-            {
-                return File(Server.MapPath("~/Content/images/categories/NoImage.jpg"), "Image");
-            }
-            
+            return File(Server.MapPath("~/Content/images/categories/NoImage.jpg"), "Image");
         }
 
         public ActionResult ProductImg(int id)
         {
-            string FilePath = Server.MapPath("~/Content/images/products/" + Convert.ToString(id) + ".jpg");
+            string filePath = Server.MapPath("~/Content/images/products/" + Convert.ToString(id) + ".jpg");
 
-            if (System.IO.File.Exists(FilePath))
+            if (System.IO.File.Exists(filePath))
             {
-                return File(FilePath, "image");
+                return File(filePath, "image");
             }
-            else
-            {
-                return File(Server.MapPath("~/Content/images/products/NoImage.jpg"), "Image");
-            }
-
+            return File(Server.MapPath("~/Content/images/products/NoImage.jpg"), "Image");
         }
 
     }

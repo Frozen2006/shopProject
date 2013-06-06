@@ -50,7 +50,7 @@
                 
                @for (int day = 0; day < 7; day++)
                {
-                   DateTime current = Model.startDay[row].AddDays(Convert.ToDouble(day));
+                   DateTime current = Model.StartDay[row].AddDays(Convert.ToDouble(day));
 
                    BookinSlot bs = Model.Slots.FirstOrDefault(m => m.StartTime == current);
 

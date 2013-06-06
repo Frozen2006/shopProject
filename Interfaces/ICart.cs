@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Helpers;
 
 namespace Interfaces
 {
     public interface ICart
     {
-        void Add(string UserEmail, int ProductId, double Count);
-        void AddArray(string UserEmail, int[] ProductsId, double[] Counts);
-        List<Helpers.ProductInCart> GetAllChart(string UserEmail);
-        void DeleteProduct(string UserEmail, int ProductId);
-        void Clear(string UserEmail);
+        void Add(string userEmail, int productId, double count);
+        void AddArray(string userEmail, int[] productsId, double[] counts);
+        List<ProductInCart> GetAllChart(string userEmail);
+        void DeleteProduct(string userEmail, int productId);
+        void Clear(string userEmail);
         
         //return finally cost of changed item
-        double UpateCount(string UserEmail, int ProductId, double NewCount);
-        double GetTotalPrice(string UserEmail);
+        double UpateCount(string userEmail, int productId, double newCount);
+        double GetTotalPrice(string userEmail);
         
         //Other methods be realize in future
         //void Buy(string UserEmail);
