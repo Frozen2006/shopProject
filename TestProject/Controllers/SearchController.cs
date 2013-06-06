@@ -6,22 +6,20 @@ using BLL;
 using Entities;
 using Helpers;
 using Interfaces;
+using Ninject;
 using TestProject.Models;
 
 namespace TestProject.Controllers
 {
     public class SearchController : BaseController
     {
-        //
-        // GET: /Search/
+        private ISearchService SearchService { get; set; }
 
-
-        private readonly ISearchService _search;
-
-
-        public SearchController(ICategoryService ps, IUserService us, ICart cs, ISearchService ss) : base(ps, us, cs)
+        [Inject]
+        public SearchController(ICategoryService productService, IUserService userService, ICartService cartService, ISearchService searchService)
+            : base(productService, userService, cartService)
         {
-            _search = ss;
+            SearchService = searchService;
         }
 
         public ActionResult Index()
@@ -35,7 +33,7 @@ namespace TestProject.Controllers
             if (data.Length < 3)
                 return View("Error");
 
-            List<CategoriesInSearch> categories = _search.GetCategories(data);
+            List<CategoriesInSearch> categories = SearchService.GetCategories(data);
             
             if (page == null)
             {
@@ -50,14 +48,14 @@ namespace TestProject.Controllers
             int count;
             if (String.IsNullOrWhiteSpace(category))
             {
-                pis = _search.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
+                pis = SearchService.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
                                                             (bool) reverse);
                 products = pis.Products;
                 count = pis.AllCount;
             }
             else
             {
-                pis = _search.GetProductsFromCategory(data, category);
+                pis = SearchService.GetProductsFromCategory(data, category);
                 products = pis.Products;
                 count = pis.AllCount;
             }
@@ -73,7 +71,7 @@ namespace TestProject.Controllers
         {
             if ((Request.IsAjaxRequest() && !String.IsNullOrWhiteSpace(data)))
             {
-                List<Product> findedProducts = _search.GetTop10Results(data);
+                List<Product> findedProducts = SearchService.GetTop10Results(data);
 
                 List<ajaxResponce> resp = findedProducts.Select(findedProduct => new ajaxResponce
                     {

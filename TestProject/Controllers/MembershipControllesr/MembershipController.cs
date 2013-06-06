@@ -17,7 +17,7 @@ namespace TestProject.Controllers.MembershipControllesr
 
         private readonly IZipCode _myZip;
 
-        public MembershipController(ICategoryService ps, IUserService us, ICart cs, IZipCode zip) : base(ps, us, cs)
+        public MembershipController(ICategoryService ps, IUserService us, ICartService cs, IZipCode zip) : base(ps, us, cs)
         {
             _myZip = zip;
         }
@@ -40,7 +40,7 @@ namespace TestProject.Controllers.MembershipControllesr
                 User us = Mapper.Map<RegisterModel, User>(model);
                 us.Role = (int) RolesType.User;
 
-                if (_userService.CeateUser(us))
+                if (UserService.CeateUser(us))
                 {
                     return RedirectToAction("Index");
                 }
@@ -87,7 +87,7 @@ namespace TestProject.Controllers.MembershipControllesr
         {
             if (ModelState.IsValid)
             {
-                if (_userService.LogIn(model.Email, model.Password))
+                if (UserService.LogIn(model.Email, model.Password))
                 {
                     return RedirectToAction("Index");
                 }
@@ -102,7 +102,7 @@ namespace TestProject.Controllers.MembershipControllesr
         {
             var httpCookie = HttpContext.Request.Cookies.Get("session_data");
             if (httpCookie != null)
-                _userService.LogOut(httpCookie.Value);
+                UserService.LogOut(httpCookie.Value);
             return RedirectToAction("Index", "Home");
         }
     }

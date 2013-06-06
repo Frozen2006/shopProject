@@ -16,13 +16,13 @@ namespace TestProject.Controllers
     public class CategoryController : BaseController
     {
         [Inject]
-        public CategoryController(ICategoryService ps, IUserService us, ICart cs)
-            : base(ps, us, cs) { }
+        public CategoryController(ICategoryService productService, IUserService userService, ICartService cartService)
+            : base(productService, userService, cartService) { }
 
 
         public ActionResult Index()
         {
-            var root = _prodService.GetRootCategory();
+            var root = ProdService.GetRootCategory();
             return RedirectToAction("Details", new { id = root.Id });
         }
         
@@ -30,9 +30,9 @@ namespace TestProject.Controllers
         {
             var model = new CategoryDetailsModel();
 
-            Category category = _prodService.GetCategoryById(id);
+            Category category = ProdService.GetCategoryById(id);
             model.Category = category;
-            model.Subcategories = _prodService.GetSubcategories(category);
+            model.Subcategories = ProdService.GetSubcategories(category);
 
             return View(model);
         }
@@ -43,7 +43,7 @@ namespace TestProject.Controllers
             var model = new CategotyNavigationModel();
 
             model.Category = category;
-            model.Parents = _prodService.GetParentsList(category);
+            model.Parents = ProdService.GetParentsList(category);
 
             return PartialView(model);
         }

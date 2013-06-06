@@ -6,17 +6,17 @@ namespace TestProject.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly ICategoryService _prodService;
-        protected readonly IUserService _userService;
-        protected readonly ICart _cartService;
+        protected  ICategoryService ProdService { get; set; }
+        protected  IUserService UserService{ get; set; }
+        protected  ICartService CartService { get; set; }
 
 
         [Inject]
-        public BaseController(ICategoryService ps, IUserService us, ICart cs)
+        public BaseController(ICategoryService productService, IUserService userService, ICartService cartService)
         {
-            _prodService = ps;
-            _userService = us;
-            _cartService = cs;
+            ProdService = productService;
+            UserService = userService;
+            CartService = cartService;
         }
 
         protected string GetUserEmail()

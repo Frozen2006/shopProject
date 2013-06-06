@@ -17,7 +17,7 @@ namespace TestProject.Controllers.Cart
         private readonly ITimeSlotsService _tss;
 
 
-        public TimeSlotsController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService tss) : base(ps, us, cs)
+        public TimeSlotsController(ICategoryService ps, IUserService us, ICartService cs, ITimeSlotsService tss) : base(ps, us, cs)
         {
             _tss = tss;
         }

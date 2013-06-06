@@ -10,7 +10,7 @@ using Ninject;
 
 namespace BLL
 {
-    public class CartService : Interfaces.ICart
+    public class CartService : Interfaces.ICartService
     {
 
         private readonly UserRepository _repo;

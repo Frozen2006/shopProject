@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Helpers;
 using Interfaces;
+using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -9,12 +10,9 @@ namespace TestProject.Controllers
     [CustomAuthrize(Roles = RolesType.User)]
     public class SettingsController : BaseController
     {
-        //
-        // GET: /Settings/
-
-
-        public SettingsController(ICategoryService ps, IUserService us, ICart cs) : base(ps, us, cs)
-        {}
+        [Inject]
+        public SettingsController(ICategoryService productService, IUserService userService, ICartService cartService)
+            : base(productService, userService, cartService) { }
 
         public ActionResult Index()
         {
@@ -32,7 +30,7 @@ namespace TestProject.Controllers
 
             string userEmail = GetUserEmail();
 
-            UserDetails userDetails = _userService.GetUserDetails(userEmail);
+            UserDetails userDetails = UserService.GetUserDetails(userEmail);
 
             model.Address1 = userDetails.address;
             model.Address2 = userDetails.address2;
@@ -53,7 +51,7 @@ namespace TestProject.Controllers
             {
                 string userEmail = GetUserEmail();
 
-               _userService.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
+               UserService.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
             }
             ModelState.AddModelError("", "Input data is bad");
             ViewBag.Data = "BAD";
@@ -68,9 +66,9 @@ namespace TestProject.Controllers
             {
                 string userEmail = GetUserEmail();
 
-                if (_userService.CheckUser(userEmail, model.OldPassword))
+                if (UserService.CheckUser(userEmail, model.OldPassword))
                 {
-                    _userService.ChangePassword(userEmail, model.OldPassword, model.Password);
+                    UserService.ChangePassword(userEmail, model.OldPassword, model.Password);
                     ModelState.AddModelError("", "Success!");
                     return View(new ChangePasswordModel());
                 }

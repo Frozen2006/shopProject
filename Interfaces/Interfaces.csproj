@@ -48,7 +48,7 @@
     <Compile Include="Repositories\ITimeSlotsRepository.cs" />
     <Compile Include="Repositories\IZipRepository.cs" />
     <Compile Include="Repositories\ISessionRepository.cs" />
-    <Compile Include="ICart.cs" />
+    <Compile Include="ICartService.cs" />
     <Compile Include="Repositories\ICategoryRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />

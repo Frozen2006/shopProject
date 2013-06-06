@@ -42,7 +42,7 @@ namespace NinjectModules
             Bind<IOrderService>().To<OrderService>();
 
             //Cart
-            Bind<ICart>().To<CartService>().InRequestScope();
+            Bind<ICartService>().To<CartService>().InRequestScope();
 
             Bind<ISearchService>().To<SearchService>();
 

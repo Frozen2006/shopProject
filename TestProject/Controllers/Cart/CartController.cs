@@ -16,7 +16,7 @@ namespace TestProject.Controllers.Cart
         private readonly ITimeSlotsService _slotsService;
         private readonly IOrderService _orderService;
 
-        public CartController(ICategoryService ps, IUserService us, ICart cs, ITimeSlotsService slotsService, IOrderService os)
+        public CartController(ICategoryService ps, IUserService us, ICartService cs, ITimeSlotsService slotsService, IOrderService os)
             : base(ps, us, cs)
         {
             _orderService = os;
@@ -30,8 +30,8 @@ namespace TestProject.Controllers.Cart
 
             var model = new CartViewModel
                 {
-                    Products = _cartService.GetAllChart(userEmail),
-                    TotalPrice = _cartService.GetTotalPrice(userEmail)
+                    Products = CartService.GetAllChart(userEmail),
+                    TotalPrice = CartService.GetTotalPrice(userEmail)
                 };
 
 
@@ -49,9 +49,9 @@ namespace TestProject.Controllers.Cart
             {
                 string userEmail = GetUserEmail();
 
-                _cartService.DeleteProduct(userEmail, Convert.ToInt32(productId));
+                CartService.DeleteProduct(userEmail, Convert.ToInt32(productId));
 
-                return Content(Convert.ToString(_cartService.GetTotalPrice(userEmail)));
+                return Content(Convert.ToString(CartService.GetTotalPrice(userEmail)));
             }
             return View("Index");
         }
@@ -67,13 +67,13 @@ namespace TestProject.Controllers.Cart
             {
                 string userEmail = GetUserEmail();
 
-                double newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(productId), count);
+                double newPositionTotalPrice = CartService.UpateCount(userEmail, Convert.ToInt32(productId), count);
 
                 var outData =
                     new
                         {
                             positionPrice = Convert.ToString(newPositionTotalPrice),
-                            totalPrice = Convert.ToString(_cartService.GetTotalPrice(userEmail))
+                            totalPrice = Convert.ToString(CartService.GetTotalPrice(userEmail))
                         };
 
 
@@ -130,11 +130,11 @@ namespace TestProject.Controllers.Cart
 
                 for (int q = 0; q < Id.Count; q++)
                 {
-                        double newPositionTotalPrice = _cartService.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
+                        double newPositionTotalPrice = CartService.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
                         outData.Add(new jsonUpdateAll { Id = Convert.ToString(Id[q]), positionPrice = Convert.ToString(newPositionTotalPrice), count = Convert.ToString(Count[q])});
                 }
 
-                string totalPrice = Convert.ToString(_cartService.GetTotalPrice(userEmail));
+                string totalPrice = Convert.ToString(CartService.GetTotalPrice(userEmail));
 
                 foreach (var jsonUpdateAll in outData)
                 {

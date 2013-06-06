@@ -1,6 +1,7 @@
 ﻿using Helpers;
 using Interfaces;
 using System.Web.Mvc;
+using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -9,12 +10,13 @@ namespace TestProject.Controllers
     [CustomAuthrize]
     public class PaymentController : BaseController
     {
-        private readonly IOrderService _orderService;
+        private IOrderService OrderService { get; set; }
 
-        public PaymentController(ICategoryService ps, IUserService us, ICart cs, IOrderService os)
-            : base(ps, us, cs)
+        [Inject]
+        public PaymentController(ICategoryService productService, IUserService userService, ICartService cartService, IOrderService orderService)
+            : base(productService, userService, cartService)
         {
-            _orderService = os;
+            OrderService = orderService;
         }
 
         [HttpGet]
@@ -26,7 +28,7 @@ namespace TestProject.Controllers
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
             }
 
-            OrdersDetails order = _orderService.GetOrderDetails(orderId);
+            OrdersDetails order = OrderService.GetOrderDetails(orderId);
 
             if (order == null)
             {
@@ -62,7 +64,7 @@ namespace TestProject.Controllers
                     return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
                 }
 
-                OrdersDetails order = _orderService.GetOrderDetails(model.OrderId);
+                OrdersDetails order = OrderService.GetOrderDetails(model.OrderId);
 
                 if (order.userEmail != email)
                 {
@@ -74,7 +76,7 @@ namespace TestProject.Controllers
                     return RedirectToAction("CustomError", "Error", new { message = "The order has already been paid" });
                 }
 
-                _orderService.UpdateOrder(model.OrderId, OrderStatus.Paid);
+                OrderService.UpdateOrder(model.OrderId, OrderStatus.Paid);
 
                 return RedirectToAction("Index", "History");
             }

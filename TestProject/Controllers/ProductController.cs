@@ -14,14 +14,14 @@ namespace TestProject.Controllers
     public class ProductController : BaseController
     {
         [Inject]
-        public ProductController(ICategoryService ps, IUserService us, ICart cs)
-            : base(ps, us, cs) { } 
+        public ProductController(ICategoryService productService, IUserService userService, ICartService cartService)
+            : base(productService, userService, cartService) { }
         
         public ActionResult List(int categoryId, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
             var model = new ProductListModel();
 
-            Category category = _prodService.GetCategoryById(categoryId);
+            Category category = ProdService.GetCategoryById(categoryId);
 
             model.Category = category;
 
@@ -30,7 +30,7 @@ namespace TestProject.Controllers
             model.SortType = sort ?? SortType.Alphabetic;
             model.Reverse = reverse ?? false;
 
-            model.Products = _prodService.GetProducts(model.Category, model.PageNumber, model.PageSize,
+            model.Products = ProdService.GetProducts(model.Category, model.PageNumber, model.PageSize,
                                                       model.SortType, model.Reverse);
 
             return View(model);
@@ -38,7 +38,7 @@ namespace TestProject.Controllers
 
         public ActionResult AddToCart(string productId, string count)
         {
-            string email = _userService.GetEmailIfLoginIn();
+            string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
                 Response.StatusCode = 403;
@@ -59,20 +59,20 @@ namespace TestProject.Controllers
                 return Content("Incorrect arguments:<br>" + ex.Message);
             }
 
-            Product product = _prodService.GetProduct(intProductId);
+            Product product = ProdService.GetProduct(intProductId);
             if (product == null)
             {
                 Response.StatusCode = 404;
                 return Content("Product not found");
             }
 
-            _cartService.Add(email, intProductId, doubleCount);
+            CartService.Add(email, intProductId, doubleCount);
             return Content(doubleCount + " units of" + product.Name + "were successfully added");
         }
 
         public ActionResult Details(int id)
         {
-            var product = _prodService.GetProduct(id);
+            var product = ProdService.GetProduct(id);
 
             //to error page
             //if(product == null)
@@ -100,7 +100,7 @@ namespace TestProject.Controllers
                 try
                 {
                     products = productIds.Select(id => int.Parse(id))
-                                         .Select(id => _prodService.GetProduct(id))
+                                         .Select(id => ProdService.GetProduct(id))
                                          .ToArray();
 
                     doubleCounts = counts.Select(c => double.Parse(c))
@@ -118,7 +118,7 @@ namespace TestProject.Controllers
                     return Content("Some products were not found");
                 }
 
-                _cartService.AddArray(email, products.Select(p => p.Id).ToArray(), doubleCounts);
+                CartService.AddArray(email, products.Select(p => p.Id).ToArray(), doubleCounts);
 
                 StringBuilder respons = new StringBuilder();
                 for (int i = 0; i < products.Length; i++)

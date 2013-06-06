@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Ninject;
 using TestProject.Filters;
 
 namespace TestProject.Controllers
@@ -14,12 +15,13 @@ namespace TestProject.Controllers
     [CustomAuthrize]
     public class HistoryController : BaseController
     {
-        private readonly  IOrderService _orderService;
+        private IOrderService OrderService { get; set; }
 
-        public HistoryController(ICategoryService ps, IUserService us, ICart cs, IOrderService os)
-            : base(ps, us, cs)
+        [Inject]
+        public HistoryController(ICategoryService productService, IUserService userService, ICartService cartService, IOrderService orderService)
+            : base(productService, userService, cartService)
         {
-            _orderService = os;
+            OrderService = orderService;
         }
 
         public ActionResult Index()
@@ -31,13 +33,13 @@ namespace TestProject.Controllers
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotLoggedIn });
             }
 
-            var orders = _orderService.GetUserOrders(email);
+            var orders = OrderService.GetUserOrders(email);
             return View(orders);
         }
 
         public ActionResult Details(int id)
         {
-            OrdersDetails order = _orderService.GetOrderDetails(id);
+            OrdersDetails order = OrderService.GetOrderDetails(id);
 
             return View(order);
         }
