@@ -6,7 +6,7 @@ using Entities;
 
 namespace BLL.membership
 {
-    public class ZipCodeService : Interfaces.IZipCode
+    public class ZipCodeService : Interfaces.IZipCodeService
     {
         private readonly ZipRepository _repo;
 

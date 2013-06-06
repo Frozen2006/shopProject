@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="CartService.cs" />
     <Compile Include="CategoryService.cs" />
+    <Compile Include="ErrorService.cs" />
     <Compile Include="membership\UsersService.cs" />
     <Compile Include="membership\ZipCodeService.cs" />
     <Compile Include="OrderService.cs" />

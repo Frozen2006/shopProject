@@ -6,20 +6,21 @@ using AutoMapper;
 using Entities;
 using Helpers;
 using Interfaces;
+using Ninject;
 using TestProject.Models;
 
 namespace TestProject.Controllers.MembershipControllesr
 {
     public class MembershipController : BaseController
     {
-        //
-        // GET: /Membership/
 
-        private readonly IZipCode _myZip;
+        private IZipCodeService ZipCodeService { get; set; }
 
-        public MembershipController(ICategoryService ps, IUserService us, ICartService cs, IZipCode zip) : base(ps, us, cs)
+        [Inject]
+        public MembershipController(ICategoryService productService, IUserService userService, ICartService cartService, IZipCodeService zipCodeService)
+            : base(productService, userService, cartService)
         {
-            _myZip = zip;
+            ZipCodeService = zipCodeService;
         }
 
         public ActionResult Index()
@@ -60,7 +61,7 @@ namespace TestProject.Controllers.MembershipControllesr
             Request.Headers["X-Requested-With"] = "XMLHttpRequest";
             if (Request.IsAjaxRequest() && (term.Length > 0))
             {
-                List<Tuple<string,string>> dataList = _myZip.GetCities(term);
+                List<Tuple<string,string>> dataList = ZipCodeService.GetCities(term);
 
                 var jsonOutZips = dataList.Select(dL => new jsonOutData {label = dL.Item1 + " " + dL.Item2, value = dL.Item1, city = dL.Item2}).ToList();
 

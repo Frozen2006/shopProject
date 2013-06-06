@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Helpers;
 using Interfaces;
+using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -14,20 +15,21 @@ namespace TestProject.Controllers.Cart
         //
         // GET: /TimeSlots/
 
-        private readonly ITimeSlotsService _tss;
+        private ITimeSlotsService TimeSlotService { get; set; }
 
-
-        public TimeSlotsController(ICategoryService ps, IUserService us, ICartService cs, ITimeSlotsService tss) : base(ps, us, cs)
+        [Inject]
+        public TimeSlotsController(ICategoryService productService, IUserService userService, ICartService cartService, ITimeSlotsService timeSlotsService)
+            : base(productService, userService, cartService)
         {
-            _tss = tss;
+            TimeSlotService = timeSlotsService;
         }
 
         public ActionResult Index()
         {
             TimeSlotsModel model = GetModel(false);
-                return View(model);
-        }
 
+            return View(model);
+        }
 
         private TimeSlotsModel GetModel(bool whithBackBtn)
         {
@@ -39,9 +41,9 @@ namespace TestProject.Controllers.Cart
 
             DateTime end = date.AddDays(7.0);
 
-            model.SlotsOneHour = _tss.GetSlots(start, end, SlotsType.OneHour, userEmail);
-            model.SlotsTwoHour = _tss.GetSlots(start, end, SlotsType.TwoHour, userEmail);
-            model.SlotsFourHour = _tss.GetSlots(start, end, SlotsType.FourHour, userEmail);
+            model.SlotsOneHour = TimeSlotService.GetSlots(start, end, SlotsType.OneHour, userEmail);
+            model.SlotsTwoHour = TimeSlotService.GetSlots(start, end, SlotsType.TwoHour, userEmail);
+            model.SlotsFourHour = TimeSlotService.GetSlots(start, end, SlotsType.FourHour, userEmail);
 
             //colection with date times to Periods from 9.00 to 22.00 with step in 1 hour, setted to start date of the week
             model.StartDay = new List<DateTime>();
@@ -64,7 +66,7 @@ namespace TestProject.Controllers.Cart
         {
             string userEmail = GetUserEmail();
 
-            if (_tss.GetUserSlots(userEmail).Count == 0)
+            if (TimeSlotService.GetUserSlots(userEmail).Count == 0)
             {
                 TimeSlotsModel model = GetModel(true);
                 return View("Index", model);
@@ -95,7 +97,7 @@ namespace TestProject.Controllers.Cart
                         break;
                 }
 
-                if (_tss.AddUserToSlot(bookTime, st, userEmail))
+                if (TimeSlotService.AddUserToSlot(bookTime, st, userEmail))
                 {
                     return Content("true");
                 }

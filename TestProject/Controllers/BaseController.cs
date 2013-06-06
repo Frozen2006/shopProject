@@ -10,7 +10,6 @@ namespace TestProject.Controllers
         protected  IUserService UserService{ get; set; }
         protected  ICartService CartService { get; set; }
 
-
         [Inject]
         public BaseController(ICategoryService productService, IUserService userService, ICartService cartService)
         {
@@ -23,6 +22,5 @@ namespace TestProject.Controllers
         {
             return (string)HttpContext.Items["email"];
         }
-
     }
 }

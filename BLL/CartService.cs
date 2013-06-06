@@ -157,7 +157,8 @@ namespace BLL
             if (String.IsNullOrWhiteSpace(userEmail))
                 throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
 
-            var us = _repo.ReadAll().FirstOrDefault(m => String.CompareOrdinal(m.email, userEmail) == 0);
+            User us = _repo.ReadAll()
+                .FirstOrDefault(m => (m.email == userEmail));
 
             if (us == null)
                 throw new InstanceNotFoundException("User not found");

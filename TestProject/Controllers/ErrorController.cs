@@ -3,46 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Interfaces;
+using Ninject;
 using TestProject.Models;
 
 namespace TestProject.Controllers
 {
     public class ErrorController : Controller
     {
+        private IErrorService ErrorService { get; set; }
+
+        [Inject]
+        public ErrorController(IErrorService errorService)
+        {
+            ErrorService = errorService;
+        }
+
         public ActionResult Error(string code)
         {
             ErrorCode errorCode;
             if (!Enum.TryParse<ErrorCode>(code ,out errorCode))
                 errorCode = ErrorCode.Unknown;
 
-            string message;
+            string message = ErrorService.GetErrorDescription(errorCode);
 
-            switch (errorCode)
-            {
-                case ErrorCode.NotLoggedIn:
-                    message = "User is not logged in";
-                    break;
-                case ErrorCode.NotFound:
-                    message = "Resource was not found";
-                    break;
-                case ErrorCode.Forbidden:
-                    message = "Access forbidden";
-                    break;
-                default:
-                    message = "Unknown error occured";
-                    break;
-            }
-
-            var model = new ErrorModel();
-            model.Message = message;
+            var model = new ErrorModel {Message = message};
 
             return View("Error", model);
         }
 
-        public ActionResult CustomError(string message)
+        public ActionResult Custom(string message)
         {
-            var model = new ErrorModel();
-            model.Message = message;
+            var model = new ErrorModel {Message = message};
 
             return View("Error", model);
         }

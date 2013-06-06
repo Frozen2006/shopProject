@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Helpers;
 using Interfaces;
+using Ninject;
 using TestProject.Filters;
 using TestProject.Models;
 
@@ -11,16 +12,15 @@ namespace TestProject.Controllers.Cart
     [CustomAuthrize(Roles = RolesType.User)]
     public class CartController : BaseController
     {
-        //
-        // GET: /Cart/
-        private readonly ITimeSlotsService _slotsService;
-        private readonly IOrderService _orderService;
+        private ITimeSlotsService SlotService { get; set; }
+        private IOrderService OrderService { get; set; }
 
-        public CartController(ICategoryService ps, IUserService us, ICartService cs, ITimeSlotsService slotsService, IOrderService os)
-            : base(ps, us, cs)
+        [Inject]
+        public CartController(ICategoryService productService, IUserService userService, ICartService cartService, ITimeSlotsService slotsService, IOrderService orderService)
+            : base(productService, userService, cartService)
         {
-            _orderService = os;
-            _slotsService = slotsService;
+            OrderService = orderService;
+            SlotService = slotsService;
         }
 
         public ActionResult Index()
@@ -82,13 +82,10 @@ namespace TestProject.Controllers.Cart
             return View("Index");
         }
 
-
-
-
         public ActionResult ConfirmOrder()
         {
             string userEmail = GetUserEmail();
-            var odm = new OrderDetailsModel {TimeSlot = _slotsService.GetUserSlots(userEmail)};
+            var odm = new OrderDetailsModel { TimeSlot = SlotService.GetUserSlots(userEmail) };
 
             return View(odm);
         }
@@ -100,7 +97,7 @@ namespace TestProject.Controllers.Cart
                 return RedirectToAction("Index", "Home");
 
             string userEmail = GetUserEmail();
-            int orderId = _orderService.CreateOrder(userEmail, (int)Id, Comments);
+            int orderId = OrderService.CreateOrder(userEmail, (int)Id, Comments);
 
             return RedirectToAction("Pay", "Payment", new { orderId = orderId });
         }

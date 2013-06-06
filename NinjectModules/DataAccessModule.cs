@@ -36,10 +36,11 @@ namespace NinjectModules
             Bind<TimeSlotsRepository>().To<TimeSlotsRepository>();
             Bind<IOrdersRepository>().To <OrdersRepository>();
 
-            Bind<IZipCode>().To<ZipCodeService>();
+            Bind<IZipCodeService>().To<ZipCodeService>();
             Bind<ICategoryService>().To<CategoryService>();
             Bind<IUserService>().To<UsersService>();
             Bind<IOrderService>().To<OrderService>();
+            Bind<IErrorService>().To<ErrorService>();
 
             //Cart
             Bind<ICartService>().To<CartService>().InRequestScope();

@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorCode.cs" />
     <Compile Include="ICategoryService.cs" />
+    <Compile Include="IErrorService.cs" />
     <Compile Include="IOrderService.cs" />
     <Compile Include="ISearchService.cs" />
     <Compile Include="ITimeSlotsService.cs" />
@@ -54,7 +56,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="ISessionContext.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
-    <Compile Include="IZipCode.cs" />
+    <Compile Include="IZipCodeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
