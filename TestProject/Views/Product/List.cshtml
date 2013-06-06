@@ -96,3 +96,38 @@
     </div>
 </div>
 }
+
+<script>
+    function getPage() {
+
+        var params = {
+            categoryId: "@Model.Category.Id",
+        sort: "@Model.SortType",
+        pageSize: "@Model.PageSize",
+        reverse: "@Model.Reverse"
+    }
+
+    var select = document.getElementById("sort");
+
+    switch (select.selectedIndex) {
+        case 0:
+            params.sort = "Alphabetic";
+            params.reverse = "False";
+            break;
+        case 1:
+            params.sort = "Alphabetic";
+            params.reverse = "True";
+            break;
+        case 2:
+            params.sort = "Price";
+            params.reverse = "False";
+            break;
+        case 3:
+            params.sort = "Price";
+            params.reverse = "True";
+            break;
+    }
+
+    window.location.href = "/product/list?" + $.param(params);
+}
+</script>
