@@ -6,6 +6,11 @@
     @foreach (var item in Model.OrderByDescending(order => order.CreationTime)) {
        <div class="order-box well">
             <div class="order_table_cell">
+            <span class="order_table_header">Date:</span>
+                @item.CreationTime
+            </div>
+
+            <div class="order_table_cell">
             <span class="order_table_header">Id:</span>
                 @item.Id
             </div>
@@ -16,14 +21,18 @@
             </div>
 
             <div class="order_table_cell">
-            <span class="order_table_header">Start time:</span>
+            <span class="order_table_header">Delivery from</span>
                 @item.startOrderTime
-            </div>
+            <span class="order_table_header">to</span>
+                @item.endOrderTime
+            </div> 
 
             <div class="order_table_cell">
-            <span class="order_table_header">End time:</span>
-                @item.endOrderTime    
+            <span class="order_table_header">Price with discount:</span>
+                @item.price$    
             </div>    
+
+
            
             @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn more_button" }) 
         </div>

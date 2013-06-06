@@ -1,29 +1,61 @@
-﻿//Slider scripts
-    function constructSlider(sliderClass, step) {
-        $("." + sliderClass).slider({
-            range: "min",
-            min: 0,
-            max: 10,
-            value: 0,
-            step: step,
-            slide: function (event, ui) {
-                var counter = getCounter(event.target);
-                counter.value = ui.value;
+﻿function getPage() {
 
-                $(counter).change();
-                $(ui).change();
-            }
-        });
+    var params = {
+        categoryId: "@Model.Category.Id",
+        sort: "@Model.SortType",
+        pageSize: "@Model.PageSize",
+        reverse: "@Model.Reverse"
     }
 
-    $(function () {
-        constructSlider("int_slider", 1);
-        constructSlider("float_slider", 0.1);
-    });
+    var select = document.getElementById("sort");
 
-function countInput(event, price, sliderClass)
-{
-    slider = getSlider(event.target);           
+    switch (select.selectedIndex) {
+        case 0:
+            params.sort = "Alphabetic";
+            params.reverse = "False";
+            break;
+        case 1:
+            params.sort = "Alphabetic";
+            params.reverse = "True";
+            break;
+        case 2:
+            params.sort = "Price";
+            params.reverse = "False";
+            break;
+        case 3:
+            params.sort = "Price";
+            params.reverse = "True";
+            break;
+    }
+
+    window.location.href = "/product/list?" + $.param(params);
+}
+
+//Slider scripts
+function constructSlider(sliderClass, step) {
+    $("." + sliderClass).slider({
+        range: "min",
+        min: 0,
+        max: 10,
+        value: 0,
+        step: step,
+        slide: function (event, ui) {
+            var counter = getCounter(event.target);
+            counter.value = ui.value;
+
+            $(counter).change();
+            $(ui).change();
+        }
+    });
+}
+
+$(function () {
+    constructSlider("int_slider", 1);
+    constructSlider("float_slider", 0.1);
+});
+
+function countInput(event, price, sliderClass) {
+    slider = getSlider(event.target);
 
     var stringCount = event.target.value;
 
@@ -38,8 +70,8 @@ function countInput(event, price, sliderClass)
 
     //If can't parse than set it to 0.
     //event.target.value = count;
-        
-        
+
+
     $(slider).slider("value", count);
 
     //Set estimated price.
@@ -85,21 +117,21 @@ function getPrice(element) {
 
 //Adding to cart scripts
 
-    //public ActionResult AddToCart(int productId, int count)
-    function sendRequest(id, c) {
-        $.ajax
-        ({
-            url: "/Product/AddToCart",
-            data: { productId: id, count: c.toString().replace(".",",") },
-            type: "POST",
-            success: function (data) {
-                newAlert('alert', data);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                newAlert('alert alert-error', errorThrown);
-            }
-        })
-    }
+//public ActionResult AddToCart(int productId, int count)
+function sendRequest(id, c) {
+    $.ajax
+    ({
+        url: "/Product/AddToCart",
+        data: { productId: id, count: c.toString().replace(".", ",") },
+        type: "POST",
+        success: function (data) {
+            newAlert('alert', data);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            newAlert('alert alert-error', errorThrown);
+        }
+    })
+}
 
 function addToCart(event) {
     var input = getIdInput(event.target);
@@ -118,7 +150,7 @@ function addToCart(event) {
 $(function () {
     $("body").append("<div id='alert_area'></div>");
 });
-    
+
 function newAlert(type, message) {
     $("#alert_area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
     $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
@@ -133,7 +165,7 @@ function addAll() {
 
     for (var i = 0; i < idInputs.length; i++) {
         var count = getCounter(idInputs[i]);
-    
+
         var numCount = parseFloat(count.value) || 0;
 
         if (numCount > 0) {

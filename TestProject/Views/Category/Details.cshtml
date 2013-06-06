@@ -3,7 +3,6 @@
 
 <div class="row-fluid">
     @Html.Action("CategoryNavigation", new { category = Model.Category })
-
     <div>
         @if (Model.Subcategories.Count() != 0)
         {
@@ -56,6 +55,6 @@
               }              
             }
             </div>
-        }  
+        }
     </div>
 </div>
