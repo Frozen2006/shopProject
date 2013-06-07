@@ -96,7 +96,9 @@ function getPrice(element) {
                 newAlert('alert', data.Report);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                newAlert('alert alert-error', errorThrown);
+                var response = $.parseJSON(XMLHttpRequest.responseText);
+    
+                newAlert('alert alert-error', response.Report);
             },
             dataType: "json"
         })
@@ -160,7 +162,9 @@ function addAll() {
                 newAlert('alert', data.Report);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                newAlert('alert alert-error', XMLHttpRequest.responseText);
+                var response = $.parseJSON(XMLHttpRequest.responseText);
+
+                newAlert('alert alert-error', response.Report);
             },
             dataType: "json",
             traditional: true

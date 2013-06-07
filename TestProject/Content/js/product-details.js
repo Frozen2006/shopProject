@@ -95,7 +95,9 @@ function sendRequest(id, c) {
             newAlert('alert', data.Report);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            newAlert('alert alert-error', errorThrown);
+            var response = $.parseJSON(XMLHttpRequest.responseText);
+
+            newAlert('alert alert-error', response.Report);
         },
         dataType: "json"
     })

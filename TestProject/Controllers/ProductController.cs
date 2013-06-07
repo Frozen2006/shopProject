@@ -36,21 +36,6 @@ namespace iTechArt.Shop.Web.Controllers
             return View(model);
         }
 
-        [CustomAuthrize]
-        public ActionResult AddToCart(int productId, double count)
-        {
-            Product product = ProdService.GetProduct(productId);
-            if (product == null)
-            {
-                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
-            }
-
-            string email = GetUserEmail();
-
-            CartService.Add(email, productId, count);
-            return JsonReport(count + " units of" + product.Name + "were successfully added");
-        }
-
         public ActionResult Details(int id)
         {
             var product = ProdService.GetProduct(id);
@@ -62,16 +47,42 @@ namespace iTechArt.Shop.Web.Controllers
             return View(product);
         }
 
-        [CustomAuthrize]
+        public ActionResult AddToCart(int productId, double count)
+        {
+            //Проверяем залогиненность руками, потому что пришлось снять Authorization атрибут.
+            //дело в том, что он не пропуска AJAX запросы и ошибку пользователю возвращала сама MVC
+            string email = GetUserEmail();
+            if (email == null)
+            {
+                Response.StatusCode = 403;
+                return JsonReport("You are not logged in.");
+            }
+            Product product = ProdService.GetProduct(productId);
+            if (product == null)
+            {
+                Response.StatusCode = 404;
+                return JsonReport("Product not found");
+            }
+
+            CartService.Add(email, productId, count);
+            return JsonReport(count + " units of" + product.Name + "were successfully added");
+        }
+
         public ActionResult AddArrayToCart(int[] productIds, double[] counts)
         {
+            string email = GetUserEmail();
+            if (email == null)
+            {
+                Response.StatusCode = 403;
+                return JsonReport("You are not logged in.");
+            }
+
             Product[] products = productIds.Select(id => ProdService.GetProduct(id)).ToArray();
             if (products.Contains(null))
             {
-                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
+                Response.StatusCode = 404;
+                return JsonReport("Product not found");
             }
-
-            string email = GetUserEmail();
 
             CartService.AddArray(email, productIds, counts);
 
