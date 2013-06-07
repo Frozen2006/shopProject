@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Logic", "BLL\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Helpers", "Helpers\iTechArt.Shop.Helpers.csproj", "{11D294D9-19A7-486E-A788-6032EBF9E90B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Interfaces", "Interfaces\iTechArt.Shop.Interfaces.csproj", "{F0BCAD9F-72FB-40EC-A6F8-111C5E6C4493}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Common", "Interfaces\iTechArt.Shop.Common.csproj", "{F0BCAD9F-72FB-40EC-A6F8-111C5E6C4493}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iTechArt.Shop.Entities", "Entities\iTechArt.Shop.Entities.csproj", "{56D9FB78-9F87-436E-BAF4-1103B694C4F3}"
 EndProject

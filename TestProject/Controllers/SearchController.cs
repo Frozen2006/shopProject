@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using iTechArt.Shop.Common.Services;
 using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.Entities;
 using Helpers;
-using Interfaces;
 using Ninject;
+using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web.Controllers 

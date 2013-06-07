@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Helpers;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
 using iTechArt.Shop.Web.Filters;
 using iTechArt.Shop.Web.Models;

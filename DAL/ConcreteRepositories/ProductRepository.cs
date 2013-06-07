@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
+using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
-using Interfaces.Repositories;
 
 namespace iTechArt.Shop.DataAccess.Repositories
 {

@@ -340,9 +340,9 @@
       <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
       <Name>iTechArt.Shop.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\iTechArt.Shop.Interfaces.csproj">
+    <ProjectReference Include="..\Interfaces\iTechArt.Shop.Common.csproj">
       <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
-      <Name>iTechArt.Shop.Interfaces</Name>
+      <Name>iTechArt.Shop.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

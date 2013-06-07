@@ -7,10 +7,11 @@ using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
 using Helpers;
 using Ninject;
+using iTechArt.Shop.Common.Services;
 
 namespace iTechArt.Shop.Logic.Services
 {
-    public class CartService : Interfaces.ICartService
+    public class CartService : ICartService
     {
 
         private readonly UserRepository _repo;

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Interfaces
+namespace iTechArt.Shop.Common
+{
+
+
+}
+namespace iTechArt.Shop.Web.Common
 {
     public enum ErrorCode
     {

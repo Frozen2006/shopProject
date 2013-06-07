@@ -1,7 +1,8 @@
 ﻿using Helpers;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using System.Web.Mvc;
 using Ninject;
+using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Filters;
 using iTechArt.Shop.Web.Models;
 

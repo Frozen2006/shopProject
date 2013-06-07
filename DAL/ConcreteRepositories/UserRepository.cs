@@ -1,8 +1,9 @@
 ﻿using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 
 
 namespace iTechArt.Shop.DataAccess.Repositories

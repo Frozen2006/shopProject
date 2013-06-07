@@ -1,13 +1,15 @@
-﻿using iTechArt.Shop.Logic.Services;
+﻿using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
 using iTechArt.Shop.Entities;
-using Interfaces;
-using Interfaces.Repositories;
+using iTechArt.Shop.Common.Services;
+using iTechArt.Shop.DataAccess.Repositories;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;
 using iTechArt.Shop.Logic.Membership;
+using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Helpers;
 
 namespace NinjectModules

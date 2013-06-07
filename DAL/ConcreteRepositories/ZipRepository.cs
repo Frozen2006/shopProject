@@ -1,7 +1,8 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
-using Interfaces;
+
 
 namespace iTechArt.Shop.DataAccess.Repositories
 {

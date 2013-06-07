@@ -7,7 +7,7 @@ using AutoMapper;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
 using Helpers;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
 
 namespace iTechArt.Shop.Logic.Services

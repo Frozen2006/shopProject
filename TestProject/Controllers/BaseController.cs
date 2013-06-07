@@ -1,6 +1,6 @@
-﻿using Interfaces;
-using Ninject;
+﻿using Ninject;
 using System.Web.Mvc;
+using iTechArt.Shop.Common.Services;
 
 namespace iTechArt.Shop.Web.Controllers 
 {

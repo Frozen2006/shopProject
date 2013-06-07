@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Interfaces.Repositories
+namespace iTechArt.Shop.Common.Repositories
 {
     public interface IRepository<T> : IDisposable
     {

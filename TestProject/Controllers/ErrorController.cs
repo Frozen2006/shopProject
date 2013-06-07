@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
+using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web.Controllers 

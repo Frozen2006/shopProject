@@ -2,7 +2,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Reflection;
 using iTechArt.Shop.Logic.Services;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject.Modules;
 
 

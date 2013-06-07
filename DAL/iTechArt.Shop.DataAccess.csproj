@@ -99,9 +99,9 @@
       <Project>{56d9fb78-9f87-436e-baf4-1103b694c4f3}</Project>
       <Name>iTechArt.Shop.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\iTechArt.Shop.Interfaces.csproj">
+    <ProjectReference Include="..\Interfaces\iTechArt.Shop.Common.csproj">
       <Project>{f0bcad9f-72fb-40ec-a6f8-111c5e6c4493}</Project>
-      <Name>iTechArt.Shop.Interfaces</Name>
+      <Name>iTechArt.Shop.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

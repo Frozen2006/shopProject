@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using iTechArt.Shop.Entities;
 using Helpers;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
 using iTechArt.Shop.Web.Models;
 

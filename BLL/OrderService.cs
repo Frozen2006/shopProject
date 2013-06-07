@@ -6,7 +6,7 @@ using System.Management.Instrumentation;
 using AutoMapper;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
 using Helpers;
 

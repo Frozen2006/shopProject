@@ -1,10 +1,11 @@
 ﻿using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.Entities;
-using Interfaces;
+using iTechArt.Shop.Common.Services;
 using Ninject;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Filters;
 using iTechArt.Shop.Web.Models;
 
