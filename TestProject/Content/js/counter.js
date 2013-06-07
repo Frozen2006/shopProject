@@ -144,20 +144,19 @@ function correctInput(event, sliderClass) {
 //MVC action: 
 //public ActionResult AddToCart(int productId, int count)
 function sendRequest(id, c) {
-    $.ajax
-    ({
+    $.ajax({
         url: "/Product/AddToCart",
         data: { productId: id, count: c.toString().replace(".", ",") },
         type: "POST",
-        success: function (data) {
+        success: function(data) {
             newAlert('alert', data.Report);
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
             var response = $.parseJSON(XMLHttpRequest.responseText);
             newAlert('alert alert-error', response.Report);
         },
         dataType: "json"
-    })
+    });
 }
 
 //Event handler for the button that sends add request the server.
@@ -178,7 +177,6 @@ function addToCart(event) {
 //MVC action: 
 //public ActionResult AddArrayToCart(int[] productIds, double[] counts)
 function addAll() {
-
     var productArray = new Array();
     var countArray = new Array();
 
@@ -219,5 +217,4 @@ function addAll() {
             traditional: true
         });
     }
-
 }
