@@ -51,6 +51,8 @@ namespace iTechArt.Shop.Web.Controllers
                 string userEmail = GetUserEmail();
 
                UserService.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
+               ModelState.AddModelError("", "Change compleat");
+               return View(model);
             }
             ModelState.AddModelError("", "Input data is bad");
             ViewBag.Data = "BAD";

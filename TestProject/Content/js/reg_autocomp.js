@@ -1,6 +1,4 @@
    $(function () {
-        
-
         $("#Zip").autocomplete( {
             source: function (request, response) {
                 $.ajax
@@ -14,7 +12,6 @@
                         response(data);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert(textStatus);
                     }
                 });
             },

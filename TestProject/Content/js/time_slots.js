@@ -16,6 +16,7 @@ function SendBook(hour, day, mounth, year, slotType) {
         type: "POST",
         success: function (data) {
             $("td#" + hour + "-" + day + "-" + mounth + "-" + year + "-" + slotType)[0].style.background = "#5BB75B";
+            $("td#" + hour + "-" + day + "-" + mounth + "-" + year + "-" + slotType)[0].onclick = function() {};
             $("#myModal").modal('hide');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

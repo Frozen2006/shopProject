@@ -55,7 +55,6 @@ function updateAll() {
         traditional: true,
         type: "POST",
         success: function (data) {
-            var productBox = $("div.product_box");
             for (var i in data) {
                 var productId = data[i].Id;
                 $("div#" + productId).find(".counter")[0].innerHTML = data[i].count;
@@ -89,57 +88,6 @@ function getDataFromId(productId) {
     return { Id: productId, Count: val };
 }
 
-function decrement(productId) {
-    var boxWithCount = $("div#" + productId).find("#count")[0];
-    var boxWithPrice = $("div#" + productId).find("#price")[0];
-    var oldVal = boxWithCount.innerHTML;
-    var newVal = oldVal;
-    if (oldVal > 1) {
-        newVal--;
-    }
-    var priceOfOneItem = parseFloat(boxWithPrice.innerHTML.replace(",", ".")) / parseFloat(oldVal);
-    var newPrice = priceOfOneItem * newVal;
-    boxWithPrice.innerHTML = newPrice.toFixed(2);
-
-
-    boxWithCount.className = "badge badge-warning";
-    boxWithCount.innerHTML = newVal;
-
-    $("#UpdateAll").prop("disabled", false);
-
-    if ($("div#" + productId).find("#update").length == 0) {
-        var btnCode = "<input type=\"button\" id=\"update\" class=\"btn btn-warning\" style=\"margin-right: 5px\" onclick=\"update(" + productId + ")\" value=\"Update\">";
-        var deleteBtn = $("div#" + productId).find("#updateArea")[0];
-        $(btnCode).appendTo(deleteBtn);
-    }
-    // sendAjaxToChange(productId, newVal);
-}
-
-function incriment(productId) {
-    var boxWithCount = $("div#" + productId).find("#count")[0];
-    var boxWithPrice = $("div#" + productId).find("#price")[0];
-    var oldVal = boxWithCount.innerHTML;
-    var newVal = oldVal;
-    newVal++;
-    
-    var priceOfOneItem = parseFloat(boxWithPrice.innerHTML.replace(",", ".")) / parseFloat(oldVal);
-    var newPrice = priceOfOneItem * newVal;
-    boxWithPrice.innerHTML = newPrice.toFixed(2);
-
-
-    boxWithCount.className = "badge badge-warning";
-    boxWithCount.innerHTML = newVal;
-    
-    $("#UpdateAll").prop("disabled", false);
-
-    if ($("div#" + productId).find("#update").length == 0) {
-        var btnCode = "<input type=\"button\" id=\"update\" class=\"btn btn-warning\" style=\"margin-right: 5px\" onclick=\"update(" + productId + ")\" value=\"Update\">";
-        var deleteBtn = $("div#" + productId).find("#updateArea")[0];
-        $(btnCode).appendTo(deleteBtn);
-    }
-    //sendAjaxToChange(productId, newVal);
-}
-
 function update(productId) {
     var boxWithCount = $("div#" + productId).find(".counter")[0];
     var val = boxWithCount.value;
@@ -167,45 +115,6 @@ function sendAjaxToChange(productId, newVal) {
             newAlert("alert-error", "Waring! Connection error! Try update you page.");
         }
     });
-}
-
-function brutforceOnce() {
-    var productBox = $("div.product_box");
-
-    var outData = [];
-
-    for (var i in productBox) {
-        var prodId = productBox[i].id;
-        if (!isNaN(prodId)) {
-            incriment(prodId);
-        }
-    }
-
-    updateAll();
-}
-
-function brut(times) {
-    
-    for (var i = 0; i < times; i++) {
-        brutforceOnce();
-    }
-}
-
-function brut2(times, id) {
-
-    for (var i = 0; i < times; i++) {
-        $.ajax({
-            url: "/Cart/SetNewValue",
-            data: { productId: id, count: 1 },
-            type: "POST",
-            success: function (data) {
-                console.log("success sending");
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                newAlert("alert-error", "Waring! Connection error! Try update you page.");
-            }
-        });
-    }
 }
 
 function constructSlider(sliderClass, step, min) {
