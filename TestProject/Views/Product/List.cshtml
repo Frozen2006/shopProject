@@ -11,17 +11,24 @@
     <h3>Products</h3>
 
     <div id="sort_panel">
+        @{
+            //Calculating selected item index to make it selected
+            int index = 0;
+            index += (int)Model.SortType * 2;
+            index += Model.Reverse ? 1 : 0;
+        }
+
         <select id="sort" onchange="getPage()">
-            <option>Alphabetic ascending</option>      
-            <option>Alphabetic descending</option> 
-            <option>Price ascending</option>                 
-            <option>Price descending</option>            
+            <option @(index == 0?"selected":"")>Alphabetic ascending</option>      
+            <option @(index == 1?"selected":"")>Alphabetic descending</option> 
+            <option @(index == 2?"selected":"")>Price ascending</option>                 
+            <option @(index == 3?"selected":"")>Price descending</option>            
         </select>
 
         @for (int i = 1; i < 4; i++)
         {
             int size = (int)Math.Pow(10, i);
-                @Html.ActionLink("Show by " + size, "List", new { categoryId = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse }, new { @class = "btn" })
+            @Html.ActionLink("Show by " + size, "List", new { categoryId = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse }, new { @class = "btn" })
         }
     </div>
 
@@ -102,14 +109,14 @@
 
         var params = {
             categoryId: "@Model.Category.Id",
-        sort: "@Model.SortType",
-        pageSize: "@Model.PageSize",
-        reverse: "@Model.Reverse"
-    }
+            sort: "@Model.SortType",
+            pageSize: "@Model.PageSize",
+            reverse: "@Model.Reverse"
+        };
 
-    var select = document.getElementById("sort");
+        var select = document.getElementById("sort");
 
-    switch (select.selectedIndex) {
+        switch (select.selectedIndex) {
         case 0:
             params.sort = "Alphabetic";
             params.reverse = "False";
@@ -126,8 +133,8 @@
             params.sort = "Price";
             params.reverse = "True";
             break;
-    }
+        }
 
-    window.location.href = "/product/list?" + $.param(params);
-}
+        window.location.href = "/product/list?" + $.param(params);
+    }
 </script>
