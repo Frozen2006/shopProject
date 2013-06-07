@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
-using DAL.Repositories;
-using DAL.Repositories.DbFirstRepository;
-using Entities;
+using iTechArt.Shop.Entities;
 using Interfaces;
 using Interfaces.Repositories;
 using Ninject;
 
-namespace BLL
+namespace iTechArt.Shop.Logic.Services
 {
     public class CategoryService : ICategoryService
     {

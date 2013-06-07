@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities
+﻿namespace iTechArt.Shop.Entities
 {
-    public partial class DeliverySpot : Entities.IEntity
+    public partial class DeliverySpot : IEntity
     {
     }
 }

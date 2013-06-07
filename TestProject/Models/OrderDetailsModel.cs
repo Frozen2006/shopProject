@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Entities;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Models
 {

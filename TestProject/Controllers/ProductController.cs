@@ -1,5 +1,5 @@
-﻿using BLL;
-using Entities;
+﻿using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.Entities;
 using Interfaces;
 using Ninject;
 using System.Linq;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Web.Mvc;
 using TestProject.Filters;
 using TestProject.Models;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Controllers
 {

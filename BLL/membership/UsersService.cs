@@ -6,11 +6,11 @@ using System.Text;
 using System.Web.Caching;
 using AutoMapper;
 using System.Web;
-using Entities;
+using iTechArt.Shop.Entities;
 using Helpers;
 using Interfaces;
 
-namespace BLL.membership
+namespace iTechArt.Shop.Logic.Membership
 {
     //class to work with users db: create user, manage user, delete user, etc...
     public class UsersService : IUserService

@@ -1,5 +1,4 @@
-﻿@using BLL.membership
-@using Interfaces
+﻿@using Interfaces
 @using Ninject;
 @{ 
     IUserService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<IUserService>(); 
@@ -42,5 +41,3 @@
         </div>
    </div>
 </div>
-
-

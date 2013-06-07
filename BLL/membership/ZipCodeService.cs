@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.membership;
-using Entities;
+using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.Entities;
 
-namespace BLL.membership
+namespace iTechArt.Shop.Logic.Membership
 {
     public class ZipCodeService : Interfaces.IZipCodeService
     {

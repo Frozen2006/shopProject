@@ -4,13 +4,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Instrumentation;
 using AutoMapper;
-using DAL.membership;
-using Entities;
+using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.Entities;
 using Helpers;
 using Interfaces;
 using Ninject;
 
-namespace BLL
+namespace iTechArt.Shop.Logic.Services
 {
     public class TimeSlotsService : ITimeSlotsService
     {

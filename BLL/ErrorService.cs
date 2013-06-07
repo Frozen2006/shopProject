@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Interfaces;
+﻿using Interfaces;
 
-namespace BLL
+namespace iTechArt.Shop.Logic.Services
 {
     public class ErrorService : IErrorService
     {

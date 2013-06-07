@@ -1,6 +1,8 @@
-﻿using BLL;
-using Entities;
+﻿using Interfaces;
+using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.Entities;
 using System.Collections.Generic;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Models
 {

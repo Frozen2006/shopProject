@@ -3,11 +3,13 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
-using Entities;
+using TestProject;
+using iTechArt.Shop.Entities;
 using Helpers;
 using TestProject.Models;
+using iTechArt.Shop.Entities;
 
-namespace TestProject
+namespace iTechArt.Shop.Web
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

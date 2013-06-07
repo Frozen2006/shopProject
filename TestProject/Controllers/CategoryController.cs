@@ -1,9 +1,10 @@
 ﻿using System.Web.Mvc;
-using BLL;
-using Entities;
+using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.Entities;
 using Ninject;
 using TestProject.Models;
 using Interfaces;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Controllers
 {

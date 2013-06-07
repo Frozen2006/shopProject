@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BLL;
-using BLL.membership;
-using DAL;
-using DAL.Repositories.DbFirstRepository;
-using DAL.membership;
+﻿using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
-using Helpers;
+using iTechArt.Shop.Entities;
 using Interfaces;
 using Interfaces.Repositories;
-using Ninject.Infrastructure;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;
 using TestProject.Helpers;
+using iTechArt.Shop.Logic.Membership;
 
 namespace NinjectModules
 {
@@ -25,7 +17,7 @@ namespace NinjectModules
         public override void Load()
         {
             Bind<DbContext>().To<ShopContext>().InRequestScope();
-          //  Bind<DbContext>().To<Entities.ShopContext>().InScope( ctx => StandardScopeCallbacks.Request ?? StandardScopeCallbacks.Thread)
+
             Bind<ICategoryRepository>().To<CategoryRepository>();
             Bind<IRepository<Product>>().To<ProductRepository>();
             Bind<ISessionContext>().To<SessionContextMapper>();

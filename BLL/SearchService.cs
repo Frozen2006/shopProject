@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DAL.Repositories.DbFirstRepository;
-using Entities;
+using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.Entities;
 using Helpers;
 using Interfaces;
 using Ninject;
 
-namespace BLL
+namespace iTechArt.Shop.Logic.Services
 {
     public class SearchService : ISearchService
     {

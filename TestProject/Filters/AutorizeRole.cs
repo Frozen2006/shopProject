@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using BLL.membership;
 using Helpers;
 using Ninject;
+using iTechArt.Shop.Logic.Membership;
 
 namespace TestProject.Filters
 {

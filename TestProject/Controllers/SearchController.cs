@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using BLL;
-using Entities;
+using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.Entities;
 using Helpers;
 using Interfaces;
 using Ninject;
 using TestProject.Models;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Controllers
 {

@@ -1,12 +1,8 @@
-﻿using DAL.Repositories.DbFirstRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
+using ProductDescriptionGenerator;
 
-namespace ProductDescriptionGenerator
+namespace iTechArt.Shop.ProductDescriptionGenerator
 {
     class Program
     {

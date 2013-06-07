@@ -1,9 +1,8 @@
 ﻿using System.Data.Entity;
-using System.Linq;
-using Entities;
+using iTechArt.Shop.Entities;
 using Interfaces.Repositories;
 
-namespace DAL.Repositories.DbFirstRepository
+namespace iTechArt.Shop.DataAccess.Repositories
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {

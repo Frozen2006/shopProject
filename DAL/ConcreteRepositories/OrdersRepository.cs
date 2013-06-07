@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Repositories.DbFirstRepository;
-using Entities;
+using iTechArt.Shop.Entities;
 using Interfaces;
 
-namespace DAL.membership
+namespace iTechArt.Shop.DataAccess.Repositories
 {
     public class OrdersRepository : RepositoryBase<Order>, IOrdersRepository
     {

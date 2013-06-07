@@ -1,7 +1,7 @@
 using System.Data.Entity;
 using System.IO;
 using System.Reflection;
-using BLL;
+using iTechArt.Shop.Logic.Services;
 using Interfaces;
 using Ninject.Modules;
 
@@ -19,7 +19,7 @@ namespace TestProject.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
-    using Entities;
+    using iTechArt.Shop.Entities;
 
     public static class NinjectWebCommon 
     {

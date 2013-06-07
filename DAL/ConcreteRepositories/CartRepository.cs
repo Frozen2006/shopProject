@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.Repositories.DbFirstRepository;
-using Entities;
 
-namespace DAL.membership
+using iTechArt.Shop.Entities;
+
+namespace iTechArt.Shop.DataAccess.Repositories
 {
     public class CartRepository : RepositoryBase<Cart>
     {

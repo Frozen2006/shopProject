@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Entities;
+using iTechArt.Shop.Entities;
+using iTechArt.Shop.Entities;
 
 namespace TestProject.Models
 {

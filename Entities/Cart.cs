@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Entities
+namespace iTechArt.Shop.Entities
 {
     using System;
     using System.Collections.Generic;

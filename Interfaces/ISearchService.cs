@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLL;
-using Entities;
+using iTechArt.Shop.Entities;
 using Helpers;
+using iTechArt.Shop.Entities;
 
 namespace Interfaces
 {

@@ -7,8 +7,8 @@
     <ProjectGuid>{D99D1DDA-8208-4F98-AB36-95A913FC315A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DAL</RootNamespace>
-    <AssemblyName>DAL</AssemblyName>
+    <RootNamespace>iTechArt.Shop.DataAccess</RootNamespace>
+    <AssemblyName>DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -75,7 +75,7 @@
     <EntityDeploy Include="Shop.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Shop.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Entities</CustomToolNamespace>
+      <CustomToolNamespace>iTechArt.Shop.DataAccess</CustomToolNamespace>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>

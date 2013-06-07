@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entities;
+using iTechArt.Shop.Entities;
 using Interfaces.Repositories;
 
-namespace DAL.Repositories.DbFirstRepository
+namespace iTechArt.Shop.DataAccess.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class, IEntity
     {
-        
         //Вот этот контекст должен назначаться Ninject'ом. Поэтому попросим его в конструктор
         protected static DbContext Context { get; set; }
         protected DbSet<T> CurrentDbSet { get; set; }
