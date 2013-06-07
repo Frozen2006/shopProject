@@ -5,7 +5,7 @@ using System.Web.Routing;
 using AutoMapper;
 using iTechArt.Shop.Entities;
 using Helpers;
-using iTechArt.Shop.Entities;
+using iTechArt.Shop.Web.App_Start;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web
@@ -17,12 +17,7 @@ namespace iTechArt.Shop.Web
     {
         protected void Application_Start()
         {
-            Mapper.CreateMap<Product, ProductInCart>();
-            Mapper.CreateMap<RegisterModel, User>();
-            Mapper.CreateMap<User, UserDetails>();
-            Mapper.CreateMap<DeliverySpot, BookinSlot>();
-            Mapper.CreateMap<Order, OrdersDetails>();
-
+            MapperInit.Init();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
