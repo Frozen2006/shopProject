@@ -3,8 +3,9 @@ using System.Web.Mvc;
 using Helpers;
 using Ninject;
 using iTechArt.Shop.Logic.Membership;
+using iTechArt.Shop.Web;
 
-namespace TestProject.Filters
+namespace iTechArt.Shop.Web.Filters
 {
     public class CustomAuthrizeAttribute : AuthorizeAttribute
     {
@@ -14,7 +15,7 @@ namespace TestProject.Filters
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            var us = App_Start.NinjectWebCommon.Kernel.Get<UsersService>();
+            var us = NinjectWebCommon.Kernel.Get<UsersService>();
 
             string email = us.AtributeCheck(Roles);
 

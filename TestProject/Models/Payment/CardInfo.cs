@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class CardInfo
     {

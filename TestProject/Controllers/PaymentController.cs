@@ -2,10 +2,10 @@
 using Interfaces;
 using System.Web.Mvc;
 using Ninject;
-using TestProject.Filters;
-using TestProject.Models;
+using iTechArt.Shop.Web.Filters;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers
+namespace iTechArt.Shop.Web.Controllers 
 {
     [CustomAuthrize]
     public class PaymentController : BaseController

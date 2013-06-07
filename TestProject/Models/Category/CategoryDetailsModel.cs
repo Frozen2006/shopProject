@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using iTechArt.Shop.Entities;
-using iTechArt.Shop.Entities;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class CategoryDetailsModel
     {

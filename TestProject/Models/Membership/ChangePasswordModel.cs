@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class ChangePasswordModel
     {

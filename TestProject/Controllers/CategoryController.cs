@@ -1,12 +1,11 @@
 ﻿using System.Web.Mvc;
-using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.Entities;
 using Ninject;
-using TestProject.Models;
 using Interfaces;
-using iTechArt.Shop.Entities;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers
+
+namespace iTechArt.Shop.Web.Controllers 
 {
     public class CategoryController : BaseController
     {

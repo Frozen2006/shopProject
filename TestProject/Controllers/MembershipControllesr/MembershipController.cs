@@ -7,9 +7,9 @@ using iTechArt.Shop.Entities;
 using Helpers;
 using Interfaces;
 using Ninject;
-using TestProject.Models;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers.MembershipControllesr
+namespace iTechArt.Shop.Web.Controllers .MembershipControllesr
 {
     public class MembershipController : BaseController
     {

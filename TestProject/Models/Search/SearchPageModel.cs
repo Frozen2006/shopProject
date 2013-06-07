@@ -5,7 +5,7 @@ using iTechArt.Shop.Entities;
 using Helpers;
 using iTechArt.Shop.Entities;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class SearchPageModel
     {

@@ -166,25 +166,22 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\SessionContextMapper.cs" />
-    <Compile Include="Mailers\IPasswordResetMailer.cs" />
-    <Compile Include="Mailers\Models\MailerModel.cs" />
-    <Compile Include="Mailers\PasswordResetMailer.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Models\CardInfo.cs" />
-    <Compile Include="Models\CartViewModel.cs" />
-    <Compile Include="Models\CategoryDetailsModel.cs" />
-    <Compile Include="Models\ChangeDeliveryAddressModel.cs" />
-    <Compile Include="Models\CategotyNavigationModel.cs" />
-    <Compile Include="Models\ChangePasswordModel.cs" />
-    <Compile Include="Models\ErrorModel.cs" />
-    <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\OrderDetailsModel.cs" />
-    <Compile Include="Models\PaymentModel.cs" />
-    <Compile Include="Models\ProductListModel.cs" />
-    <Compile Include="Models\RegisterModel.cs" />
-    <Compile Include="Models\SearchPageModel.cs" />
-    <Compile Include="Models\TimeSlotsModel.cs" />
-    <Compile Include="Models\TimeSlotsTableModel.cs" />
+    <Compile Include="Models\Payment\CardInfo.cs" />
+    <Compile Include="Models\Cart\CartViewModel.cs" />
+    <Compile Include="Models\Category\CategoryDetailsModel.cs" />
+    <Compile Include="Models\Membership\ChangeDeliveryAddressModel.cs" />
+    <Compile Include="Models\Category\CategotyNavigationModel.cs" />
+    <Compile Include="Models\Membership\ChangePasswordModel.cs" />
+    <Compile Include="Models\Error\ErrorModel.cs" />
+    <Compile Include="Models\Membership\LoginModel.cs" />
+    <Compile Include="Models\Order\OrderDetailsModel.cs" />
+    <Compile Include="Models\Payment\PaymentModel.cs" />
+    <Compile Include="Models\Product\ProductListModel.cs" />
+    <Compile Include="Models\Membership\RegisterModel.cs" />
+    <Compile Include="Models\Search\SearchPageModel.cs" />
+    <Compile Include="Models\TimeSlots\TimeSlotsModel.cs" />
+    <Compile Include="Models\TimeSlots\TimeSlotsTableModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -275,7 +272,6 @@
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -310,7 +306,7 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_MenuIconPart.cshtml" />
     <Content Include="Views\Settings\Delivery.cshtml" />
-    <Content Include="Views\Counter.cshtml" />
+    <Content Include="Views\Partial\Counter.cshtml" />
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Category\CategoryNavigation.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />

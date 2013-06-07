@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TestProject.Controllers
+namespace iTechArt.Shop.Web.Controllers 
 {
     public class HomeController : Controller
     {

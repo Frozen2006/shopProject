@@ -1,7 +1,8 @@
 ﻿@using Interfaces
 @using Ninject;
+@using iTechArt.Shop.Web
 @{ 
-    IUserService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<IUserService>(); 
+    IUserService us = NinjectWebCommon.Kernel.Get<IUserService>(); 
 }
 @{
     ViewBag.Title = "Index";

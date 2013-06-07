@@ -3,11 +3,10 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
-using TestProject;
 using iTechArt.Shop.Entities;
 using Helpers;
-using TestProject.Models;
 using iTechArt.Shop.Entities;
+using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web
 {

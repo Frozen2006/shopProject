@@ -2,9 +2,9 @@
 using System.Web.Mvc;
 using Interfaces;
 using Ninject;
-using TestProject.Models;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers
+namespace iTechArt.Shop.Web.Controllers 
 {
     public class ErrorController : Controller
     {

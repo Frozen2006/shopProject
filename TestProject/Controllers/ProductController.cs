@@ -5,11 +5,10 @@ using Ninject;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using TestProject.Filters;
-using TestProject.Models;
-using iTechArt.Shop.Entities;
+using iTechArt.Shop.Web.Filters;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers
+namespace iTechArt.Shop.Web.Controllers 
 {
     public class ProductController : BaseController
     {

@@ -7,8 +7,8 @@ using Interfaces.Repositories;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;
-using TestProject.Helpers;
 using iTechArt.Shop.Logic.Membership;
+using iTechArt.Shop.Web.Helpers;
 
 namespace NinjectModules
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class ErrorModel
     {

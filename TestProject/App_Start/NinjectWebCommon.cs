@@ -6,10 +6,10 @@ using Interfaces;
 using Ninject.Modules;
 
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(TestProject.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(TestProject.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(iTechArt.Shop.Web.NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(iTechArt.Shop.Web.NinjectWebCommon), "Stop")]
 
-namespace TestProject.App_Start
+namespace iTechArt.Shop.Web
 {
     using System;
     using System.Web;

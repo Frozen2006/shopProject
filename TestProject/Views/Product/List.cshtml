@@ -1,5 +1,5 @@
 ﻿@using iTechArt.Shop.Logic.Services
-@model TestProject.Models.ProductListModel
+@model iTechArt.Shop.Web.Models.ProductListModel
 
 @Scripts.Render("~/Content/js/productpage.js")
 
@@ -42,7 +42,7 @@
             </div>
                 
             <div class="tocart">
-                @Html.Partial("../Counter", product)  
+                @Html.Partial("../Partial/Counter", product)  
             </div>
         }     
     </div>

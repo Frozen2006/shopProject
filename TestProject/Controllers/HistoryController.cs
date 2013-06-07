@@ -2,9 +2,9 @@
 using Interfaces;
 using System.Web.Mvc;
 using Ninject;
-using TestProject.Filters;
+using iTechArt.Shop.Web.Filters;
 
-namespace TestProject.Controllers
+namespace iTechArt.Shop.Web.Controllers 
 {
     [CustomAuthrize]
     public class HistoryController : BaseController

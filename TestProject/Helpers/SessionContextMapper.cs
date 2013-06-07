@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Caching;
 using Interfaces;
 
-namespace TestProject.Helpers
+namespace iTechArt.Shop.Web.Helpers
 {
     public class SessionContextMapper : ISessionContext
     {

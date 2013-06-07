@@ -4,10 +4,10 @@ using System.Web.Mvc;
 using Helpers;
 using Interfaces;
 using Ninject;
-using TestProject.Filters;
-using TestProject.Models;
+using iTechArt.Shop.Web.Filters;
+using iTechArt.Shop.Web.Models;
 
-namespace TestProject.Controllers.Cart
+namespace iTechArt.Shop.Web.Controllers .Cart
 {
     [CustomAuthrize(Roles = RolesType.User)]
     public class TimeSlotsController : BaseController

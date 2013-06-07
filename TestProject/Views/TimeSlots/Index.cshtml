@@ -1,6 +1,5 @@
 ﻿@using Helpers
-@using TestProject.Models
-@model TestProject.Models.TimeSlotsModel
+@model iTechArt.Shop.Web.Models.TimeSlotsModel
 @Scripts.Render("~/Content/js/TimeSlots.js")
 
 <div class="row-fluid">
@@ -68,9 +67,7 @@
         @if (Model.IsButtonEnable)
         {
             @Html.ActionLink("Continue...", "CheckOut", "TimeSlots", new {}, new {@class = "btn btn-primary btn-large"})
-            ;
         }
-        
     </div>
 </div>       
                       

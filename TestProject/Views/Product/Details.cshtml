@@ -23,7 +23,7 @@
     </div>
 
     <div class="counter_wrapper">
-        @Html.Partial("../Counter", Model)  
+        @Html.Partial("../Partial/Counter", Model)  
     </div>
     
     @Html.ActionLink("To Category", "List", "Product", new { categoryId = Model.Category.Id }, new { @class = "btn" })

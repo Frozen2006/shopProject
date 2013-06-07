@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace TestProject
+namespace iTechArt.Shop.Web
 {
     public class FilterConfig
     {

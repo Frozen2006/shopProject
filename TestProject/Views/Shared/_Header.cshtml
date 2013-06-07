@@ -1,9 +1,10 @@
 ﻿@using iTechArt.Shop.Logic.Membership
 @using Interfaces
 @using Ninject;
+@using iTechArt.Shop.Web
 @{ 
     
-    IUserService us = TestProject.App_Start.NinjectWebCommon.Kernel.Get<IUserService>();
+    IUserService us = NinjectWebCommon.Kernel.Get<IUserService>();
     //check autorization
     string email = us.GetEmailIfLoginIn();
     bool isLoginIn =  (email != null);

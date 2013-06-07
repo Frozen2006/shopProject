@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Helpers;
 
-namespace TestProject.Models
+namespace iTechArt.Shop.Web.Models
 {
     public class TimeSlotsTableModel
     {
