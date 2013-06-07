@@ -66,10 +66,6 @@
       <Project>{56d9fb78-9f87-436e-baf4-1103b694c4f3}</Project>
       <Name>iTechArt.Shop.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Helpers\iTechArt.Shop.Helpers.csproj">
-      <Project>{11d294d9-19a7-486e-a788-6032ebf9e90b}</Project>
-      <Name>iTechArt.Shop.Helpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -78,6 +78,16 @@
     <Compile Include="User.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelsToPL\BookinSlot.cs" />
+    <Compile Include="ModelsToPL\CategoriesInSearch.cs" />
+    <Compile Include="ModelsToPL\OrdersDetails.cs" />
+    <Compile Include="ModelsToPL\OrdersInList.cs" />
+    <Compile Include="ModelsToPL\OrderStatus.cs" />
+    <Compile Include="ModelsToPL\ProductInCart.cs" />
+    <Compile Include="ModelsToPL\ProductInSearch.cs" />
+    <Compile Include="ModelsToPL\RolesType.cs" />
+    <Compile Include="ModelsToPL\SlotsType.cs" />
+    <Compile Include="ModelsToPL\UserDetails.cs" />
     <Compile Include="Zip.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
