@@ -49,9 +49,7 @@ namespace iTechArt.Shop.Web.Controllers
 
         public ActionResult AddToCart(int productId, double count)
         {
-            //Проверяем залогиненность руками, потому что пришлось снять Authorization атрибут.
-            //дело в том, что он не пропуска AJAX запросы и ошибку пользователю возвращала сама MVC
-            string email = GetUserEmail();
+            string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
                 Response.StatusCode = 403;
@@ -70,7 +68,7 @@ namespace iTechArt.Shop.Web.Controllers
 
         public ActionResult AddArrayToCart(int[] productIds, double[] counts)
         {
-            string email = GetUserEmail();
+            string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
                 Response.StatusCode = 403;
