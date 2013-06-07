@@ -1,51 +1,44 @@
-﻿@model iTechArt.Shop.Entities.Product
-@using System.Globalization
+﻿@* A Slider and an estimated price for the product 
+    REQUIERS:
+        @Scripts.Render("~/Content/js/alerts.js")
+        @Scripts.Render("~/Content/js/counter.js")
+    on the page where it is used.
+*@
+@model iTechArt.Shop.Entities.Product
 
-<div class="counter_box">
-    @{
-        string sliderClass;
-        string measure;
-    }
+@{
+    string sliderClass;
+    string measure;
+}
 
-    @switch (Model.SellByWeight)
-    {
-        case "W":
-            {
-                sliderClass = "float_slider";
-                measure = Model.UnitOfMeasure;
-                break;
-            }
-        case "P":
-            {
-                sliderClass = "int_slider";
-                measure = "packs";
-                break;
-            }
-        default:
-            {
-                sliderClass = "int_slider";
-                measure = "units";
-                break;
-            }                
-    }
-
-    <div class="controls_wrapper">
-
-        <span class="price">Price: <span class="price_value">@Model.Price.ToString("0.00")$</span></span>
-
-        <div class="slider @sliderClass"></div>
-
-        @{
-            //calls countInput with the following params: event, price, slider class (to round the count value)
-            string changeHandler = "countInput(event, " + Model.Price.ToString(CultureInfo.InvariantCulture) + ", '" + sliderClass + "')";
-            string blurHandler = "correctInput(event, '" + sliderClass + "')";
+@switch (Model.SellByWeight)
+{
+    case "W":
+        {
+            sliderClass = "float_slider";
+            measure = Model.UnitOfMeasure;
+            break;
         }
-        <input type="text" class="counter"  value="0" onchange="@changeHandler" onkeyup="@changeHandler" onblur="@blurHandler"/>
-
+    case "P":
+        {
+            sliderClass = "int_slider";
+            measure = "packs";
+            break;
+        }
+    default:
+        {
+            sliderClass = "int_slider";
+            measure = "units";
+            break;
+        }                
+}
+<div class="counter_box">
+    <div class="controls_wrapper">
+        <span class="price">Price: <span class="price_value">@Model.Price.ToString("0.00")</span>$</span>
+        <div class="slider @sliderClass"></div>
+        <input type="text" class="counter"  value="0" onchange="countInput(event)" onkeyup="countInput(event)" onblur="correctInput(event)"/>
         <span class="estimated_price"> @measure for <span class="estimated_price_value">0</span>$</span>  
-
         <input type="hidden" class="product_id" value="@Model.Id" />
-
     </div>
 
     <input type="button" class="add_button btn btn-danger" value="Add" onclick="addToCart(event)" />
