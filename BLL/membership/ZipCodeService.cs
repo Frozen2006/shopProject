@@ -51,9 +51,19 @@ namespace iTechArt.Shop.Logic.Membership
 
             IQueryable<Zip> citys = null;
 
-            citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
+            if (oneTCity == null)
+            {
+                citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
+            }
 
-            return citys.Select(oneCity => Tuple.Create(oneCity.zip1, oneCity.city + ", " + oneCity.sub_city)).ToList();
+            List<Tuple<string, string>> outData = new List<Tuple<string, string>>();
+
+            foreach (var oneCity in citys)
+            {
+                outData.Add(Tuple.Create(oneCity.zip1, oneCity.city + ", " + oneCity.sub_city));
+            }
+
+            return outData;
         }
     }
 }

@@ -1,9 +1,4 @@
 ﻿@model iTechArt.Shop.Web.Models.RegisterModel
-
-@section Scripts {
-
-}
-
 @{
     ViewBag.Title = "Register";
 }
@@ -27,12 +22,6 @@
         padding: 7px 9px;
     }
 </style>
-<script>
-    $(function () {
-       // $("#mainMenu")[0].remove();
-    });
-
-</script>
 
 @Scripts.Render("~/Content/js/reg_autocomp.js")
 
@@ -44,7 +33,7 @@
     @Html.ValidationSummary(true)
     <ol>
         <li>
-            @Html.Label("Enter you email adress")
+            @Html.Label("Enter your email adress")
             @Html.TextBoxFor(m => m.Email, new { @class = "input-block-level", @placeholder = "Email" })
             @Html.ValidationMessageFor(m => m.Email)
         </li>
@@ -74,22 +63,22 @@
             @Html.ValidationMessageFor(m => m.lastName)
         </li>
         <li>
-            @Html.Label("Enter you main adress to delivery")
+            @Html.Label("Enter your main adress to delivery")
             @Html.TextBoxFor(m => m.Address, new { @class = "input-block-level", @placeholder = "Adress" })
             @Html.ValidationMessageFor(m => m.Address)
         </li>
         <li>
-            @Html.Label("Enter you secondary adress (additional)")
+            @Html.Label("Enter your secondary adress (additional)")
             @Html.TextBoxFor(m => m.Address2, new { @class = "input-block-level", @placeholder = "Secondary adress" })
             @Html.ValidationMessageFor(m => m.Address2)
         </li>
         <li>
-            @Html.Label("You phone")
+            @Html.Label("Your phone")
             @Html.TextBoxFor(m => m.Phone, new { @class = "input-block-level", @placeholder = "Phone" })
             @Html.ValidationMessageFor(m => m.Phone)
         </li>
         <li>
-            @Html.Label("You secondary phone (additional)")
+            @Html.Label("Your secondary phone (additional)")
             @Html.TextBoxFor(m => m.Phone2, new { @class = "input-block-level", @placeholder = "Secondary phone" })
             @Html.ValidationMessageFor(m => m.Phone2)
         </li>

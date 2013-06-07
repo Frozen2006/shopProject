@@ -43,11 +43,12 @@ namespace iTechArt.Shop.Web.Controllers .MembershipControllesr
 
                 if (UserService.CeateUser(us))
                 {
+                    UserService.LogIn(model.Email, model.Password);
                     return RedirectToAction("Index");
                 }
             }
-            ModelState.AddModelError("", "BAAAAAAAAAAAAAAAAAAD");
-            ViewBag.Data = "BAD";
+            ModelState.AddModelError("", "Email is already exist, or input data is wrong!");
+            ViewBag.Data = "BAD EMAIL";
             return View(model);
         }
 
@@ -94,8 +95,8 @@ namespace iTechArt.Shop.Web.Controllers .MembershipControllesr
                 }
             }
 
-            ModelState.AddModelError("", "Bad user name or pass");
-            ViewBag.Data = "Bad user name or pass";
+            ModelState.AddModelError("", "Bad user name or password");
+            ViewBag.Data = "Bad user name or password";
             return View(model);
         }
 

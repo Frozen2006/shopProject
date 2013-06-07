@@ -6,10 +6,12 @@ namespace iTechArt.Shop.Web.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [RegularExpression(@"[\w\d-\.]+@([\w\d-]+(\.[\w\-]+)+)", ErrorMessage = "Invalid email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Value \"{0}\" must have more then {2} chars.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Value \"{0}\" must have more or equal then {2} chars.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -31,7 +33,7 @@ namespace iTechArt.Shop.Web.Models
         [Display(Name = "Last name")]
         public string lastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Main adress field is required.")]
         [Display(Name = "Address 1")]
         public string Address { get; set; }
 
