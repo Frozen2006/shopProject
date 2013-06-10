@@ -47,7 +47,7 @@
                             @for (int i = 1; i < 4; i++)
                             {
                                 int size = (int)Math.Pow(10, i);
-                                @Html.ActionLink("Show by " + size, "Search", new { category = Model.Category.Name, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, page = Model.Page, data = Model.SearchRequest }, new { @class = "btn" })
+                                @Html.ActionLink("Show by " + size, "Search", new { category = Model.Category.Name, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
                             }
                         </div> 
                         
@@ -91,7 +91,8 @@
                         
                         @{
                             int pageSize = Model.PageSize;
-                            int productCount = Model.Category.Products.Count();
+                            int productCount = Model.Products.Count();
+                            
                             const int maxPageCount = 15;
 
                             int pageCount = productCount / pageSize + 1;
@@ -104,7 +105,7 @@
                                     @for (int i = 1; i <= pageCount; i++)
                                     {
                                         <li @((i == Model.Page) ? "class=active" : "")>
-                                            @Html.ActionLink(i.ToString(), "List", new {categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse})
+                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
                                         </li>
                                     }
                                 </ul>
