@@ -32,76 +32,66 @@
             @Html.ActionLink("Show by " + size, "List", new { categoryId = Model.Category.Id, sort = Model.SortType, pageSize = size, reverse = Model.Reverse }, new { @class = "btn" })
         }
     </div>
+    
+    @{
+        int pageSize = Model.PageSize;
+        int productCount = Model.Category.Products.Count();
+        const int maxPageCount = 15;
 
-@foreach(var product in Model.Products)
-{
-    <div class="well product_box">
-        @{
-            string href = "/product/details/" + product.Id;
-            string path = "/Image/ProductImg/" + product.Id;
-            
-            <div class="info">
-                <a class="no_underline" href="@href">
-                    <img class="product_photo" width="70" height="70" src="@path" />
-                </a>
-                <a href="@href">
-                    @product.Name
-                </a>
-            </div>
-                
-            <div class="tocart">
-                @Html.Partial("../Partial/Counter", product)  
-            </div>
-        }     
-    </div>
-}
-
-@{
-    int pageSize = Model.PageSize;
-    int productCount = Model.Category.Products.Count();
-    const int maxPageCount = 15;
-
-    int pageCount = productCount / pageSize + 1;
-}
-    <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
-
+        int pageCount = productCount / pageSize + 1;
+    } 
+    
     <div class="pagination pagination-centered">
-        <ul>
-        @if (pageCount >= maxPageCount)
+        @if (pageCount > 1)
         {
-            const int linkCount = 6;
-
-            for (int i = 1; i <= linkCount; i++)
-            {
-                <li>
-                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                </li>
-            }      
-
-            <li class="disabled">...</li>
-
-                    
-            for (int i = pageCount - linkCount; i <= pageCount; i++)
-            {
-                <li>
-                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                </li>
-            }
+            <ul>
+                @for (int i = 1; i <= pageCount; i++)
+                {
+                    <li @((i == Model.PageNumber) ? "class=active" : "")>
+                        @Html.ActionLink(i.ToString(), "List", new {categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse})
+                    </li>
+                }
+            </ul>
         }
-
-        @if (pageCount > 1 && pageCount < maxPageCount)
-        {
-            //View all page anchors
-
-            for (int i = 1; i <= pageCount; i++)
-            {
-                <li>
-                    @Html.ActionLink(i.ToString(), "List", new { categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse })
-                </li>
-            }
-        }
-        </ul>
     </div>
+
+    @foreach(var product in Model.Products)
+    {
+        <div class="well product_box">
+            @{
+                string href = "/product/details/" + product.Id;
+                string path = "/Image/ProductImg/" + product.Id;
+            
+                <div class="info">
+                    <a class="no_underline" href="@href">
+                        <img class="product_photo" width="70" height="70" src="@path" />
+                    </a>
+                    <a href="@href">
+                        @product.Name
+                    </a>
+                </div>
+                
+                <div class="tocart">
+                    @Html.Partial("../Partial/Counter", product)  
+                </div>
+            }     
+        </div>
+    }
+        <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
+
+        <div class="pagination pagination-centered">
+            @if (pageCount > 1)
+            {
+                <ul>
+                    @for (int i = 1; i <= pageCount; i++)
+                    {
+                        <li @((i == Model.PageNumber) ? "class=active" : "")>
+                            @Html.ActionLink(i.ToString(), "List", new {categoryId = Model.Category.Id, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse})
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
 </div>
 }
 

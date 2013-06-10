@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Text;
 using AutoMapper;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
@@ -43,7 +44,6 @@ namespace iTechArt.Shop.Logic.Services
             }
 
             _repo.Update(us);
-
         }
 
         // Add new product to user cart.
@@ -75,6 +75,22 @@ namespace iTechArt.Shop.Logic.Services
 
             _repo.Update(us);
 
+        }
+
+        public string GetAddingReport(Product product, double count)
+        {
+            return count + " units of " + product.Name + " were successfully added";
+        }
+
+        public string GetAddingReport(Product[] products, double[] counts)
+        {
+            var report = new StringBuilder();
+            for (int i = 0; i < products.Length; i++)
+            {
+                report.Append(string.Format("{0} units of {1},<br>", counts[i], products[i].Name));
+            }
+            report.Append("were successfully added!");
+            return report.ToString();
         }
 
         // Get list of product's in cart with additional information (count, total price)
@@ -123,7 +139,6 @@ namespace iTechArt.Shop.Logic.Services
             us.Carts.Clear();
 
             _repo.Update(us);
-
         }
 
 

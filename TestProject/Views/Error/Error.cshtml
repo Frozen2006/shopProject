@@ -2,8 +2,12 @@
 
 <div class="error_box">
     <h2>Sorry for that. Some errod occurded</h2>
-    <span>Description:</span>
-    <p>@Model.Message</p>
+    
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <span>Description:</span>
+        <p>@Model.Message</p>
+    }
 
     @if (Model.Exception != null)
     {

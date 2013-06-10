@@ -60,11 +60,13 @@ namespace iTechArt.Shop.Logic.Services
                     products = products.OrderBy(prod => prod.Price);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("sort");
+                    goto case SortType.Alphabetic;
             }
-            //!
+
             if (reverse)
+            {
                 products = products.Reverse();
+            }
 
             return products.Skip(pageSize * (page - 1)).Take(pageSize);
         }

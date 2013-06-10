@@ -96,7 +96,9 @@ namespace iTechArt.Shop.Logic.Services
             User user = _userRepository.ReadAll().FirstOrDefault(m => m.email == userEmail);
 
             if (user == null)
-                throw new InstanceNotFoundException("User not found");
+            {
+                return null;
+            }
 
             var ordList = new List<OrdersInList>();
 
@@ -123,7 +125,7 @@ namespace iTechArt.Shop.Logic.Services
         }
 
         /// <summary>
-        /// Throws exception if user is not logged in.
+        /// Returns null if user is not logged in or if the order doesn't belong to him.
         /// </summary>
         /// <param name="orderId">Id of the order for payment</param>
         /// <returns>Order detail</returns>
@@ -182,7 +184,7 @@ namespace iTechArt.Shop.Logic.Services
             if (order == null)
                 throw new InstanceNotFoundException("Order not found");
 
-            order.Status =(int)orderStatus;
+            order.Status = (int)orderStatus;
 
             _ordersRepository.Update(order);
         }

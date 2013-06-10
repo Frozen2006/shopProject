@@ -18,8 +18,8 @@ namespace iTechArt.Shop.Web.Controllers .Cart
         private ITimeSlotsService TimeSlotService { get; set; }
 
         [Inject]
-        public TimeSlotsController(ICategoryService productService, IUserService userService, ICartService cartService, ITimeSlotsService timeSlotsService)
-            : base(productService, userService, cartService)
+        public TimeSlotsController(ICategoryService categoryService, IUserService userService, ICartService cartService, ITimeSlotsService timeSlotsService)
+            : base(categoryService, userService, cartService)
         {
             TimeSlotService = timeSlotsService;
         }

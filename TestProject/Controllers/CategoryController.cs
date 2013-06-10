@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using iTechArt.Shop.Entities;
 using Ninject;
 using iTechArt.Shop.Common.Services;
@@ -11,23 +12,25 @@ namespace iTechArt.Shop.Web.Controllers
     public class CategoryController : BaseController
     {
         [Inject]
-        public CategoryController(ICategoryService productService, IUserService userService, ICartService cartService)
-            : base(productService, userService, cartService) { }
+        public CategoryController(ICategoryService categoryService, IUserService userService, ICartService cartService)
+            : base(categoryService, userService, cartService) { }
 
         public ActionResult Index()
         {
-            Category root = ProdService.GetRootCategory();
+            Category root = CategoryService.GetRootCategory();
             return RedirectToAction("Details", new { id = root.Id });
         }
         
-        public ActionResult Details(int id, int? page, int? pageSize, SortType? sort, bool? reverse)
+        public ActionResult Details(int id)
         {
-            Category category = ProdService.GetCategoryById(id);
+            Category category = CategoryService.GetCategoryById(id);
+            if (category == null)
+                return RedirectToAction("Error", "Error", new {Code = ErrorCode.NotFound});
 
             var model = new CategoryDetailsModel
                 {
                     Category = category,
-                    Subcategories = ProdService.GetSubcategories(category)
+                    Subcategories = CategoryService.GetSubcategories(category)
                 };
 
             return View(model);
@@ -36,10 +39,13 @@ namespace iTechArt.Shop.Web.Controllers
         [ChildActionOnly]
         public ActionResult CategoryNavigation(Category category)
         {
+            if(category == null)
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.Unknown });
+
             var model = new CategotyNavigationModel
                 {
                     Category = category,
-                    Parents = ProdService.GetParentsList(category)
+                    Parents = CategoryService.GetParentsList(category)
                 };
 
             return PartialView(model);

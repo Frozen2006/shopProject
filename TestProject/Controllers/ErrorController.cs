@@ -17,6 +17,12 @@ namespace iTechArt.Shop.Web.Controllers
             ErrorService = errorService;
         }
 
+        public ActionResult Index()
+        {
+            var model = new ErrorModel();
+            return View("Error", model);
+        }
+
         public ActionResult Error(string code)
         {
             ErrorCode errorCode;

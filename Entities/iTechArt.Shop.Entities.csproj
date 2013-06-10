@@ -84,7 +84,7 @@
     <Compile Include="ModelsToPL\OrdersInList.cs" />
     <Compile Include="ModelsToPL\OrderStatus.cs" />
     <Compile Include="ModelsToPL\ProductInCart.cs" />
-    <Compile Include="ModelsToPL\ProductInSearch.cs" />
+    <Compile Include="ModelsToPL\SearchResult.cs" />
     <Compile Include="ModelsToPL\RolesType.cs" />
     <Compile Include="ModelsToPL\SlotsType.cs" />
     <Compile Include="ModelsToPL\UserDetails.cs" />
