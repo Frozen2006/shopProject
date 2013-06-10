@@ -24,14 +24,8 @@ namespace iTechArt.Shop.Web.Controllers
             SearchService = searchService;
         }
 
-        //What is category? is this id? than ti should be int!
-        //If it is name? why do you use name?
-        public ActionResult Search(string data, string category, int? page, int? pageSize, SortType? sort, bool? reverse)
+        public ActionResult Search(string data, int? category, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
-            ////What the hell is this?
-            /// User sends search request and gets error O_o
-            if (data.Length < 3)
-                return RedirectToAction("Custom", "Error", new { Message = "Too short search request" });
 
             List<CategoriesInSearch> categories = SearchService.GetCategories(data);
 
@@ -41,14 +35,14 @@ namespace iTechArt.Shop.Web.Controllers
             reverse = reverse ?? false;
 
             SearchResult searchResult;
-            if (String.IsNullOrWhiteSpace(category))
+            if (category == null)
             {
                 searchResult = SearchService.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
                                                         (bool) reverse);
             }
             else
             {
-                searchResult = SearchService.GetProductsFromCategory(data, category);
+                searchResult = SearchService.GetProductsFromCategory(data, (int)category);
             }
 
             var model = new SearchPageModel()

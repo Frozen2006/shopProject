@@ -52,9 +52,9 @@ namespace iTechArt.Shop.Logic.Services
         }
 
         //Return all products from category
-        public SearchResult GetProductsFromCategory(string searchData, string categoryName)
+        public SearchResult GetProductsFromCategory(string searchData, int categoryId)
         {
-            var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
+            var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Id == categoryId));
 
 
             var pis = new SearchResult
