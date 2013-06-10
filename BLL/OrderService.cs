@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Instrumentation;
 using AutoMapper;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;
-using Helpers;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Logic.Services
 {

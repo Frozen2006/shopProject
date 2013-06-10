@@ -5,156 +5,157 @@
 @Scripts.Render("~/Content/js/counter.js")
 
 <div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span3">
-            <div class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Categories</li>
-                    <li>@Html.ActionLink("All results", "Search", "Search", new { data = Model.SearchRequest }, null)</li>
-                    @foreach (var categoryM in Model.Categories)
-                    {
-                        <li>
-                            @Html.ActionLink(categoryM.Category.Name+""+ " (" + categoryM.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = categoryM.Category.Name }, null)
-                        </li>
-                    }
-                </ul>
-            </div>
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">Categories</li>
+                <li>@Html.ActionLink("All results", "Search", "Search", new { data = Model.SearchRequest }, null)</li>
+                @foreach (var categoryM in Model.Categories)
+                {
+                    <li>
+                        @Html.ActionLink(categoryM.Category.Name+""+ " (" + categoryM.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = categoryM.Category.Name }, null)
+                    </li>
+                }
+            </ul>
         </div>
-        <div class="span9">
-            <div class="well well-large">
-                <h2>Serach results for: @Model.SearchRequest</h2><br/>
+    </div>
+    <div class="span9">
+        <div class="well well-large">
+            <h2>Serach results for: @Model.SearchRequest</h2><br/>
                 
-                @if (Model.Products.Count() != 0)
-                {  
-                    <div class="products"> 
-                        <h3>Products</h3>
+            @if (Model.Products.Count() != 0)
+            {  
+                <div class="products"> 
+                    <h3>Products</h3>
                         
-                        <div id="sort_panel">
-                            @{
-                                //Calculating selected item index to make it selected
-                                int index = 0;
-                                index += (int)Model.SortType * 2;
-                                index += Model.Reverse ? 1 : 0;
-                            }
-
-                            <select id="sort" onchange="getPage()">
-                                <option @(index == 0?"selected":"")>Alphabetic ascending</option>      
-                                <option @(index == 1?"selected":"")>Alphabetic descending</option> 
-                                <option @(index == 2?"selected":"")>Price ascending</option>                 
-                                <option @(index == 3?"selected":"")>Price descending</option>            
-                            </select>
-
-                            @for (int i = 1; i < 4; i++)
-                            {
-                                int size = (int)Math.Pow(10, i);
-                                @Html.ActionLink("Show by " + size, "Search", new { category = Model.Category.Name, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
-                            }
-                        </div> 
-                        
-                        <script>
-                            //public ActionResult Search(string data, string category, int? page, int? pageSize, SortType? sort, bool? reverse)
-                            function getPage() {
-
-                                var params = {
-                                    categoryId: "@Model.Category.Id",
-                                    sort: "@Model.SortType",
-                                    pageSize: "@Model.PageSize",
-                                    reverse: "@Model.Reverse",
-                                    data: "@Model.SearchRequest",
-                                    category: "@Model.Category.Name"
-                                };
-
-                                var select = document.getElementById("sort");
-
-                                switch (select.selectedIndex) {
-                                case 0:
-                                    params.sort = "Alphabetic";
-                                    params.reverse = "False";
-                                    break;
-                                case 1:
-                                    params.sort = "Alphabetic";
-                                    params.reverse = "True";
-                                    break;
-                                case 2:
-                                    params.sort = "Price";
-                                    params.reverse = "False";
-                                    break;
-                                case 3:
-                                    params.sort = "Price";
-                                    params.reverse = "True";
-                                    break;
-                                }
-
-                                window.location.href = "/search/search?" + $.param(params);
-                            }
-                        </script>
-                        
+                    <div id="sort_panel">
                         @{
-                            int pageSize = Model.PageSize;
-                            int productCount = Model.Products.Count();
-                            
-                            const int maxPageCount = 15;
-
-                            int pageCount = productCount / pageSize + 1;
-                        } 
-    
-                        <div class="pagination pagination-centered">
-                            @if (pageCount > 1)
-                            {
-                                <ul>
-                                    @for (int i = 1; i <= pageCount; i++)
-                                    {
-                                        <li @((i == Model.Page) ? "class=active" : "")>
-                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
-                                        </li>
-                                    }
-                                </ul>
-                            }
-                        </div>
-
-
-                        @foreach(var product in Model.Products)
-                        {
-                            <div class="well product_box">
-                                @{
-                                    string href = "/product/details/" + product.Id;
-                                    string path = "/Image/ProductImg/" + product.Id;
-            
-                                    <div class="info">
-                                        <a class="no_underline" href="@href">
-                                            <img class="product_photo" width="70" height="70" src="@path" />
-                                        </a>
-                                        <a href="@href">
-                                            @product.Name
-                                        </a>
-                                    </div>
-                
-                                    <div class="tocart">
-                                        @Html.Partial("../Partial/Counter", product)  
-                                    </div>
-                                }     
-                            </div>
+                            //Calculating selected item index to make it selected
+                            int index = 0;
+                            index += (int)Model.SortType * 2;
+                            index += Model.Reverse ? 1 : 0;
                         }
 
+                        <select id="sort" onchange="getPage()">
+                            <option @(index == 0?"selected":"")>Alphabetic ascending</option>      
+                            <option @(index == 1?"selected":"")>Alphabetic descending</option> 
+                            <option @(index == 2?"selected":"")>Price ascending</option>                 
+                            <option @(index == 3?"selected":"")>Price descending</option>            
+                        </select>
 
-
-                        <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
+                        @for (int i = 1; i < 4; i++)
+                        {
+                            int size = (int)Math.Pow(10, i);
+                            @Html.ActionLink("Show by " + size, "Search", new { category = Model.Category.Name, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
+                        }
+                    </div> 
                         
-                        <div class="pagination pagination-centered">
-                            @if (pageCount > 1)
-                            {
-                                <ul>
-                                    @for (int i = 1; i <= pageCount; i++)
-                                    {
-                                        <li @((i == Model.Page) ? "class=active" : "")>
-                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
-                                        </li>
-                                    }
-                                </ul>
+                    <script>
+                        //public ActionResult Search(string data, string category, int? page, int? pageSize, SortType? sort, bool? reverse)
+                        function getPage() {
+
+                            var params = {
+                                categoryId: "@Model.Category.Id",
+                                sort: "@Model.SortType",
+                                pageSize: "@Model.PageSize",
+                                reverse: "@Model.Reverse",
+                                data: "@Model.SearchRequest",
+                                category: "@Model.Category.Name"
+                            };
+
+                            var select = document.getElementById("sort");
+
+                            switch (select.selectedIndex) {
+                            case 0:
+                                params.sort = "Alphabetic";
+                                params.reverse = "False";
+                                break;
+                            case 1:
+                                params.sort = "Alphabetic";
+                                params.reverse = "True";
+                                break;
+                            case 2:
+                                params.sort = "Price";
+                                params.reverse = "False";
+                                break;
+                            case 3:
+                                params.sort = "Price";
+                                params.reverse = "True";
+                                break;
                             }
-                        </div>
+
+                            window.location.href = "/search/search?" + $.param(params);
+                        }
+                    </script>
+                        
+                    @{
+                        int pageSize = Model.PageSize;
+                        int productCount = Model.Products.Count();
+                            
+                        const int maxPageCount = 15;
+
+                        int pageCount = productCount / pageSize + 1;
+                    } 
+    
+                    <div class="pagination pagination-centered">
+                        @if (pageCount > 1)
+                        {
+                            <ul>
+                                @for (int i = 1; i <= pageCount; i++)
+                                {
+                                    <li @((i == Model.Page) ? "class=active" : "")>
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                    </li>
+                                }
+                            </ul>
+                        }
                     </div>
+
+
+                    @foreach(var product in Model.Products)
+                    {
+                        <div class="well product_box">
+                            @{
+                                string href = "/product/details/" + product.Id;
+                                string path = "/Image/ProductImg/" + product.Id;
+            
+                                <div class="info">
+                                    <a class="no_underline" href="@href">
+                                        <img class="product_photo" width="70" height="70" src="@path" />
+                                    </a>
+                                    <a href="@href">
+                                        @product.Name
+                                    </a>
+                                </div>
+                
+                                <div class="tocart">
+                                    @Html.Partial("../Partial/Counter", product)  
+                                </div>
+                            }     
+                        </div>
+                    }
+
+
+
+                    <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
+                        
+                    <div class="pagination pagination-centered">
+                        @if (pageCount > 1)
+                        {
+                            <ul>
+                                @for (int i = 1; i <= pageCount; i++)
+                                {
+                                    <li @((i == Model.Page) ? "class=active" : "")>
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
                 }
+            </div>
         </div>
     </div>
 </div>

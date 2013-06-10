@@ -1,4 +1,5 @@
-﻿using iTechArt.Shop.Web.Common;
+﻿using iTechArt.Shop.Common.Enumerations;
+using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Common.Services
 {

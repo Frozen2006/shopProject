@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Helpers;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Web.Models
 {
@@ -8,7 +8,7 @@ namespace iTechArt.Shop.Web.Models
     {
         public DateTime Today;
         public List<DateTime> StartDay;
-        public List<BookinSlot> Slots;
+        public List<BookingSlot> Slots;
         public int Step = 1;
     }
 }

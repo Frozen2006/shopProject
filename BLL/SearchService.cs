@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
-using Helpers;
 using iTechArt.Shop.Common.Services;
 using Ninject;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Logic.Services

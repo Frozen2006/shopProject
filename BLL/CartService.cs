@@ -6,9 +6,9 @@ using System.Text;
 using AutoMapper;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
-using Helpers;
 using Ninject;
 using iTechArt.Shop.Common.Services;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Logic.Services
 {

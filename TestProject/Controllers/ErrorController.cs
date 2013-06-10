@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Services;
 using Ninject;
 using iTechArt.Shop.Web.Common;

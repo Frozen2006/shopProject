@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;

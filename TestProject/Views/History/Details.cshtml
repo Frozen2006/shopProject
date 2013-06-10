@@ -1,4 +1,6 @@
-﻿@model Helpers.OrdersDetails
+﻿@using iTechArt.Shop.Common.Enumerations
+@using iTechArt.Shop.Entities.PresentationModels
+@model iTechArt.Shop.Entities.PresentationModels.OrdersDetails
 
 <div class="order_details_box">
     <h2>Order @Model.Id</h2>
@@ -21,7 +23,7 @@
 
     @Html.ActionLink("Back to orders", "Index", null, new{ @class="btn btn-success"})
 
-    @if (Model.OrderStatus == Helpers.OrderStatus.WaitForPaid)
+    @if (Model.OrderStatus == OrderStatus.WaitForPaid)
     {
         @Html.ActionLink("Payment", "Pay", "Payment", new { orderId = Model.Id }, new { @class="btn btn-danger"})
     }

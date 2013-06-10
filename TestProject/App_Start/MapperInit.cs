@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AutoMapper;
-using Helpers;
 using iTechArt.Shop.Entities;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web.App_Start
@@ -16,7 +16,7 @@ namespace iTechArt.Shop.Web.App_Start
             Mapper.CreateMap<Product, ProductInCart>();
             Mapper.CreateMap<RegisterModel, User>();
             Mapper.CreateMap<User, UserDetails>();
-            Mapper.CreateMap<DeliverySpot, BookinSlot>();
+            Mapper.CreateMap<DeliverySpot, BookingSlot>();
             Mapper.CreateMap<Order, OrdersDetails>();
         }
     }

@@ -4,7 +4,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using iTechArt.Shop.Entities;
-using Helpers;
 using iTechArt.Shop.Web.App_Start;
 using iTechArt.Shop.Web.Models;
 

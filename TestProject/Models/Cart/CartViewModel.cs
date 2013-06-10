@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Helpers;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Web.Models
 {

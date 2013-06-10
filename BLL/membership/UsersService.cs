@@ -6,10 +6,11 @@ using System.Text;
 using System.Web.Caching;
 using AutoMapper;
 using System.Web;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
-using Helpers;
 using iTechArt.Shop.Common.Services;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Logic.Membership

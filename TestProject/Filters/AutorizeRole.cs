@@ -1,7 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using Helpers;
 using Ninject;
+using iTechArt.Shop.Common.Enumerations;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Logic.Membership;
 using iTechArt.Shop.Web;
 

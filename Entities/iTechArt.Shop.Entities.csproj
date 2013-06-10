@@ -63,6 +63,11 @@
     <Compile Include="PartialEntities\Product.cs" />
     <Compile Include="PartialEntities\Session.cs" />
     <Compile Include="PartialEntities\User.cs" />
+    <Compile Include="PresentationModels\OrderStatus.cs" />
+    <Compile Include="PresentationModels\RolesType.cs" />
+    <Compile Include="PresentationModels\SlotStatus.cs" />
+    <Compile Include="PresentationModels\SlotsType.cs" />
+    <Compile Include="PresentationModels\SortType.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
@@ -78,16 +83,13 @@
     <Compile Include="User.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelsToPL\BookinSlot.cs" />
-    <Compile Include="ModelsToPL\CategoriesInSearch.cs" />
-    <Compile Include="ModelsToPL\OrdersDetails.cs" />
-    <Compile Include="ModelsToPL\OrdersInList.cs" />
-    <Compile Include="ModelsToPL\OrderStatus.cs" />
-    <Compile Include="ModelsToPL\ProductInCart.cs" />
-    <Compile Include="ModelsToPL\SearchResult.cs" />
-    <Compile Include="ModelsToPL\RolesType.cs" />
-    <Compile Include="ModelsToPL\SlotsType.cs" />
-    <Compile Include="ModelsToPL\UserDetails.cs" />
+    <Compile Include="PresentationModels\BookingSlot.cs" />
+    <Compile Include="PresentationModels\CategoriesInSearch.cs" />
+    <Compile Include="PresentationModels\OrdersDetails.cs" />
+    <Compile Include="PresentationModels\OrdersInList.cs" />
+    <Compile Include="PresentationModels\ProductInCart.cs" />
+    <Compile Include="PresentationModels\SearchResult.cs" />
+    <Compile Include="PresentationModels\UserDetails.cs" />
     <Compile Include="Zip.cs">
       <DependentUpon>Shop.tt</DependentUpon>
     </Compile>

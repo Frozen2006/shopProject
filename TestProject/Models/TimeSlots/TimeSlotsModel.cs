@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Helpers;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Web.Models
 {
@@ -8,9 +8,9 @@ namespace iTechArt.Shop.Web.Models
     {
         public DateTime Today;
         public List<DateTime> StartDay;
-        public List<BookinSlot> SlotsOneHour;
-        public List<BookinSlot> SlotsTwoHour;
-        public List<BookinSlot> SlotsFourHour;
+        public List<BookingSlot> SlotsOneHour;
+        public List<BookingSlot> SlotsTwoHour;
+        public List<BookingSlot> SlotsFourHour;
         public bool IsButtonEnable = false;
     }
 }

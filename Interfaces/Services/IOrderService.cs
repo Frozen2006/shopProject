@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Helpers;
+using iTechArt.Shop.Common.Enumerations;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Common.Services
 {

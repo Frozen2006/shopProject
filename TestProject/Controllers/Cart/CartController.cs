@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Helpers;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Services;
 using Ninject;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Filters;
 using iTechArt.Shop.Web.Models;
 

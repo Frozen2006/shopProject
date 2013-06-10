@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using iTechArt.Shop.Common.Services;
-using iTechArt.Shop.Logic.Services;
+using iTechArt.Shop.Common.Enumerations;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Entities;
-using Helpers;
-using iTechArt.Shop.Entities;
-using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Web.Models
 {

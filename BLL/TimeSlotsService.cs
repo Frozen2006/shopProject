@@ -4,11 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Management.Instrumentation;
 using AutoMapper;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
-using Helpers;
 using iTechArt.Shop.Common.Services;
 using Ninject;
+using iTechArt.Shop.Entities.PresentationModels;
 
 namespace iTechArt.Shop.Logic.Services
 {
@@ -27,7 +28,7 @@ namespace iTechArt.Shop.Logic.Services
             _userRepository = us;
         }
 
-        public List<BookinSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type, string userEmail)
+        public List<BookingSlot> GetSlots(DateTime startTime, DateTime endTime, SlotsType type, string userEmail)
         {
             var slots = _timeRepository.ReadAll().Where(m => (m.StartTime >= startTime) && (m.EndTime <= endTime) && (m.Type == (int)(type))).ToList();
 
@@ -105,10 +106,10 @@ namespace iTechArt.Shop.Logic.Services
 
             return us;
         }
-        private BookinSlot DeliverySpotToBookingSlot(DeliverySpot ds, string userEmail)
+        private BookingSlot DeliverySpotToBookingSlot(DeliverySpot ds, string userEmail)
         {
             //map all parameters
-            BookinSlot bookinSlot = Mapper.Map<DeliverySpot, BookinSlot>(ds);
+            BookingSlot bookinSlot = Mapper.Map<DeliverySpot, BookingSlot>(ds);
 
 
             //generatin status field

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using iTechArt.Shop.Common.Enumerations;
 
 namespace iTechArt.Shop.Web.Common
 {

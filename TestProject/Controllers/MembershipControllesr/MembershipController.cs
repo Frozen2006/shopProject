@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Entities;
-using Helpers;
 using iTechArt.Shop.Common.Services;
 using Ninject;
+using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web.Controllers .MembershipControllesr

@@ -4,7 +4,6 @@ using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
-using iTechArt.Shop.DataAccess.Repositories;
 using Ninject.Modules;
 using Ninject.Web.Common;
 using System.Data.Entity;

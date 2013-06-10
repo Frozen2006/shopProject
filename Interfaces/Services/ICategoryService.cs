@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Web.Common;
 
