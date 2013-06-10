@@ -1,4 +1,6 @@
-   $(function () {
+//Send request, when user write zip code, and display suggest.
+//Use only on registration page
+$(function () {
         $("#Zip").autocomplete( {
             source: function (request, response) {
                 $.ajax

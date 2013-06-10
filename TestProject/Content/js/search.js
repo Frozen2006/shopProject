@@ -1,4 +1,4 @@
-    //custom jQuery UI autocompleat (only settings)
+//custom jQuery UI autocompleat (only settings)
     $.widget( "custom.searchautocomplete", $.ui.autocomplete, {
         _renderMenu: function( ul, items ) {
             var that = this,
@@ -16,8 +16,8 @@
         }
     });
 
+//setup serach autocompleat ajax
       $(function() {
-   
           $("#searchArea").searchautocomplete({
               appendTo: "#ui-widget-autoc",
               source: function (request, response) {

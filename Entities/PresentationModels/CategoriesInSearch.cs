@@ -2,7 +2,7 @@
 {
     public class CategoriesInSearch
     {
-        public Category Category;
-        public int Count;
+        public Category Category { get; set; }
+        public int Count { get; set; }
     }
 }

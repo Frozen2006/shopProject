@@ -142,7 +142,7 @@ namespace iTechArt.Shop.Logic.Membership
             {
                 return (RolesType)user.Role;
             }
-            throw new InstanceNotFoundException("No user with this email adress");
+            throw new InstanceNotFoundException("No user with this Email adress");
         }
 
         public void ChangeRole(string userEmail, RolesType newRole)

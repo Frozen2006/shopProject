@@ -41,7 +41,7 @@ function countInput(event, price, sliderClass) {
 
     $(slider).slider("value", count);
 
-    //Set estimated price.
+    //Set estimated Price.
     var pricespan = getPrice(event.target);
     pricespan.innerHTML = (count * price).toFixed(2);
 }
@@ -77,9 +77,9 @@ function getSlider(element) {
     return element.parentNode.getElementsByClassName("slider")[0];
 }
 
-//Returns price span by its sibling node (e.g. button event sender)
+//Returns Price span by its sibling node (e.g. button event sender)
 function getPrice(element) {
-    return element.parentNode.getElementsByClassName("estimated_price_value")[0];
+    return element.parentNode.getElementsByClassName("estimated_Price_value")[0];
 }
 
 //Adding to cart scripts

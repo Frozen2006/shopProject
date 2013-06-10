@@ -1,4 +1,5 @@
-﻿function Bookin(hour, day, mounth, year, slotType) {
+﻿//Shows a modal window with question
+function Bookin(hour, day, mounth, year, slotType) {
     $("#myModal").find("#bookThis")[0].onclick = function () { SendBook(hour, day, mounth, year, slotType); };
     $("#time-place")[0].innerHTML = hour + ":00-" + (hour + slotType) + ":00 " + mounth + "/" + day + "/" + year;
     $("#myModal").modal('show');
@@ -8,7 +9,7 @@ function closeModal() {
     $("#myModal").modal('hide');
 }
 
-
+//Send ajax to book time
 function SendBook(hour, day, mounth, year, slotType) {
     $.ajax({
         url: "/TimeSlots/Book",

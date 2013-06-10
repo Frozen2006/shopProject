@@ -893,8 +893,8 @@ window.Modernizr = (function( window, document, undefined ) {
                       // Interestingly, opera fails the earlier test, so it doesn't
                       //  even make it here.
 
-                    } else if ( /^(url|email)$/.test(inputElemType) ) {
-                      // Real url and email support comes with prebaked validation.
+                    } else if ( /^(url|Email)$/.test(inputElemType) ) {
+                      // Real url and Email support comes with prebaked validation.
                       bool = inputElem.checkValidity && inputElem.checkValidity() === false;
 
                     } else if ( /^color$/.test(inputElemType) ) {
@@ -914,7 +914,7 @@ window.Modernizr = (function( window, document, undefined ) {
                 inputs[ props[i] ] = !!bool;
             }
             return inputs;
-        })('search tel url email datetime date month week time datetime-local number range color'.split(' '));
+        })('search tel url Email datetime date month week time datetime-local number range color'.split(' '));
     }
 
 

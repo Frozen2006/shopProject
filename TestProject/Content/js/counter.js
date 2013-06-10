@@ -1,4 +1,4 @@
-﻿//Scripts for sliders, estimated prices and ajax adding to cart.
+﻿//Scripts for sliders, estimated Prices and ajax adding to cart.
 
 //REQUIRES: "alerts.js" to communicate with user
 
@@ -6,10 +6,10 @@
 /*
 <div class="counter_box">
     <div class="controls_wrapper">
-        <span class="price">Price: <span class="price_value">5.00</span>$</span>
+        <span class="Price">Price: <span class="Price_value">5.00</span>$</span>
         <div class="slider int_slider"></div>
         <input type="text" class="counter" />
-        <span class="estimated_price"> packs for <span class="estimated_price_value">1</span>$</span>
+        <span class="estimated_Price"> packs for <span class="estimated_Price_value">1</span>$</span>
         <input type="hidden" class="product_id" value="123" />
     </div>
 
@@ -17,7 +17,7 @@
 </div>
 */
 
-//The following methods help to get counter elements (product id, estimated price etc.)
+//The following methods help to get counter elements (product id, estimated Price etc.)
 //to get an easy acces to them from event handlers
 
 //Returns counter input(<input type="text" class="counter" />) by the slider or it's sibling  (e.g. button event sender)
@@ -36,14 +36,14 @@ function getSlider(element) {
     return element.parentNode.getElementsByClassName("slider")[0];
 }
 
-//Returns estimatied price span by the slider or it's sibling  (e.g. button event sender)
+//Returns estimatied Price span by the slider or it's sibling  (e.g. button event sender)
 function getEstimatedPriceSpan(element) {
-    return element.parentNode.getElementsByClassName("estimated_price_value")[0];
+    return element.parentNode.getElementsByClassName("estimated_Price_value")[0];
 }
 
-//Gets prodct price (Number) by the slider or it's sibling  (e.g. button or input event sender)
+//Gets prodct Price (Number) by the slider or it's sibling  (e.g. button or input event sender)
 function getPrice(element) {
-    var priceSpan = element.parentNode.getElementsByClassName("price_value")[0];
+    var priceSpan = element.parentNode.getElementsByClassName("Price_value")[0];
     var string = priceSpan.innerHTML.toString().replace(",", ".");
     return parseFloat(string);
 }
@@ -82,7 +82,7 @@ function sliderIsFloat(slider) {
     return $(slider).hasClass("float_slider");
 }
 
-//Event handler. Changes the slider value when the price text box (<input type="text">) is changed by user.
+//Event handler. Changes the slider value when the Price text box (<input type="text">) is changed by user.
 //Attatch it to the input "onchange" and "onkeyup" events
 function countInput(event) {
     var slider = getSlider(event.target);
@@ -106,7 +106,7 @@ function countInput(event) {
     //Setting slider value
     $(slider).slider("value", count);
 
-    //Set estimated price.
+    //Set estimated Price.
     var pricespan = getEstimatedPriceSpan(event.target);
     pricespan.innerHTML = (count * price).toFixed(2);
 }
