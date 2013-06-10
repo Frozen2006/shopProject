@@ -99,8 +99,6 @@ namespace iTechArt.Shop.Logic.Services
 
             int countOfAllProducts = _productRepo.ReadAll().Count(m => m.Name.Contains(searchData));
 
-
-
             var pis = new SearchResult { Products = products.ToList(), AllCount = countOfAllProducts};
 
             return pis;
