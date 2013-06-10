@@ -36,9 +36,7 @@
     @{
         int pageSize = Model.PageSize;
         int productCount = Model.Category.Products.Count();
-        const int maxPageCount = 15;
-
-        int pageCount = productCount / pageSize + 1;
+        int pageCount = (int)((double)productCount / pageSize + 0.5);
     } 
     
     <div class="pagination pagination-centered">

@@ -91,18 +91,7 @@
                     @{
                         int pageSize = Model.PageSize;
                         int productCount = Model.CountAll;
-
-                        int pageCount;
-                        if (productCount%2 == 0)
-                        {
-                            pageCount = productCount/pageSize;
-                        }
-                        else
-                        {
-                            pageCount = productCount/pageSize + 1;
-                        }
-
-
+                        int pageCount = (int)((double)productCount / pageSize + 0.5);
                     } 
     
                     <div class="pagination pagination-centered">
