@@ -10,7 +10,6 @@ namespace iTechArt.Shop.Web.Models
         public List<CategoriesInSearch> Categories;
         public List<Product> Products;
         public string SearchRequest;
-        public Category Category;
         public SortType SortType;
         public int PageSize;
         public bool Reverse;

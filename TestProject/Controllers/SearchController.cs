@@ -53,7 +53,6 @@ namespace iTechArt.Shop.Web.Controllers
                     PageSize = (int) pageSize,
                     Reverse = (bool) reverse,
                     SortType = (SortType) sort,
-                    Category = new Category(),
                     Page = (int) page,
                     CountAll = searchResult.AllCount
                 };
