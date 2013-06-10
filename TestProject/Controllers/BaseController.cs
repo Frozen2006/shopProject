@@ -27,26 +27,9 @@ namespace iTechArt.Shop.Web.Controllers
             return (string)HttpContext.Items["email"];
         }
 
-        /// <summary>
-        /// Get JSON-object report.
-        /// </summary>
-        /// <param name="report">Report text</param>
-        /// <returns>{ Report: "report" }</returns>
-        public JsonResult JsonReport(string report)
+        public JsonResult JsonReport(string report, bool withError)
         {
-            return Json(new { Report = report });
-        }
-
-        /// <summary>
-        /// Get JSON-object report and set response code.
-        /// </summary>
-        /// <param name="report">Report text</param>
-        /// <param name="code">Response code</param>
-        /// <returns>{ Report: "report" }</returns>
-        public JsonResult JsonReport(string report, HttpStatusCode code)
-        {
-            Response.StatusCode = (int)code;
-            return JsonReport(report);
+            return Json(new {Report = report, WithError = withError});
         }
     }
 }

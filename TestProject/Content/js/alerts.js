@@ -12,3 +12,15 @@ function newAlert(type, message) {
     $("#alert_area").append($("<div class='alert-message " + type + " fade in' data-alert><p> " + message + " </p></div>"));
     $(".alert-message").delay(2000).fadeOut("slow", function () { $(this).remove(); });
 }
+
+function ordinaryAlert(message) {
+    newAlert("alert", message);
+}
+
+function errorAlert(message) {
+    newAlert("alert alert-error", message);
+}
+
+function successAlert(message) {
+    newAlert("alert alert-success", message);
+}

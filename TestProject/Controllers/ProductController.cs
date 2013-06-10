@@ -60,25 +60,25 @@ namespace iTechArt.Shop.Web.Controllers
         {
             if (count < 0)
             {
-                return JsonReport("Incorrect product count", HttpStatusCode.InternalServerError);
+                return JsonReport("Incorrect product count", true);
             }
 
             string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
-                return JsonReport("You are not logged in.", HttpStatusCode.Unauthorized);
+                return JsonReport("You are not logged in.", true);
             }
 
             Product product = CategoryService.GetProduct(productId);
             if (product == null)
             {
-                return JsonReport("Product not found", HttpStatusCode.NotFound);
+                return JsonReport("Product not found", true);
             }
 
             CartService.Add(email, productId, count);
 
             string report = CartService.GetAddingReport(product, count);
-            return JsonReport(report);
+            return JsonReport(report, false);
         }
 
         /// <summary>
@@ -89,25 +89,25 @@ namespace iTechArt.Shop.Web.Controllers
         {
             if (counts.Min() < 0)
             {
-                return JsonReport("Incorrect product count", HttpStatusCode.InternalServerError);
+                return JsonReport("Incorrect product count", true);
             }
 
             string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
-                return JsonReport("You are not logged in.", HttpStatusCode.Unauthorized);
+                return JsonReport("You are not logged in.", true);
             }
 
             Product[] products = productIds.Select(id => CategoryService.GetProduct(id)).ToArray();
             if (products.Contains(null))
             {
-                return JsonReport("Product not found", HttpStatusCode.NotFound);
+                return JsonReport("Product not found", true);
             }
 
             CartService.AddArray(email, productIds, counts);
 
             string report = CartService.GetAddingReport(products, counts);
-            return JsonReport(report);
+            return JsonReport(report, false);
         }
     }
 }
