@@ -14,7 +14,7 @@
                     @foreach (var categoryM in Model.Categories)
                     {
                         <li>
-                            @Html.ActionLink(categoryM.Category.Name+""+ " (" + categoryM.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = categoryM.Category.Name }, null)
+                            @Html.ActionLink(categoryM.Category.Name+""+ " (" + categoryM.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = categoryM.Category.Id }, null)
                         </li>
                     }
                 </ul>
@@ -28,7 +28,7 @@
                 {  
                     <div class="products"> 
                         <h3>Products</h3>
-                        
+                        <h4>Finded about @Model.Products.Count products</h4>
                         <div id="sort_panel">
                             @{
                                 //Calculating selected item index to make it selected
