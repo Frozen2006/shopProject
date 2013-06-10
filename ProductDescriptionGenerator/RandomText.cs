@@ -183,7 +183,7 @@ namespace ProductDescriptionGenerator
         }
 
         /// <summary>
-        /// Generates a random paragraph.
+        /// Generates a random paragraph
         /// </summary>
         public string Paragraph()
         {
