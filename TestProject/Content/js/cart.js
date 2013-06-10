@@ -68,10 +68,10 @@ function updateAll() {
 
             $("#UpdateAll").prop("disabled", true);
 
-            newAlert("alert-success", "All product successful update!");
+            newAlert("alert alert-success", "All product successful update!");
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            newAlert("alert-error", "Waring! Connection error! Try update you page.");
+            newAlert("alert alert-error", "Waring! Connection error! Try update you page.");
         }
     });
 }
@@ -79,7 +79,6 @@ function updateAll() {
 function getDataFromId(productId) {
     var boxWithCount = $("div#" + productId).find(".counter")[0];
     var val = boxWithCount.value;
-
     return { Id: productId, Count: val };
 }
 
@@ -104,10 +103,10 @@ function sendAjaxToChange(productId, newVal) {
             
             $("#UpdateAll").prop("disabled", true);
             
-            newAlert("alert-success", "Product count successful updated!");
+            newAlert("alert alert-success", "Product count successful updated!");
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            newAlert("alert-error", "Waring! Connection error! Try update you page.");
+            newAlert("alert alert-error", "Waring! Connection error! Try update you page.");
         }
     });
 }
@@ -193,15 +192,20 @@ function correctInput(event, sliderClass) {
     var stringCount = event.target.value;
 
     //Trying to parse input
+    //If can't parse than set it to 0.
     var count;
-    if (sliderClass == "int_slider") {
-        count = parseInt(stringCount) || 0;
-    }
-    else {
+    if (sliderIsFloat(slider)) {
         count = parseFloat(stringCount.replace(",", ".")).toFixed(1) || 0;
     }
+    else {
+        count = parseInt(stringCount) || 0;
+    }
 
-    //If can't parse than set it to 0.
+    if (count < 0) {
+        count = 0;
+    }
+
+    //Setting a correct value.
     event.target.value = count;
 }
 

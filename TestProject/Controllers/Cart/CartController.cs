@@ -58,8 +58,9 @@ namespace iTechArt.Shop.Web.Controllers .Cart
         }
 
         //Ajax jquery responce method
+        //Set new count value to one product
         [HttpPost]
-        public ActionResult SetNewValue(string productId, int count)
+        public ActionResult SetNewValue(string productId, double count)
         {
             if (productId == null)
                 return null;
@@ -86,6 +87,8 @@ namespace iTechArt.Shop.Web.Controllers .Cart
         public ActionResult ConfirmOrder()
         {
             string userEmail = GetUserEmail();
+            if (CartService.GetAllChart(userEmail).Count == 0)
+                return RedirectToAction("Index");
             var odm = new OrderDetailsModel { TimeSlot = SlotService.GetUserSlots(userEmail) };
 
             return View(odm);
@@ -115,7 +118,7 @@ namespace iTechArt.Shop.Web.Controllers .Cart
 
         //Ajax jquery responce method
         [HttpPost]
-        public ActionResult SetNewValueToAll(List<int> Id, List<int> Count)
+        public ActionResult SetNewValueToAll(List<int> Id, List<double> Count)
         {
            if (Id == null)
                 return null;
