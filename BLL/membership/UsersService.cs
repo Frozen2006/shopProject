@@ -13,6 +13,7 @@ using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using iTechArt.Shop.Entities.PresentationModels;
 
+
 namespace iTechArt.Shop.Logic.Membership
 {
     //class to work with users db: create user, manage user, delete user, etc...
@@ -196,21 +197,14 @@ namespace iTechArt.Shop.Logic.Membership
             return null;
         }
 
-        public void ChangeDeliveryData(string email, string address, string address2, string phone, string phone2,
-                                       int zip, string city)
+        public void ChangeDeliveryData(string email, ChangeDeliveryAddressModel data)
         {
             User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
 
             if (us == null)
                 throw new InstanceNotFoundException("User not found");
 
-            us.address = address;
-            us.address2 = address2;
-            us.phone = phone;
-            us.phone2 = phone2;
-            us.zip = zip;
-            us.city = city;
-        
+            us = Mapper.Map(data, us);
             _repository.Update(us);
         
         }
@@ -219,12 +213,12 @@ namespace iTechArt.Shop.Logic.Membership
         {
             string guid = Guid.NewGuid().ToString();
             User userAccount = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
-            if (userAccount == null) throw new ArgumentNullException("userEmail");
+            if (userAccount == null) return null;
+
             var currentSession = new Session { guid = guid, UserId = userAccount.Id };
             _sessionRepository.Create(currentSession);
 
-            HttpContext.Current.Cache.Add(guid, userAccount.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
-                                          CacheItemPriority.Normal, null);
+            _sessionContext.AddUserDataToCash(guid, userAccount.email);
 
             return guid;
         }

@@ -1,6 +1,7 @@
 ﻿using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Entities.PresentationModels;
+using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Common.Services
 {
@@ -18,9 +19,7 @@ namespace iTechArt.Shop.Common.Services
         void ChangeRole(string userEmail, RolesType newRole);
         string AtributeCheck(RolesType roleName);
 
-        void ChangeDeliveryData(string email, string address, string address2, string phone, string phone2,
-                                int zip, string city);
-
+        void ChangeDeliveryData(string email, ChangeDeliveryAddressModel data);
         string StartSession(string userEmail);
         void RemoveSession(string guid);
         bool CheckSession(string guid);

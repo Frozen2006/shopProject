@@ -173,7 +173,6 @@
     <Compile Include="Models\Payment\CardInfo.cs" />
     <Compile Include="Models\Cart\CartViewModel.cs" />
     <Compile Include="Models\Category\CategoryDetailsModel.cs" />
-    <Compile Include="Models\Membership\ChangeDeliveryAddressModel.cs" />
     <Compile Include="Models\Category\CategotyNavigationModel.cs" />
     <Compile Include="Models\Membership\ChangePasswordModel.cs" />
     <Compile Include="Models\Error\ErrorModel.cs" />
@@ -208,11 +207,11 @@
     <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
-    <Content Include="Content\jquery-ui-1.10.3.custom.min.css" />
-    <Content Include="Content\jquery-ui-1.10.3.custom.min.js" />
-    <Content Include="Content\js\bootstrap.input-clear.js" />
-    <Content Include="Content\js\bootstrap.js" />
-    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\css\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\js_frameworks\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Content\js_frameworks\bootstrap.input-clear.js" />
+    <Content Include="Content\js_frameworks\bootstrap.js" />
+    <Content Include="Content\js_frameworks\bootstrap.min.js" />
     <Content Include="Content\js\reg_autocomp.js" />
     <Content Include="Content\js\search.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

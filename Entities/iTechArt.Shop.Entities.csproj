@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -63,6 +64,7 @@
     <Compile Include="PartialEntities\Product.cs" />
     <Compile Include="PartialEntities\Session.cs" />
     <Compile Include="PartialEntities\User.cs" />
+    <Compile Include="PresentationModels\ChangeDeliveryAddressModel.cs" />
     <Compile Include="PresentationModels\OrderStatus.cs" />
     <Compile Include="PresentationModels\RolesType.cs" />
     <Compile Include="PresentationModels\SlotStatus.cs" />

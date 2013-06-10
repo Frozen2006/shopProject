@@ -32,7 +32,7 @@ namespace iTechArt.Shop.Logic.Membership
                     return String.Empty;
                 }
             }
-            return city.city + ", " + city.sub_city;
+            return String.Format("{0}, {1}", city.city, city.sub_city);
         }
 
         // Return list of possible sity
@@ -40,27 +40,25 @@ namespace iTechArt.Shop.Logic.Membership
         // Item2 = ciy name
         public List<Tuple<string,string>> GetCities(string particalZip)
         {
-            Zip oneTCity = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) == 0);
+            Zip oneCity = _repo.ReadAll().FirstOrDefault(m => m.zip1.CompareTo(particalZip) == 0);
 
-            if (oneTCity != null)
+            //if finded one city (100% mutch)
+            if (oneCity != null)
             {
                 var outDataF = new List<Tuple<string, string>>();
-                outDataF.Add(Tuple.Create(oneTCity.zip1, oneTCity.city + ", " + oneTCity.sub_city));
+                outDataF.Add(Tuple.Create(oneCity.zip1, String.Format("{0}, {1}", oneCity.city, oneCity.sub_city)));
                 return outDataF;
             }
 
-            IQueryable<Zip> citys = null;
 
-            if (oneTCity == null)
-            {
-                citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
-            }
+            //try get many city's zip
+            IQueryable<Zip> citys = _repo.ReadAll().Where(m => m.zip1.Substring(0, particalZip.Length).CompareTo(particalZip) == 0).Take(5);
 
             List<Tuple<string, string>> outData = new List<Tuple<string, string>>();
 
-            foreach (var oneCity in citys)
+            foreach (var city in citys)
             {
-                outData.Add(Tuple.Create(oneCity.zip1, oneCity.city + ", " + oneCity.sub_city));
+                outData.Add(Tuple.Create(city.zip1, String.Format("{0}, {1}", city.city, city.sub_city)));
             }
 
             return outData;

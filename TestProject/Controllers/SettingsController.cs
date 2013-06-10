@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using AutoMapper;
 using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Services;
 using Ninject;
@@ -33,12 +34,7 @@ namespace iTechArt.Shop.Web.Controllers
 
             UserDetails userDetails = UserService.GetUserDetails(userEmail);
 
-            model.Address1 = userDetails.address;
-            model.Address2 = userDetails.address2;
-            model.Phone1 = userDetails.phone;
-            model.Phone2 = userDetails.phone2;
-            model.Zip = userDetails.zip;
-            model.City = userDetails.city;
+            model = Mapper.Map(userDetails, model);
 
             return View(model);
         }
@@ -51,7 +47,7 @@ namespace iTechArt.Shop.Web.Controllers
             {
                 string userEmail = GetUserEmail();
 
-               UserService.ChangeDeliveryData(userEmail, model.Address1, model.Address2, model.Phone1, model.Phone2, model.Zip, model.City);
+               UserService.ChangeDeliveryData(userEmail, model);
                ModelState.AddModelError("", "Change compleat");
                return View(model);
             }
