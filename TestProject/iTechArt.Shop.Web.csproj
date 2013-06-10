@@ -173,7 +173,6 @@
     <Compile Include="Models\Payment\CardInfo.cs" />
     <Compile Include="Models\Cart\CartViewModel.cs" />
     <Compile Include="Models\Category\CategoryDetailsModel.cs" />
-    <Compile Include="Models\Membership\ChangeDeliveryAddressModel.cs" />
     <Compile Include="Models\Category\CategotyNavigationModel.cs" />
     <Compile Include="Models\Membership\ChangePasswordModel.cs" />
     <Compile Include="Models\Error\ErrorModel.cs" />

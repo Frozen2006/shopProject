@@ -6,12 +6,12 @@ using System.Text;
 using System.Web.Caching;
 using AutoMapper;
 using System.Web;
-using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using iTechArt.Shop.Entities.PresentationModels;
 using iTechArt.Shop.Web.Common;
+using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Logic.Membership
 {
@@ -196,21 +196,14 @@ namespace iTechArt.Shop.Logic.Membership
             return null;
         }
 
-        public void ChangeDeliveryData(string email, string address, string address2, string phone, string phone2,
-                                       int zip, string city)
+        public void ChangeDeliveryData(string email, ChangeDeliveryAddressModel data)
         {
             User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
 
             if (us == null)
                 throw new InstanceNotFoundException("User not found");
 
-            us.address = address;
-            us.address2 = address2;
-            us.phone = phone;
-            us.phone2 = phone2;
-            us.zip = zip;
-            us.city = city;
-        
+            us = Mapper.Map(data, us);
             _repository.Update(us);
         
         }

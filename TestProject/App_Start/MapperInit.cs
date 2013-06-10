@@ -18,6 +18,8 @@ namespace iTechArt.Shop.Web.App_Start
             Mapper.CreateMap<User, UserDetails>();
             Mapper.CreateMap<DeliverySpot, BookingSlot>();
             Mapper.CreateMap<Order, OrdersDetails>();
+            Mapper.CreateMap<ChangeDeliveryAddressModel, User>();
+            Mapper.CreateMap<UserDetails, ChangeDeliveryAddressModel>();
         }
     }
 }

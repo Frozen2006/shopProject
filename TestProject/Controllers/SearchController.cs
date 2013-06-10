@@ -5,10 +5,8 @@ using System.Web.Mvc;
 using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Common.Services;
 using iTechArt.Shop.Entities.PresentationModels;
-using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.Entities;
 using Ninject;
-using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Models;
 
 namespace iTechArt.Shop.Web.Controllers 
