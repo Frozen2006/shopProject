@@ -212,12 +212,12 @@ namespace iTechArt.Shop.Logic.Membership
         {
             string guid = Guid.NewGuid().ToString();
             User userAccount = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
-            if (userAccount == null) throw new ArgumentNullException("userEmail");
+            if (userAccount == null) return null;
+
             var currentSession = new Session { guid = guid, UserId = userAccount.Id };
             _sessionRepository.Create(currentSession);
 
-            HttpContext.Current.Cache.Add(guid, userAccount.email, null, DateTime.Now.AddDays(1.0), TimeSpan.Zero,
-                                          CacheItemPriority.Normal, null);
+            _sessionContext.AddUserDataToCash(guid, userAccount.email);
 
             return guid;
         }
