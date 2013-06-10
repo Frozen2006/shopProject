@@ -14,6 +14,7 @@ namespace iTechArt.Shop.Web.Models
         public int PageSize;
         public bool Reverse;
         public int Page;
+        public int? CategoryId;
         public int CountAll;
     }
 }

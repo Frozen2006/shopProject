@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.DataAccess.Repositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;
 using iTechArt.Shop.Entities.PresentationModels;
-using iTechArt.Shop.Web.Common;
 
-namespace iTechArt.Shop.Logic.Services
+namespace iTechArt.Shop.Logic
 {
     public class SearchService : ISearchService
     {
@@ -51,45 +51,41 @@ namespace iTechArt.Shop.Logic.Services
             return allCat;
         }
 
-        //Return all products from category
-        public SearchResult GetProductsFromCategory(string searchData, int categoryId)
-        {
-            var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Id == categoryId));
-
-
-            var pis = new SearchResult
-                {
-                    AllCount = searchedData.Count(),
-                    Products = searchedData.ToList()
-                };
-
-            return pis;
-        }
-
         // Find data with padination
-        public SearchResult GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse)
+        public SearchResult GetResults(string searchData, int? categoryId, int page, int pageSize, SortType sort, bool reverse)
         {
             IEnumerable<Product> products;
+
+            Expression<Func<Product, bool>> where;
+            
+            if (categoryId == null)
+            {
+                where = (m) => m.Name.Contains(searchData);
+            }
+            else
+            {
+                where = (m) => ((m.Category.Id == (int)categoryId) && (m.Name.Contains(searchData)));
+            }
 
             switch (sort)
             {
                 case SortType.Alphabetic:
                     products =
                         _productRepo.ReadAll()
-                                    .Where(m => m.Name.Contains(searchData))
+                                    .Where(where)
                                     .OrderBy(m => m.Name)
                                     .Skip(pageSize*(page - 1))
                                     .Take(pageSize);
                     break;
                 case SortType.Price:
                     products = _productRepo.ReadAll()
-                                    .Where(m => m.Name.Contains(searchData))
+                                    .Where(where)
                                     .OrderBy(m => m.Price)
                                     .Skip(pageSize * (page - 1))
                                     .Take(pageSize);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("sort");
+                    return null;
             }
             //!
             if (reverse)

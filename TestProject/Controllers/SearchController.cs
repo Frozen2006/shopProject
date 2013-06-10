@@ -33,17 +33,11 @@ namespace iTechArt.Shop.Web.Controllers
             pageSize = pageSize ?? 10;
             sort = sort ?? SortType.Alphabetic;
             reverse = reverse ?? false;
+            
 
-            SearchResult searchResult;
-            if (category == null)
-            {
-                searchResult = SearchService.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
+            SearchResult searchResult = SearchService.GetResults(data, category, (int) page, (int) pageSize, (SortType) sort,
                                                         (bool) reverse);
-            }
-            else
-            {
-                searchResult = SearchService.GetProductsFromCategory(data, (int)category);
-            }
+
 
             var model = new SearchPageModel()
                 {
@@ -54,6 +48,7 @@ namespace iTechArt.Shop.Web.Controllers
                     Reverse = (bool) reverse,
                     SortType = (SortType) sort,
                     Page = (int) page,
+                    CategoryId = category,
                     CountAll = searchResult.AllCount
                 };
 

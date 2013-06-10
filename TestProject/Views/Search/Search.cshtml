@@ -11,10 +11,10 @@
             <ul class="nav nav-list">
                 <li class="nav-header">Categories</li>
                 <li>@Html.ActionLink("All results", "Search", "Search", new { data = Model.SearchRequest }, null)</li>
-                @foreach (var categoryM in Model.Categories)
+                @foreach (var category in Model.Categories)
                 {
                     <li>
-                        @Html.ActionLink(categoryM.Category.Name+""+ " (" + categoryM.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = categoryM.Category.Name }, null)
+                        @Html.ActionLink(category.Category.Name+""+ " (" + category.Count + ")", "Search", "Search", new { data = Model.SearchRequest, category = category.Category.Id }, null)
                     </li>
                 }
             </ul>
@@ -47,7 +47,7 @@
                         @for (int i = 1; i < 4; i++)
                         {
                             int size = (int)Math.Pow(10, i);
-                            @Html.ActionLink("Show by " + size, "Search", new { category = Model.Category.Name, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
+                            @Html.ActionLink("Show by " + size, "Search", new { category = Model.CategoryId, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
                         }
                     </div> 
                         
@@ -56,12 +56,11 @@
                         function getPage() {
 
                             var params = {
-                                categoryId: "@Model.Category.Id",
+                                category: "@Model.CategoryId",
                                 sort: "@Model.SortType",
                                 pageSize: "@Model.PageSize",
                                 reverse: "@Model.Reverse",
                                 data: "@Model.SearchRequest",
-                                category: "@Model.Category.Name"
                             };
 
                             var select = document.getElementById("sort");
@@ -92,10 +91,18 @@
                     @{
                         int pageSize = Model.PageSize;
                         int productCount = Model.CountAll;
-                            
-                        const int maxPageCount = 15;
 
-                        int pageCount = productCount / pageSize + 1;
+                        int pageCount;
+                        if (productCount%2 == 0)
+                        {
+                            pageCount = productCount/pageSize;
+                        }
+                        else
+                        {
+                            pageCount = productCount/pageSize + 1;
+                        }
+
+
                     } 
     
                     <div class="pagination pagination-centered">
@@ -105,7 +112,7 @@
                                 @for (int i = 1; i <= pageCount; i++)
                                 {
                                     <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
                                     </li>
                                 }
                             </ul>
@@ -147,7 +154,7 @@
                                 @for (int i = 1; i <= pageCount; i++)
                                 {
                                     <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.Category.Name, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
                                     </li>
                                 }
                             </ul>

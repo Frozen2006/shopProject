@@ -1,4 +1,5 @@
 ﻿using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.Logic;
 using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
