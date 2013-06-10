@@ -7,7 +7,6 @@ using Ninject;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Filters;
 using iTechArt.Shop.Web.Models;
 

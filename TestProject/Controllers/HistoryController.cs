@@ -3,7 +3,6 @@ using iTechArt.Shop.Common.Services;
 using System.Web.Mvc;
 using Ninject;
 using iTechArt.Shop.Entities.PresentationModels;
-using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Filters;
 
 namespace iTechArt.Shop.Web.Controllers 

@@ -2,7 +2,6 @@
 using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Entities.PresentationModels;
-using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Common.Services
 {

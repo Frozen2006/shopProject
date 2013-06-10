@@ -6,7 +6,6 @@ using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;
-using iTechArt.Shop.Web.Common;
 
 namespace iTechArt.Shop.Logic.Services
 {

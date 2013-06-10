@@ -4,7 +4,6 @@ using iTechArt.Shop.Common.Enumerations;
 using iTechArt.Shop.Entities;
 using Ninject;
 using iTechArt.Shop.Common.Services;
-using iTechArt.Shop.Web.Common;
 using iTechArt.Shop.Web.Models;
 
 

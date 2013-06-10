@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Caching;
-using iTechArt.Shop.Web.Common;
+using iTechArt.Shop.Common;
 
 namespace iTechArt.Shop.Web.Helpers
 {
