@@ -21,7 +21,6 @@ namespace iTechArt.Shop.Logic
             _productRepo = pr;
         }
 
-
         //Method to search autocompleat
         public List<Product> GetTop10Results(string searchData)
         {
@@ -30,6 +29,8 @@ namespace iTechArt.Shop.Logic
             return searchDara.ToList();
         }
 
+        //Return list of categories, with contain product's in search results
+        //This method need to correct displaying category list in search result's page
         public List<CategoriesInSearch> GetCategories(string searchData)
         {
             var allCat = new List<CategoriesInSearch>();

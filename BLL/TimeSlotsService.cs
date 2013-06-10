@@ -112,18 +112,22 @@ namespace iTechArt.Shop.Logic.Services
             BookingSlot bookinSlot = Mapper.Map<DeliverySpot, BookingSlot>(ds);
 
 
-            //generatin status field
+            //generation status field
             bookinSlot.Type = (SlotsType)ds.Type;
 
             var slotStatus = SlotStatus.Free;
 
+            //some user's book this slot
             if (ds.Users.Count < UsersPerSlotLimit)
                 slotStatus = SlotStatus.Middle;
+            //slot booking by maximum count of user's
             if (ds.Users.Count >= UsersPerSlotLimit)
                 slotStatus = SlotStatus.Fool;
+            //slot is overdue
              if (DateTime.Now.AddHours(3) >= ds.StartTime)
                  slotStatus = SlotStatus.Fool;
 
+            //slot is booked by current user
              if ((ds.Users.FirstOrDefault(m => m.email == userEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.email == userEmail) == null))
                 slotStatus = SlotStatus.My;
             
