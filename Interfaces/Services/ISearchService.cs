@@ -9,7 +9,7 @@ namespace iTechArt.Shop.Common.Services
     {
         List<Product> GetTop10Results(string searchData);
         List<CategoriesInSearch> GetCategories(string searchData);
-        ProductInSearch GetProductsFromCategory(string searchData, string categoryName);
-        ProductInSearch GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse);
+        SearchResult GetProductsFromCategory(string searchData, string categoryName);
+        SearchResult GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse);
     }
 }

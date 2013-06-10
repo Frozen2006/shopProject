@@ -17,51 +17,51 @@ namespace iTechArt.Shop.Web.Controllers
         private ISearchService SearchService { get; set; }
 
         [Inject]
-        public SearchController(ICategoryService productService, IUserService userService, ICartService cartService, ISearchService searchService)
-            : base(productService, userService, cartService)
+        public SearchController(ICategoryService categoryService, IUserService userService, ICartService cartService, ISearchService searchService)
+            : base(categoryService, userService, cartService)
         {
             SearchService = searchService;
         }
 
-        public ActionResult Index()
-        {
-            return null;
-        }
-
-
+        //What is category? is this id? than ti should be int!
+        //If it is name? why do you use name?
         public ActionResult Search(string data, string category, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
+            ////What the hell is this?
+            /// User sends search request and gets error O_o
             if (data.Length < 3)
-                return View("Error");
+                return RedirectToAction("Custom", "Error", new { Message = "Too short search request" });
 
             List<CategoriesInSearch> categories = SearchService.GetCategories(data);
-            
-            if (page == null)
-            {
-                page = 1;
-                pageSize = 10;
-                sort = SortType.Alphabetic;
-                reverse = false;
-            }
 
-            List<Product> products;
-            ProductInSearch pis;
-            int count;
+            page = page ?? 1;
+            pageSize = pageSize ?? 10;
+            sort = sort ?? SortType.Alphabetic;
+            reverse = reverse ?? false;
+
+            SearchResult searchResult;
             if (String.IsNullOrWhiteSpace(category))
             {
-                pis = SearchService.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
-                                                            (bool) reverse);
-                products = pis.Products;
-                count = pis.AllCount;
+                searchResult = SearchService.GetResults(data, (int) page, (int) pageSize, (SortType) sort,
+                                                        (bool) reverse);
             }
             else
             {
-                pis = SearchService.GetProductsFromCategory(data, category);
-                products = pis.Products;
-                count = pis.AllCount;
+                searchResult = SearchService.GetProductsFromCategory(data, category);
             }
 
-            var model = new SearchPageModel() {Categories = categories, Products = products, SearchRequest = data, PageSize = (int)pageSize, Reverse = (bool)reverse, SortType = (SortType)sort, Category = new Category(), Page = (int)page, CountAll = count };
+            var model = new SearchPageModel()
+                {
+                    Categories = categories,
+                    Products = searchResult.Products,
+                    SearchRequest = data,
+                    PageSize = (int) pageSize,
+                    Reverse = (bool) reverse,
+                    SortType = (SortType) sort,
+                    Category = new Category(),
+                    Page = (int) page,
+                    CountAll = searchResult.AllCount
+                };
 
             return View(model);
         }
@@ -74,25 +74,19 @@ namespace iTechArt.Shop.Web.Controllers
             {
                 List<Product> findedProducts = SearchService.GetTop10Results(data);
 
-                List<ajaxResponce> resp = findedProducts.Select(findedProduct => new ajaxResponce
-                    {
-                        value = findedProduct.Name, ProductId = findedProduct.Id, label = findedProduct.Name, price = Convert.ToString(findedProduct.Price)
-                    }).ToList();
+                var resp = findedProducts.Select(findedProduct => new
+                {
+                    value = findedProduct.Name,
+                    ProductId = findedProduct.Id,
+                    label = findedProduct.Name,
+                    price = Convert.ToString(findedProduct.Price)
+                })
+                .ToList();
 
                 return Json(resp);
             }
 
             return null;
         }
-
-
-        class ajaxResponce
-        {
-            public string label;
-            public string value;
-            public int ProductId;
-            public string price;
-        }
-
     }
 }

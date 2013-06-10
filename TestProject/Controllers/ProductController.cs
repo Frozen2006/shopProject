@@ -1,4 +1,5 @@
-﻿using iTechArt.Shop.Logic.Services;
+﻿using System.Net;
+using iTechArt.Shop.Logic.Services;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;
@@ -14,12 +15,16 @@ namespace iTechArt.Shop.Web.Controllers
     public class ProductController : BaseController
     {
         [Inject]
-        public ProductController(ICategoryService productService, IUserService userService, ICartService cartService)
-            : base(productService, userService, cartService) { }
+        public ProductController(ICategoryService categoryService, IUserService userService, ICartService cartService)
+            : base(categoryService, userService, cartService) { }
         
         public ActionResult List(int categoryId, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
-            Category category = ProdService.GetCategoryById(categoryId);
+            Category category = CategoryService.GetCategoryById(categoryId);
+            if (category == null)
+            {
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
+            }
 
             var model = new ProductListModel
                 {
@@ -30,7 +35,7 @@ namespace iTechArt.Shop.Web.Controllers
                     SortType = sort ?? SortType.Alphabetic
                 };
 
-            model.Products = ProdService.GetProducts(model.Category, model.PageNumber, model.PageSize,
+            model.Products = CategoryService.GetProducts(model.Category, model.PageNumber, model.PageSize,
                                                       model.SortType, model.Reverse);
 
             return View(model);
@@ -38,7 +43,7 @@ namespace iTechArt.Shop.Web.Controllers
 
         public ActionResult Details(int id)
         {
-            var product = ProdService.GetProduct(id);
+            var product = CategoryService.GetProduct(id);
             if (product == null)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
@@ -47,52 +52,62 @@ namespace iTechArt.Shop.Web.Controllers
             return View(product);
         }
 
+        /// <summary>
+        /// For AJAX calls only.
+        /// </summary>
+        /// <returns>JSON report and response status code 403, 404 if error occured.</returns>
         public ActionResult AddToCart(int productId, double count)
         {
+            if (count < 0)
+            {
+                return JsonReport("Incorrect product count", HttpStatusCode.InternalServerError);
+            }
+
             string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
-                Response.StatusCode = 403;
-                return JsonReport("You are not logged in.");
+                return JsonReport("You are not logged in.", HttpStatusCode.Unauthorized);
             }
-            Product product = ProdService.GetProduct(productId);
+
+            Product product = CategoryService.GetProduct(productId);
             if (product == null)
             {
-                Response.StatusCode = 404;
-                return JsonReport("Product not found");
+                return JsonReport("Product not found", HttpStatusCode.NotFound);
             }
 
             CartService.Add(email, productId, count);
-            return JsonReport(count + " units of" + product.Name + "were successfully added");
+
+            string report = CartService.GetAddingReport(product, count);
+            return JsonReport(report);
         }
 
+        /// <summary>
+        /// For AJAX calls only.
+        /// </summary>
+        /// <returns>JSON report and response status code 403, 404 if error occured.</returns>
         public ActionResult AddArrayToCart(int[] productIds, double[] counts)
         {
+            if (counts.Min() < 0)
+            {
+                return JsonReport("Incorrect product count", HttpStatusCode.InternalServerError);
+            }
+
             string email = UserService.GetEmailIfLoginIn();
             if (email == null)
             {
-                Response.StatusCode = 403;
-                return JsonReport("You are not logged in.");
+                return JsonReport("You are not logged in.", HttpStatusCode.Unauthorized);
             }
 
-            Product[] products = productIds.Select(id => ProdService.GetProduct(id)).ToArray();
+            Product[] products = productIds.Select(id => CategoryService.GetProduct(id)).ToArray();
             if (products.Contains(null))
             {
-                Response.StatusCode = 404;
-                return JsonReport("Product not found");
+                return JsonReport("Product not found", HttpStatusCode.NotFound);
             }
 
             CartService.AddArray(email, productIds, counts);
 
-            var respons = new StringBuilder();
-            for (int i = 0; i < products.Length; i++)
-            {
-                respons.Append(string.Format("{0} units of {1},<br>", counts[i], products[i].Name));
-            }
-
-            respons.Append("were successfully added!");
-
-            return JsonReport(respons.ToString());
+            string report = CartService.GetAddingReport(products, counts);
+            return JsonReport(report);
         }
     }
 }

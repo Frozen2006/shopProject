@@ -1,8 +1,9 @@
 ﻿@model iTechArt.Shop.Entities.Product
-@Scripts.Render("~/Content/js/product-details.js")
+
+@Scripts.Render("~/Content/js/alerts.js")
+@Scripts.Render("~/Content/js/counter.js")
 
 @Html.Action("CategoryNavigation", "Category", new { category = Model.Category })
-
  
 <div class="well prod_detail">
     <h2>@Model.Name</h2>

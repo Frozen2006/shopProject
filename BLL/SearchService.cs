@@ -51,12 +51,12 @@ namespace iTechArt.Shop.Logic.Services
         }
 
         //Return all products from category
-        public ProductInSearch GetProductsFromCategory(string searchData, string categoryName)
+        public SearchResult GetProductsFromCategory(string searchData, string categoryName)
         {
             var searchedData = _productRepo.ReadAll().Where(m => (m.Name.Contains(searchData)) && (m.Category.Name == categoryName));
 
 
-            var pis = new ProductInSearch
+            var pis = new SearchResult
                 {
                     AllCount = searchedData.Count(),
                     Products = searchedData.ToList()
@@ -66,7 +66,7 @@ namespace iTechArt.Shop.Logic.Services
         }
 
         // Find data with padination
-        public ProductInSearch GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse)
+        public SearchResult GetResults(string searchData, int page, int pageSize, SortType sort, bool reverse)
         {
             IEnumerable<Product> products;
 
@@ -100,7 +100,7 @@ namespace iTechArt.Shop.Logic.Services
 
 
 
-            var pis = new ProductInSearch { Products = products.ToList(), AllCount = countOfAllProducts};
+            var pis = new SearchResult { Products = products.ToList(), AllCount = countOfAllProducts};
 
             return pis;
         }

@@ -16,8 +16,8 @@ namespace iTechArt.Shop.Web.Controllers .Cart
         private IOrderService OrderService { get; set; }
 
         [Inject]
-        public CartController(ICategoryService productService, IUserService userService, ICartService cartService, ITimeSlotsService slotsService, IOrderService orderService)
-            : base(productService, userService, cartService)
+        public CartController(ICategoryService categoryService, IUserService userService, ICartService cartService, ITimeSlotsService slotsService, IOrderService orderService)
+            : base(categoryService, userService, cartService)
         {
             OrderService = orderService;
             SlotService = slotsService;

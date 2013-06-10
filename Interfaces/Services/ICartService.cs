@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Helpers;
+using iTechArt.Shop.Entities;
 
 namespace iTechArt.Shop.Common.Services
 {
@@ -14,7 +15,10 @@ namespace iTechArt.Shop.Common.Services
         //return finally cost of changed item
         double UpateCount(string userEmail, int productId, double newCount);
         double GetTotalPrice(string userEmail);
-        
+
+        string GetAddingReport(Product product, double count);
+        string GetAddingReport(Product[] products, double[] counts);
+
         //Other methods be realize in future
         //void Buy(string UserEmail);
     }

@@ -1,4 +1,5 @@
-﻿using Helpers;
+﻿using System;
+using Helpers;
 using iTechArt.Shop.Common.Services;
 using System.Web.Mvc;
 using Ninject;
@@ -14,8 +15,8 @@ namespace iTechArt.Shop.Web.Controllers
         private IOrderService OrderService { get; set; }
 
         [Inject]
-        public PaymentController(ICategoryService productService, IUserService userService, ICartService cartService, IOrderService orderService)
-            : base(productService, userService, cartService)
+        public PaymentController(ICategoryService categoryService, IUserService userService, ICartService cartService, IOrderService orderService)
+            : base(categoryService, userService, cartService)
         {
             OrderService = orderService;
         }
@@ -24,7 +25,6 @@ namespace iTechArt.Shop.Web.Controllers
         public ActionResult Pay(int orderId)
         {
             OrdersDetails order = OrderService.GetOrderForPayment(orderId);
-            
             if (order == null)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
@@ -47,14 +47,21 @@ namespace iTechArt.Shop.Web.Controllers
             if (ModelState.IsValid)
             {
                 OrdersDetails order = OrderService.GetOrderForPayment(model.OrderId);
-
                 if (order == null)
                 {
                     return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
                 }
 
                 //TODO: bank service with profit logging
-                OrderService.UpdateOrder(order.Id, OrderStatus.Paid);
+
+                try
+                {
+                    OrderService.UpdateOrder(order.Id, OrderStatus.Paid);
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Custom", "Error", new { Message = "Can't update an order status" });
+                }
 
                 return RedirectToAction("Index", "History");
             }

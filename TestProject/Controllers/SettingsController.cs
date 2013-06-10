@@ -11,8 +11,8 @@ namespace iTechArt.Shop.Web.Controllers
     public class SettingsController : BaseController
     {
         [Inject]
-        public SettingsController(ICategoryService productService, IUserService userService, ICartService cartService)
-            : base(productService, userService, cartService) { }
+        public SettingsController(ICategoryService categoryService, IUserService userService, ICartService cartService)
+            : base(categoryService, userService, cartService) { }
 
         public ActionResult Index()
         {

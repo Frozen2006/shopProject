@@ -17,8 +17,8 @@ namespace iTechArt.Shop.Web.Controllers .MembershipControllesr
         private IZipCodeService ZipCodeService { get; set; }
 
         [Inject]
-        public MembershipController(ICategoryService productService, IUserService userService, ICartService cartService, IZipCodeService zipCodeService)
-            : base(productService, userService, cartService)
+        public MembershipController(ICategoryService categoryService, IUserService userService, ICartService cartService, IZipCodeService zipCodeService)
+            : base(categoryService, userService, cartService)
         {
             ZipCodeService = zipCodeService;
         }

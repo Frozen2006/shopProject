@@ -146,10 +146,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\js\alerts.js" />
     <Content Include="Content\js\cart.js" />
+    <Content Include="Content\js\counter.js" />
     <Content Include="Content\js\product-details.js" />
     <Content Include="Content\js\productpage.js" />
     <Content Include="Content\js\time_slots.js" />
+    <Content Include="Content\js\TimeSlots.js" />
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -294,7 +297,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Category\Details.cshtml" />

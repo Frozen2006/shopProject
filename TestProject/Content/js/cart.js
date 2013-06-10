@@ -6,11 +6,6 @@ function askRemove(productId) {
     $("#myModal").modal('show');
 }
 
-function newAlert(type, message) {
-    $("#alert-area").append($("<div id='alertBlock' class='alert " + type + " fade in' data-alert>" + '<button type="button" class="close" data-dismiss="alert">&times;</button> ' + message + " </div>"));
-    $("#alertBlock").delay(2000).fadeOut("slow", function () { $(this).remove(); });
-}
-
 function remover(productId) {
     $.ajax({
         url: "/Cart/Remove",
