@@ -60,10 +60,7 @@ namespace iTechArt.Shop.Logic.Services
                 //Product add first time
                 if (tmpCart == null)
                 {
-                    tmpCart = new Cart();
-                    tmpCart.Product_Id = productsId[q];
-                    tmpCart.Count = counts[q];
-
+                    tmpCart = new Cart {Product_Id = productsId[q], Count = counts[q]};
                     us.Carts.Add(tmpCart);
                 }
                 else //product exist
@@ -77,9 +74,10 @@ namespace iTechArt.Shop.Logic.Services
 
         }
 
+        //Technical string data to ajax responce
         public string GetAddingReport(Product product, double count)
         {
-            return count + " units of " + product.Name + " were successfully added";
+            return String.Format("{0} units of {1} were successfully added", count, product.Name);
         }
 
         public string GetAddingReport(Product[] products, double[] counts)
@@ -104,10 +102,8 @@ namespace iTechArt.Shop.Logic.Services
 
             foreach (var cart in us.Carts)
             {
-                ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(cart.Product);
-                tmpPic.Count = cart.Count; //automapper map Products, but no all cart
-                tmpPic.TotalPrice = cart.Product.Price*cart.Count; //automapper don't calculate total price
-
+                ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(cart.Product); //map product fields
+                tmpPic = Mapper.Map(cart, tmpPic); //map additional field's (such as totalPrice)
                 outChart.Add(tmpPic);
             }
 
@@ -171,13 +167,13 @@ namespace iTechArt.Shop.Logic.Services
         private User GetUser(string userEmail)
         {
             if (String.IsNullOrWhiteSpace(userEmail))
-                throw new ArgumentException("Bad arguments. (Bad data, or null reference)");
+                return null; //bad arguments
 
             User us = _repo.ReadAll()
                 .FirstOrDefault(m => (m.email == userEmail));
 
             if (us == null)
-                throw new InstanceNotFoundException("User not found");
+                return null; //user not found
 
             return us;
         }
