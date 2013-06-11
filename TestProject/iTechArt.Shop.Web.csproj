@@ -152,6 +152,7 @@
     <Content Include="Content\js\product-details.js" />
     <Content Include="Content\js\productpage.js" />
     <Content Include="Content\js\time_slots.js" />
+    <Content Include="Content\css\register.css" />
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />

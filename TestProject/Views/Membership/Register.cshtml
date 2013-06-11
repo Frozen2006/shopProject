@@ -3,26 +3,7 @@
     ViewBag.Title = "Register";
 }
 
-<style type="text/css">
-    body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-    }
-
-    .form-signin .form-signin-heading,
-    .form-signin .checkbox {
-        margin-bottom: 10px;
-    }
-    .form-signin input[type="text"],
-    .form-signin input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-    }
-</style>
-
+@Styles.Render("~/Content/css/register.css")
 @Scripts.Render("~/Content/js/reg_autocomp.js")
 
 
@@ -94,5 +75,5 @@
         </li>
     </ol>
     
-    <input type="submit" value="Register"/>
+    <input class="btn btn-success btn-large" type="submit" value="Register"/>
 }

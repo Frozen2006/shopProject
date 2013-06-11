@@ -45,13 +45,13 @@ namespace iTechArt.Shop.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                string userEmail = GetUserEmail();
-
+               string userEmail = GetUserEmail();
                UserService.ChangeDeliveryData(userEmail, model);
-               ModelState.AddModelError("", "Change compleat");
+               model.IsSuccess = true;
                return View(model);
             }
             ModelState.AddModelError("", "Input data is bad");
+            model.IsSuccess = false;
             ViewBag.Data = "BAD";
             return View(model);
         }
@@ -67,12 +67,12 @@ namespace iTechArt.Shop.Web.Controllers
                 if (UserService.CheckUser(userEmail, model.OldPassword))
                 {
                     UserService.ChangePassword(userEmail, model.OldPassword, model.Password);
-                    ModelState.AddModelError("", "Success!");
-                    return View(new ChangePasswordModel());
+                    return View(new ChangePasswordModel() { IsSuccess = true});
                 }
                 ModelState.AddModelError("", "Wrong old password.");
             }
             ModelState.AddModelError("", "Input data is bad");
+            model.IsSuccess = false;
             ViewBag.Data = "BAD";
             return View(model);
         }

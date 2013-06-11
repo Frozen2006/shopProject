@@ -30,5 +30,7 @@ namespace iTechArt.Shop.Web.Models
         [Required]
         [Display(Name = "City")]
         public string City { get; set; }
+
+        public bool IsSuccess { get; set; }
     }
 }
