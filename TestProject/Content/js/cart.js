@@ -183,7 +183,7 @@ function countInput(event, price, sliderClass) {
         count = parseInt(stringCount) || 0;
     }
 
-    if (count < 0) {
+    if (count <= 0) {
         if (sliderIsFloat(slider)) {
             count = 0.1;
         } else {
@@ -225,7 +225,7 @@ function correctInput(event, sliderClass) {
         count = parseInt(stringCount) || 0;
     }
 
-    if (count < 0) {
+    if (count <= 0) {
         if (sliderIsFloat(slider)) {
             count = 0.1;
         } else {
