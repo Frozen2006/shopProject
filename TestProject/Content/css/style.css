@@ -122,6 +122,16 @@
         margin: 0;
     }
 
+    .photo70 {
+        width: 70px;
+        height: 70px;   
+    }
+
+    .photo30 {
+        width: 30px;
+        height: 30px;
+    }
+
 /*Styles for product list*/
 
     .no_underline:hover {

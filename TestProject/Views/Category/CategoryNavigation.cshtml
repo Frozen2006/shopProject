@@ -28,7 +28,7 @@
                 imgPath = "/Image/CategoryImg/" + parent.Id;   
             }
             <a class="no_underline" href="@href">
-                <img width="30" height="30" src="@imgPath" />
+                <img class="photo30" width="30" height="30" src="@imgPath" />
             </a>
             <a href="@href">
                 @parent.Name
@@ -44,7 +44,7 @@
                 @{
                     imgPath = "/Image/CategoryImg/" + Model.Category.Id;   
                 }                
-                <img width="30" height="30" src="@imgPath" />
+                <img width="30" height="30" class="photo30" src="@imgPath" />
                 @Model.Category.Name         
         </li>
     </ul>  
