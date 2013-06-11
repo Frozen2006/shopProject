@@ -35,9 +35,10 @@
                         @Html.ValidationMessageFor(m => m.ConfirmPassword)
                     </li>
                 </ol>
-    
                 <input class="btn btn-large btn-primary" data-loading-text="Loading..." type="submit" value="Change"/>
             }
+            
+            @Html.ValidationSummary("Data is invalid. Errors:")
         </div>
     </div>
 </div>

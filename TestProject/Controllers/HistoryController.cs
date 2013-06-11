@@ -38,7 +38,7 @@ namespace iTechArt.Shop.Web.Controllers
 
         public ActionResult Details(int id)
         {
-            OrdersDetails order = OrderService.GetOrderDetails(id);
+            OrdersDetails order = OrderService.GetOrderForPayment(id);
             if (order == null)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });

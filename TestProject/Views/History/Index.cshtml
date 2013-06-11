@@ -4,7 +4,7 @@
     <h2>Order history</h2>
 
     @foreach (var item in Model.OrderByDescending(order => order.CreationTime)) {
-       <div class="order-box well">
+       <div class="order_box well">
             <div class="order_table_cell">
             <span class="order_table_header">Date:</span>
                 @item.CreationTime
@@ -22,19 +22,17 @@
 
             <div class="order_table_cell">
             <span class="order_table_header">Delivery from</span>
-                @item.StartOrderTime
+                @item.startOrderTime
             <span class="order_table_header">to</span>
-                @item.EndOrderTime
+                @item.endOrderTime
             </div> 
 
             <div class="order_table_cell">
             <span class="order_table_header">Price with discount:</span>
-                @item.Price$    
-            </div>    
-
-
+                @item.price$    
+            </div>   
            
-            @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn more_button" }) 
+            @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn more_button order_details_button" }) 
         </div>
     }
 

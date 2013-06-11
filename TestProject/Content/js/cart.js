@@ -196,6 +196,7 @@ function countInput(event, price, sliderClass) {
 }
 
 function correctInput(event, sliderClass) {
+    var slider = getSlider(event.target);
 
     enableUpdateBtn(event.target.id);
 

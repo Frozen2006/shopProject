@@ -1,6 +1,4 @@
-﻿@using Helpers
-@using iTechArt.Shop.Common.Enumerations
-@using iTechArt.Shop.Entities.PresentationModels
+﻿@using iTechArt.Shop.Entities.PresentationModels
 @model iTechArt.Shop.Web.Models.TimeSlotsTableModel
 
 @{ int step = Model.Step; }
@@ -54,7 +52,7 @@
                {
                    DateTime current = Model.StartDay[row].AddDays(Convert.ToDouble(day));
 
-                   BookinSlot bs = Model.Slots.FirstOrDefault(m => m.StartTime == current);
+                   BookingSlot bs = Model.Slots.FirstOrDefault(m => m.StartTime == current);
 
                    if (bs == null)
                    {

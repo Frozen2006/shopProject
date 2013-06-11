@@ -207,6 +207,11 @@
 /*History box*/
 #history_box {
     margin: 0 20%;
+    overflow: hidden;
+}
+
+.order_box {
+    overflow: hidden;
 }
 
 .order_table_header {
@@ -216,7 +221,6 @@
     display: inline-block;
     margin: 10px 5px;        
 }
-
 
 /*Order details*/
 .order_details_box {
