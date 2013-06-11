@@ -100,9 +100,9 @@ namespace iTechArt.Shop.Logic.Services
         }
         private User GetUser(string email)
         {
-            User us = _userRepository.ReadAll().FirstOrDefault(m => m.email == email);
+            User us = _userRepository.ReadAll().FirstOrDefault(m => m.Email == email);
             if (us == null)
-                throw new InstanceNotFoundException("User not found");
+                return null;
 
             return us;
         }
@@ -128,7 +128,7 @@ namespace iTechArt.Shop.Logic.Services
                  slotStatus = SlotStatus.Fool;
 
             //slot is booked by current user
-             if ((ds.Users.FirstOrDefault(m => m.email == userEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.email == userEmail) == null))
+             if ((ds.Users.FirstOrDefault(m => m.Email == userEmail) != null) && (ds.Orders.FirstOrDefault(m => m.User.Email == userEmail) == null))
                 slotStatus = SlotStatus.My;
             
             

@@ -27,18 +27,17 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
                 if (us != null)
                 {
-                    us.email = tiem.email;
-                    us.address = tiem.address;
-                    us.address2 = tiem.address2;
-                    us.city = tiem.city;
-                    us.first_name = tiem.first_name;
-                    us.last_name = tiem.last_name;
-                    us.password = tiem.password;
-                    us.phone = tiem.phone;
-                    us.phone2 = tiem.phone2;
-                    us.title = tiem.title;
-                    us.zip = tiem.zip;
-
+                    us.Email = tiem.Email;
+                    us.Address = tiem.Address;
+                    us.Address2 = tiem.Address2;
+                    us.City = tiem.City;
+                    us.FirstName = tiem.FirstName;
+                    us.LastName = tiem.LastName;
+                    us.Password = tiem.Password;
+                    us.Phone = tiem.Phone;
+                    us.Phone2 = tiem.Phone2;
+                    us.Title = tiem.Title;
+                    us.Zip = tiem.Zip;
                     Debug.WriteLine("Now try use context: "+Context.GetHashCode());
                     lock(_lock)
                         Context.SaveChanges();

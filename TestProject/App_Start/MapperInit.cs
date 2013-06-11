@@ -18,7 +18,15 @@ namespace iTechArt.Shop.Web.App_Start
                   .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count))
                   .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Product.Price*src.Count))
                   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id));
-                
+
+            //DAL mapps
+            Mapper.CreateMap<User, User>();
+            Mapper.CreateMap<Cart, Cart>();
+            Mapper.CreateMap<Order, Order>();
+            Mapper.CreateMap<Product, Product>();
+            Mapper.CreateMap<DeliverySpot, DeliverySpot>();
+            
+            Mapper.CreateMap<Category, Category>();
             Mapper.CreateMap<RegisterModel, User>();
             Mapper.CreateMap<User, UserDetails>();
             Mapper.CreateMap<DeliverySpot, BookingSlot>();

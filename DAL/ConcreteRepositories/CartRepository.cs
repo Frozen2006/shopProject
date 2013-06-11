@@ -16,7 +16,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
         public override void Update(Cart tiem)
         {
           
-            Cart cart = CurrentDbSet.FirstOrDefault(m => m.Product_Id == tiem.Product_Id);
+            Cart cart = CurrentDbSet.FirstOrDefault(m => m.ProductId == tiem.ProductId);
 
             if (cart != null)
             {

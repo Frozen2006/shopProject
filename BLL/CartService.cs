@@ -30,12 +30,12 @@ namespace iTechArt.Shop.Logic.Services
         {
             User us = GetUser(userEmail);
 
-            Cart tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
+            Cart tmpCart = us.Carts.FirstOrDefault(m => m.ProductId == productId);
 
             //Product add first time
             if (tmpCart == null)
             {
-                tmpCart = new Cart {Product_Id = productId, Count = count};
+                tmpCart = new Cart {ProductId = productId, Count = count};
                 us.Carts.Add(tmpCart);
             }
             else //product exist
@@ -55,12 +55,12 @@ namespace iTechArt.Shop.Logic.Services
 
             for (int q = 0; q < productsId.Length; q++)
             {
-                Cart tmpCart = us.Carts.FirstOrDefault(m => m.Product_Id == productsId[q]);
+                Cart tmpCart = us.Carts.FirstOrDefault(m => m.ProductId == productsId[q]);
 
                 //Product add first time
                 if (tmpCart == null)
                 {
-                    tmpCart = new Cart {Product_Id = productsId[q], Count = counts[q]};
+                    tmpCart = new Cart {ProductId = productsId[q], Count = counts[q]};
                     us.Carts.Add(tmpCart);
                 }
                 else //product exist
@@ -116,7 +116,7 @@ namespace iTechArt.Shop.Logic.Services
 
             User us = GetUser(userEmail);
 
-            Cart findCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
+            Cart findCart = us.Carts.FirstOrDefault(m => m.ProductId == productId);
 
             if (findCart == null)
                 throw new InstanceNotFoundException("User not have this product");
@@ -145,7 +145,7 @@ namespace iTechArt.Shop.Logic.Services
         {
             User us = GetUser(userEmail);
 
-            Cart currentCart = us.Carts.FirstOrDefault(m => m.Product_Id == productId);
+            Cart currentCart = us.Carts.FirstOrDefault(m => m.ProductId == productId);
 
             if (currentCart == null)
                 throw new InstanceNotFoundException("This product is not exist in this user account");
@@ -170,7 +170,7 @@ namespace iTechArt.Shop.Logic.Services
                 return null; //bad arguments
 
             User us = _repo.ReadAll()
-                .FirstOrDefault(m => (m.email == userEmail));
+                .FirstOrDefault(m => (m.Email == userEmail));
 
             if (us == null)
                 return null; //user not found

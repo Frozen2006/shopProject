@@ -20,7 +20,7 @@ namespace iTechArt.Shop.Entities
         }
     
         public int Id { get; set; }
-        public int Product_Id { get; set; }
+        public int ProductId { get; set; }
         public double Count { get; set; }
     
         public virtual Product Product { get; set; }

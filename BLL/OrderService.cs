@@ -36,7 +36,7 @@ namespace iTechArt.Shop.Logic.Services
         //
         public int CreateOrder(string userEmail, int timeSlotId, string comments)
         {
-            User user = _userRepository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            User user = _userRepository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
 
             if (user == null)
                 throw new InstanceNotFoundException("User not found");
@@ -81,7 +81,7 @@ namespace iTechArt.Shop.Logic.Services
 
 
             _userRepository.Update(user);
-            var firstOrDefault = _userRepository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            var firstOrDefault = _userRepository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
             if (firstOrDefault != null)
             {
                 int orderId = firstOrDefault.Orders.Last(m => (Math.Abs(m.TotalPrice - totalCost) < 0.001) && (m.DeliverySpotId == timeSlot.Id)) //m.TotalPrice AND totalCost is float. We muct compare this by epsilon value (this is 0.001)
@@ -94,7 +94,7 @@ namespace iTechArt.Shop.Logic.Services
 
         public List<OrdersInList> GetUserOrders(string userEmail)
         {
-            User user = _userRepository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            User user = _userRepository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
 
             if (user == null)
             {

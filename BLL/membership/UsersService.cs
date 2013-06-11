@@ -35,12 +35,12 @@ namespace iTechArt.Shop.Logic.Membership
         public bool CeateUser(User newUser)
         {
            
-            User exUser = _repository.ReadAll().FirstOrDefault(m => m.email == newUser.email);
+            User exUser = _repository.ReadAll().FirstOrDefault(m => m.Email == newUser.Email);
 
             if (exUser != null)
                 return false;
 
-            newUser.password = GetHash(newUser.password); //hashing pass
+            newUser.Password = GetHash(newUser.Password); //hashing pass
 
             _repository.Create(newUser);
 
@@ -52,7 +52,7 @@ namespace iTechArt.Shop.Logic.Membership
             string hassedPass = GetHash(password);
 
             User user =
-                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
+                _repository.ReadAll().FirstOrDefault(m => (m.Email == email) && (m.Password == hassedPass));
 
             return user != null;
         }
@@ -63,14 +63,14 @@ namespace iTechArt.Shop.Logic.Membership
             string hassedPass = GetHash(password);
 
             User user =
-                _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
+                _repository.ReadAll().FirstOrDefault(m => (m.Email == email) && (m.Password == hassedPass));
 
             if (user == null)
             {
                 return false;
             }
 
-            string guid = StartSession(user.email);
+            string guid = StartSession(user.Email);
             _sessionContext.SetSessionData(guid);
             return true;
         }
@@ -100,7 +100,7 @@ namespace iTechArt.Shop.Logic.Membership
 
         public UserDetails GetUserDetails(string email)
         {
-            User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+            User us = _repository.ReadAll().FirstOrDefault(m => m.Email == email);
 
             if (us == null)
             {
@@ -119,12 +119,12 @@ namespace iTechArt.Shop.Logic.Membership
         {
             string hassedPass = GetHash(oldPassword);
 
-            User user = _repository.ReadAll().FirstOrDefault(m => (m.email == email) && (m.password == hassedPass));
+            User user = _repository.ReadAll().FirstOrDefault(m => (m.Email == email) && (m.Password == hassedPass));
 
             if (user == null)
                 return false;
 
-            user.password = GetHash(newPassword);
+            user.Password = GetHash(newPassword);
 
             _repository.Update(user);
 
@@ -136,7 +136,7 @@ namespace iTechArt.Shop.Logic.Membership
         //
         public RolesType GetUserRole(string userEmail)
         {
-            User user = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            User user = _repository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
 
             if (user != null)
             {
@@ -147,7 +147,7 @@ namespace iTechArt.Shop.Logic.Membership
 
         public void ChangeRole(string userEmail, RolesType newRole)
         {
-            User user = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            User user = _repository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
 
             if (user == null)
             {
@@ -173,22 +173,22 @@ namespace iTechArt.Shop.Logic.Membership
                     //role check disabled
                     if ((int)roleName == -1)
                     { 
-                        var user = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+                        var user = _sessionRepository.ReadAll().FirstOrDefault(m => m.Guid == guid);
 
                         if (user != null)
                         {
-                            return user.User.email;
+                            return user.User.Email;
                         }
                         return null;
                     }
 
                     //role check
-                    var firstOrDefault = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+                    var firstOrDefault = _sessionRepository.ReadAll().FirstOrDefault(m => m.Guid == guid);
                     if (firstOrDefault != null)
                     {
                         User tmpoUser = firstOrDefault.User;
                         if (tmpoUser.Role == (int)roleName)
-                            return tmpoUser.email;
+                            return tmpoUser.Email;
                     }
                 }
             }
@@ -197,7 +197,7 @@ namespace iTechArt.Shop.Logic.Membership
 
         public void ChangeDeliveryData(string email, ChangeDeliveryAddressModel data)
         {
-            User us = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+            User us = _repository.ReadAll().FirstOrDefault(m => m.Email == email);
 
             if (us == null)
                 throw new InstanceNotFoundException("User not found");
@@ -210,13 +210,13 @@ namespace iTechArt.Shop.Logic.Membership
         public string StartSession(string userEmail)
         {
             string guid = Guid.NewGuid().ToString();
-            User userAccount = _repository.ReadAll().FirstOrDefault(m => m.email == userEmail);
+            User userAccount = _repository.ReadAll().FirstOrDefault(m => m.Email == userEmail);
             if (userAccount == null) return null;
 
-            var currentSession = new Session { guid = guid, UserId = userAccount.Id };
+            var currentSession = new Session { Guid = guid, UserId = userAccount.Id };
             _sessionRepository.Create(currentSession);
 
-            _sessionContext.AddUserDataToCash(guid, userAccount.email);
+            _sessionContext.AddUserDataToCash(guid, userAccount.Email);
 
             return guid;
         }
@@ -226,7 +226,7 @@ namespace iTechArt.Shop.Logic.Membership
         //
         public void RemoveSession(string guid)
         {
-            var session = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+            var session = _sessionRepository.ReadAll().FirstOrDefault(m => m.Guid == guid);
             _sessionRepository.Delete(session);
         }
 
@@ -243,11 +243,11 @@ namespace iTechArt.Shop.Logic.Membership
             }
 
             //part 2 - DB req
-            Session session = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+            Session session = _sessionRepository.ReadAll().FirstOrDefault(m => m.Guid == guid);
             if (session != null)
             {
                 
-                _sessionContext.AddUserDataToCash(guid, session.User.email);
+                _sessionContext.AddUserDataToCash(guid, session.User.Email);
                 return true;
             }
             return false;
@@ -258,12 +258,12 @@ namespace iTechArt.Shop.Logic.Membership
         //
         public string GetUserFoolTitle(string email)
         {
-            User user = _repository.ReadAll().FirstOrDefault(m => m.email == email);
+            User user = _repository.ReadAll().FirstOrDefault(m => m.Email == email);
 
             if (user == null)
-                throw new InstanceNotFoundException("User not found!");
+                return null;
 
-            return user.title + " " + user.first_name + " " + user.last_name;
+            return String.Format("{0} {1} {2}", user.Title, user.FirstName, user.LastName);
         }
 
         public string GetUserEmailFromSession(string guid)
@@ -276,13 +276,13 @@ namespace iTechArt.Shop.Logic.Membership
             }
 
             //part 2 - DB req
-            Session session = _sessionRepository.ReadAll().FirstOrDefault(m => m.guid == guid);
+            Session session = _sessionRepository.ReadAll().FirstOrDefault(m => m.Guid == guid);
             if (session != null)
             {
 
-                _sessionContext.AddUserDataToCash(guid, session.User.email);
+                _sessionContext.AddUserDataToCash(guid, session.User.Email);
 
-                return session.User.email;
+                return session.User.Email;
             }
 
             return null;

@@ -19,8 +19,8 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (session != null)
             {
-                session.guid = session.guid;
-                session.User = session.User;
+                session.Guid = tiem.Guid;
+                session.User = tiem.User;
 
                 Context.SaveChanges();
             }

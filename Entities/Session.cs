@@ -15,7 +15,7 @@ namespace iTechArt.Shop.Entities
     public partial class Session
     {
         public int Id { get; set; }
-        public string guid { get; set; }
+        public string Guid { get; set; }
         public int UserId { get; set; }
     
         public virtual User User { get; set; }

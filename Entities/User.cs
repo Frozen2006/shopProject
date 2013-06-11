@@ -23,17 +23,17 @@ namespace iTechArt.Shop.Entities
         }
     
         public int Id { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public string title { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string address { get; set; }
-        public string address2 { get; set; }
-        public string phone { get; set; }
-        public string phone2 { get; set; }
-        public int zip { get; set; }
-        public string city { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string Address2 { get; set; }
+        public string Phone { get; set; }
+        public string Phone2 { get; set; }
+        public int Zip { get; set; }
+        public string City { get; set; }
         public int Role { get; set; }
     
         public virtual ICollection<Order> Orders { get; set; }

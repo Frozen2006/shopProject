@@ -417,18 +417,18 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="guid" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Guid" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <NavigationProperty Name="User" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="Session" ToRole="User" />
         </EntityType>
         <EntityType Name="Zip">
           <Key>
-            <PropertyRef Name="zip" />
-            <PropertyRef Name="city" />
+            <PropertyRef Name="ZipCode" />
+            <PropertyRef Name="City" />
           </Key>
-          <Property Type="String" Name="zip" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="sub_city" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ZipCode" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SubCity" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Categories_ToCategories">
           <End Type="ShopModel.Category" Role="Category" Multiplicity="1" />
@@ -459,7 +459,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="Product_Id" Nullable="false" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
           <Property Type="Double" Name="Count" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ShopModel.FK_Carts_ToProducts" FromRole="Cart" ToRole="Product" />
           <NavigationProperty Name="Users" Relationship="ShopModel.UsersCarts" FromRole="Cart" ToRole="User" />
@@ -472,7 +472,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cart">
-              <PropertyRef Name="Product_Id" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -555,17 +555,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="title" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="first_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="last_name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="address" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="address2" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="phone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="phone2" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="zip" Nullable="false" />
-          <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address2" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Phone2" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Zip" Nullable="false" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Role" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="ShopModel.FK_Orders_ToUsers" FromRole="User" ToRole="Order" />
           <NavigationProperty Name="Sessions" Relationship="ShopModel.FK_Sessions_ToUsers" FromRole="User" ToRole="Session" />
@@ -637,7 +637,7 @@
             <EntityTypeMapping TypeName="ShopModel.Session">
               <MappingFragment StoreEntitySet="Sessions">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="Guid" ColumnName="guid" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -645,9 +645,9 @@
           <EntitySetMapping Name="Zips">
             <EntityTypeMapping TypeName="ShopModel.Zip">
               <MappingFragment StoreEntitySet="Zips">
-                <ScalarProperty Name="sub_city" ColumnName="sub_city" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="SubCity" ColumnName="sub_city" />
+                <ScalarProperty Name="City" ColumnName="city" />
+                <ScalarProperty Name="ZipCode" ColumnName="zip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -655,7 +655,7 @@
             <EntityTypeMapping TypeName="ShopModel.Cart">
               <MappingFragment StoreEntitySet="Carts">
                 <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="ProductId" ColumnName="Product_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -698,17 +698,17 @@
             <EntityTypeMapping TypeName="ShopModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="zip" ColumnName="zip" />
-                <ScalarProperty Name="phone2" ColumnName="phone2" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="address2" ColumnName="address2" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="City" ColumnName="city" />
+                <ScalarProperty Name="Zip" ColumnName="zip" />
+                <ScalarProperty Name="Phone2" ColumnName="phone2" />
+                <ScalarProperty Name="Phone" ColumnName="phone" />
+                <ScalarProperty Name="Address2" ColumnName="address2" />
+                <ScalarProperty Name="Address" ColumnName="address" />
+                <ScalarProperty Name="LastName" ColumnName="last_name" />
+                <ScalarProperty Name="FirstName" ColumnName="first_name" />
+                <ScalarProperty Name="Title" ColumnName="title" />
+                <ScalarProperty Name="Password" ColumnName="password" />
+                <ScalarProperty Name="Email" ColumnName="email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
