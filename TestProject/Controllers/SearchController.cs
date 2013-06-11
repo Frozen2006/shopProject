@@ -36,7 +36,6 @@ namespace iTechArt.Shop.Web.Controllers
             SearchResult searchResult = SearchService.GetResults(data, category, (int) page, (int) pageSize, (SortType) sort,
                                                         (bool) reverse);
 
-
             var model = new SearchPageModel()
                 {
                     Categories = categories,

@@ -148,12 +148,15 @@ function sendRequest(id, c) {
         url: "/Product/AddToCart",
         data: { productId: id, count: c.toString().replace(".", ",") },
         type: "POST",
-        success: function(data) {
-            newAlert('alert', data.Report);
+        success: function (data) {
+            if (data.WithError) {
+                errorAlert(data.Report);
+            } else {
+                successAlert(data.Report);
+            }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            var response = $.parseJSON(XMLHttpRequest.responseText);
-            newAlert('alert alert-error', response.Report);
+            newAlert('alert alert-error', errorThrown);
         },
         dataType: "json"
     });
@@ -207,11 +210,14 @@ function addAll() {
             url: "/Product/AddArrayToCart",
             data: postData,
             success: function (data) {
-                newAlert('alert', data.Report);
+                if (data.WithError) {
+                    errorAlert(data.Report);
+                } else {
+                    successAlert(data.Report);
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                var response = $.parseJSON(XMLHttpRequest.responseText);
-                newAlert('alert alert-error', response.Report);
+                newAlert('alert alert-error', errorThrown);
             },
             dataType: "json",
             traditional: true
