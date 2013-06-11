@@ -14,11 +14,13 @@ namespace iTechArt.Shop.Logic
     public class SearchService : ISearchService
     {
         private readonly ProductRepository _productRepo;
+        private readonly CategoryRepository _categoryRepository;
 
         [Inject]
-        public SearchService(ProductRepository pr)
+        public SearchService(ProductRepository pr, CategoryRepository cr)
         {
             _productRepo = pr;
+            _categoryRepository = cr;
         }
 
         //Method to search autocompleat
@@ -33,20 +35,14 @@ namespace iTechArt.Shop.Logic
         //This method need to correct displaying category list in search result's page
         public List<CategoriesInSearch> GetCategories(string searchData)
         {
+            string serchString = searchData.ToLowerInvariant();
             var allCat = new List<CategoriesInSearch>();
-            var q = _productRepo.ReadAll().Where(m => m.Name.Contains(searchData));
+            var categories = _categoryRepository.ReadAll().Where(m => m.Products.FirstOrDefault(q => q.Name.Contains(serchString)) != null);
 
-            foreach (var product in q)
+            foreach (var category in categories)
             {
-                CategoriesInSearch qq = allCat.FirstOrDefault(m => m.Category == product.Category);
-                if (qq == null)
-                {
-                    allCat.Add(new CategoriesInSearch{ Category = product.Category, Count = 1});
-                }
-                else
-                {
-                    qq.Count++;
-                }
+                int countInCategory = category.Products.Count(m => m.Name.ToLowerInvariant().Contains(serchString));
+                allCat.Add(new CategoriesInSearch{ Category = category, Count = countInCategory});
             }
 
             return allCat;
