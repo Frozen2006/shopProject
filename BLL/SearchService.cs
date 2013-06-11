@@ -93,8 +93,16 @@ namespace iTechArt.Shop.Logic
                 products = products.Reverse();
 
 
+            int countOfAllProducts = 0;
 
-            int countOfAllProducts = _productRepo.ReadAll().Count(m => m.Name.Contains(searchData));
+            if (categoryId == null)
+            {
+                countOfAllProducts = _productRepo.ReadAll().Count(m => m.Name.Contains(searchData));
+            }
+            else
+            {
+                countOfAllProducts = _productRepo.ReadAll().Count(m => m.Name.Contains(searchData) && (m.Category.Id == (int) categoryId));
+            }
 
             var pis = new SearchResult { Products = products.ToList(), AllCount = countOfAllProducts};
 
