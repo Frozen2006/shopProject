@@ -91,7 +91,7 @@ namespace iTechArt.Shop.Logic.Services
             return report.ToString();
         }
 
-        // Get list of product's in cart with additional information (count, total price)
+        // Get list of product's in cart with additional information (count, total Price)
         // 
         //
         public List<ProductInCart> GetAllChart(string userEmail)

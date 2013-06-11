@@ -37,7 +37,7 @@
         <span class="price">Price: <span class="price_value">@Model.Price.ToString("0.00")</span>$</span>
         <div class="slider @sliderClass"></div>
         <input type="text" class="counter"  value="0" onchange="countInput(event)" onkeyup="countInput(event)" onblur="correctInput(event)"/>
-        <span class="estimated_price"> @measure for <span class="estimated_price_value">0</span>$</span>  
+        <span class="estimated_Price"> @measure for <span class="estimated_Price_value">0</span>$</span>  
         <input type="hidden" class="product_id" value="@Model.Id" />
     </div>
 

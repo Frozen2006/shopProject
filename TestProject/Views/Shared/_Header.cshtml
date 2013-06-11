@@ -15,6 +15,7 @@
         foolTitle = us.GetUserFoolTitle(email);
     }
 }
+<div class="container-fluid">
 <div id="mainMenu" class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -24,13 +25,13 @@
                     <div class="row-fluid">
                         <!-- FIRST BLOCK -->
                         <div class="span8">
-                                @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "form-search", @style = "margin: 0" }))
-                                {
-                                    <div class="input-append span12 no-margin">
-                                        <input type="text" name="data" id="searchArea" class="span10 search-query" placeholder="Search...">
-                                        <button type="submit" class="btn"><i class="icon-search"> </i></button>
-                                    </div>
-                                }
+                            @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "form-search", @style = "margin: 0" }))
+                            {
+                                <div class="input-append span12 no-margin">
+                                    <input type="text" name="data" id="searchArea" class="span10 search-query" placeholder="Search...">
+                                    <button type="submit" class="btn"><i class="icon-search"> </i></button>
+                                </div>
+                            }
                         </div>
                         <!-- END OF FIRST BLOCK -->
                         <!-- THIRD BLOCK -->
@@ -51,14 +52,14 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <div class="nav-collapse collapse">
-                   @if (isLoginIn)
-                            {
-                                <p class="navbar-text pull-right">Hi, @foolTitle</p>
-                            }
-                            else
-                            {
-                                   <p class="navbar-text pull-right">@Html.ActionLink("Register", "Register", "Membership") or @Html.ActionLink("Login In", "Login", "Membership")</p> 
-                            }
+                @if (isLoginIn)
+                {
+                    <p class="navbar-text pull-right">Hi, @foolTitle</p>
+                }
+                else
+                {
+                    <p class="navbar-text pull-right">@Html.ActionLink("Register", "Register", "Membership") or @Html.ActionLink("Login In", "Login", "Membership")</p> 
+                }
                 <ul class="nav nav-pills">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Shop", "Index", "Category")</li>
@@ -72,3 +73,5 @@
         </div>
     </div>
 </div>
+</div>
+

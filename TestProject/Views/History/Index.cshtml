@@ -22,14 +22,14 @@
 
             <div class="order_table_cell">
             <span class="order_table_header">Delivery from</span>
-                @item.startOrderTime
+                @item.StartOrderTime
             <span class="order_table_header">to</span>
-                @item.endOrderTime
+                @item.EndOrderTime
             </div> 
 
             <div class="order_table_cell">
             <span class="order_table_header">Price with discount:</span>
-                @item.price$    
+                @item.Price.ToString("F2")$    
             </div>   
            
             @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn more_button order_details_button" }) 

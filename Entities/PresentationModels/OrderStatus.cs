@@ -2,7 +2,7 @@
 {
     public enum OrderStatus
     {
-        WaitForPaid,
+        NotPaid,
         Paid,
         Compleat
     }

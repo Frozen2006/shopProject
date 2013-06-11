@@ -72,7 +72,7 @@ namespace iTechArt.Shop.Logic.Services
             ord.TotalPrice = totalCost;
             ord.Discount = discountValue;
             ord.User = user;
-            ord.Status = (int)OrderStatus.WaitForPaid;
+            ord.Status = (int)OrderStatus.NotPaid;
             ord.CreationTime = DateTime.Now;
             user.Orders.Add(ord);
 
@@ -114,10 +114,10 @@ namespace iTechArt.Shop.Logic.Services
                 ordList.Add(new OrdersInList
                     {
                         Id = order.Id,
-                        startOrderTime = order.DeliverySpot.StartTime,
-                        endOrderTime = order.DeliverySpot.EndTime,
+                        StartOrderTime = order.DeliverySpot.StartTime,
+                        EndOrderTime = order.DeliverySpot.EndTime,
                         OrderStatus = (OrderStatus)order.Status,
-                        price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0,
+                        Price = order.TotalPrice * Convert.ToDouble(100 - order.Discount) / 100.0,
                         CreationTime = dt
                     });
             }
@@ -161,18 +161,12 @@ namespace iTechArt.Shop.Logic.Services
             foreach (var buye in order.Buyes)
             {
                 ProductInCart tmpPic = Mapper.Map<Product, ProductInCart>(buye.Product);
-                tmpPic.Count = buye.Count; //automapper map Products, but no all cart
-                tmpPic.TotalPrice = buye.Product.Price * buye.Count; //automapper don't calculate total price
+                tmpPic = Mapper.Map(buye, tmpPic); //map count and price field's
 
                 prod.Add(tmpPic);
             }
 
             var od = Mapper.Map<Order, OrdersDetails>(order);
-            //map field's, wich not mapped
-            od.startDeliveryTime = order.DeliverySpot.StartTime;
-            od.endErliveryTime = order.DeliverySpot.EndTime;
-            od.OrderStatus = (OrderStatus) (order.Status);
-            od.PriceWithDiscount = order.TotalPrice*Convert.ToDouble(100 - order.Discount)/100.0;
             od.Products = prod;
 
             return od;

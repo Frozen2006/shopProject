@@ -23,7 +23,7 @@
 
     @Html.ActionLink("Back to orders", "Index", null, new{ @class="btn btn-success"})
 
-    @if (Model.OrderStatus == OrderStatus.WaitForPaid)
+    @if (Model.OrderStatus == OrderStatus.NotPaid)
     {
         @Html.ActionLink("Payment", "Pay", "Payment", new { orderId = Model.Id }, new { @class="btn btn-danger"})
     }
