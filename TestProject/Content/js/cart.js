@@ -176,12 +176,20 @@ function countInput(event, price, sliderClass) {
     var stringCount = event.target.value;
 
     //Parsing input value. 
-    var count;
-    if (sliderClass == "int_slider") {
+    //Parsing input value. 
+    if (sliderIsFloat(slider)) {
+        count = parseFloat(stringCount.replace(",", ".")) || 0;
+    } else {
         count = parseInt(stringCount) || 0;
     }
-    else {
-        count = parseFloat(stringCount.replace(",", ".")) || 0;
+
+    if (count < 0) {
+        if (sliderIsFloat(slider)) {
+            count = 0.1;
+        } else {
+            count = 1;
+        }
+        
     }
 
     //If can't parse than set it to 0.
@@ -193,6 +201,11 @@ function countInput(event, price, sliderClass) {
     //Set estimated Price.
     var pricespan = getPrice(event.target);
     pricespan.innerHTML = (count * price).toFixed(2);
+}
+
+//Checks whether slider is float or not by it's css class.
+function sliderIsFloat(slider) {
+    return $(slider).hasClass("float_slider");
 }
 
 function correctInput(event, sliderClass) {
@@ -213,7 +226,12 @@ function correctInput(event, sliderClass) {
     }
 
     if (count < 0) {
-        count = 0;
+        if (sliderIsFloat(slider)) {
+            count = 0.1;
+        } else {
+            count = 1;
+        }
+
     }
 
     //Setting a correct value.
@@ -232,5 +250,5 @@ function getCounter(element) {
 }
 
 function getPrice(element) {
-    return element.parentNode.getElementsByClassName("estimated_Price_value")[0];
+    return element.parentNode.getElementsByClassName("estimated_price_value")[0];
 }

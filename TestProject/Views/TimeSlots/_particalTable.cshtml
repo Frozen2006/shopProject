@@ -59,7 +59,7 @@
                        //Book not correct, if then is less than 4 hour
                        if (current < Model.Today.AddHours(4.0 - Convert.ToDouble(step) + 1.0))
                        {
-                           <td style="background-color: #fff0f5"> </td>
+                           <td style="background-color: #fff0f5">Not avalable</td>
                        }
                        else
                        {
@@ -74,15 +74,15 @@
                         }
                         if (bs.Status == SlotStatus.Middle)
                         {
-                            <td style="background-color: #fff7d7" id="@hourStart-@current.Day-@current.Month-@current.Year-@step" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year, @step)"> </td>
+                            <td style="background-color: #fff7d7" id="@hourStart-@current.Day-@current.Month-@current.Year-@step" onclick="Bookin(@hourStart, @current.Day, @current.Month, @current.Year, @step)">Few</td>
                         }
                         if (bs.Status == SlotStatus.Fool)
                         {
-                            <td style="background-color: #fff0f5"> </td>
+                            <td style="background-color: #fff0f5">Fool</td>
                         }
                         if (bs.Status == SlotStatus.My)
                         {
-                            <td style="background-color: #5BB75B"> </td>
+                            <td style="background-color: #5BB75B">Your slot</td>
                         }
                    }
                    
