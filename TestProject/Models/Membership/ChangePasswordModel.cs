@@ -18,5 +18,7 @@ namespace iTechArt.Shop.Web.Models
         [Display(Name = "Password confirm")]
         [Compare("Password", ErrorMessage = "Password and confirm password values is not equal!")]
         public string ConfirmPassword { get; set; }
+
+        public bool IsSuccess { get; set; }
     }
 }

@@ -13,7 +13,10 @@
     <div class="span10">
         <div class="well well-large">
             <h2>Security settings</h2> <br/>
-
+            @if ((Model != null) && (Model.IsSuccess))
+            {
+                <ul><li>Change successful</li></ul>
+            }
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
