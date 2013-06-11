@@ -9,7 +9,7 @@
         <span class="Price">Price: <span class="Price_value">5.00</span>$</span>
         <div class="slider int_slider"></div>
         <input type="text" class="counter" />
-        <span class="estimated_Price"> packs for <span class="estimated_Price_value">1</span>$</span>
+        <span class="estimated_price"> packs for <span class="estimated_price_value">1</span>$</span>
         <input type="hidden" class="product_id" value="123" />
     </div>
 
@@ -38,12 +38,12 @@ function getSlider(element) {
 
 //Returns estimatied Price span by the slider or it's sibling  (e.g. button event sender)
 function getEstimatedPriceSpan(element) {
-    return element.parentNode.getElementsByClassName("estimated_Price_value")[0];
+    return element.parentNode.getElementsByClassName("estimated_price_value")[0];
 }
 
 //Gets prodct Price (Number) by the slider or it's sibling  (e.g. button or input event sender)
 function getPrice(element) {
-    var priceSpan = element.parentNode.getElementsByClassName("Price_value")[0];
+    var priceSpan = element.parentNode.getElementsByClassName("price_value")[0];
     var string = priceSpan.innerHTML.toString().replace(",", ".");
     return parseFloat(string);
 }

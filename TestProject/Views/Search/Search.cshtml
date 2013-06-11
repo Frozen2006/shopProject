@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="span9">
-        <div class="well well-large">
+        <div class="well well-large results_box">
             <h2>Serach results for: @Model.SearchRequest</h2><br/>
                 
             @if (Model.Products.Count() != 0)
@@ -91,7 +91,7 @@
                     @{
                         int pageSize = Model.PageSize;
                         int productCount = Model.CountAll;
-                        int pageCount = (int)((double)productCount / pageSize + 0.5);
+                        int pageCount = (int)Math.Ceiling(productCount / pageSize + 0.5);
                     } 
     
                     <div class="pagination pagination-centered">
@@ -131,10 +131,6 @@
                             }     
                         </div>
                     }
-
-
-
-                    <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
                         
                     <div class="pagination pagination-centered">
                         @if (pageCount > 1)
@@ -150,7 +146,9 @@
                         }
                     </div>
                 </div>
-                }
+                
+                <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
+            }
             </div>
         </div>
     </div>
