@@ -36,6 +36,12 @@ namespace iTechArt.Shop.Web.Controllers
             SearchResult searchResult = SearchService.GetResults(data, category, (int) page, (int) pageSize, (SortType) sort,
                                                         (bool) reverse);
 
+            int count = searchResult.AllCount;
+
+            if (category != null)
+            {
+                count = searchResult.Products.Count;
+            }
 
             var model = new SearchPageModel()
                 {
@@ -47,7 +53,7 @@ namespace iTechArt.Shop.Web.Controllers
                     SortType = (SortType) sort,
                     Page = (int) page,
                     CategoryId = category,
-                    CountAll = searchResult.AllCount
+                    CountAll = count
                 };
 
             return View(model);
