@@ -25,7 +25,7 @@
             <h2>Serach results for: @Model.SearchRequest</h2><br/>
                 
             @if (Model.Products.Count() != 0)
-            {  
+            {
                 <div class="products"> 
                     <h3>Products</h3>
                         
@@ -33,21 +33,21 @@
                         @{
                             //Calculating selected item index to make it selected
                             int index = 0;
-                            index += (int)Model.SortType * 2;
+                            index += (int) Model.SortType*2;
                             index += Model.Reverse ? 1 : 0;
                         }
 
-                        <select id="sort" onchange="getPage()">
-                            <option @(index == 0?"selected":"")>Alphabetic ascending</option>      
-                            <option @(index == 1?"selected":"")>Alphabetic descending</option> 
-                            <option @(index == 2?"selected":"")>Price ascending</option>                 
-                            <option @(index == 3?"selected":"")>Price descending</option>            
+                        <select id="sort" onchange=" getPage() ">
+                            <option @(index == 0 ? "selected" : "")>Alphabetic ascending</option>      
+                            <option @(index == 1 ? "selected" : "")>Alphabetic descending</option> 
+                            <option @(index == 2 ? "selected" : "")>Price ascending</option>                 
+                            <option @(index == 3 ? "selected" : "")>Price descending</option>            
                         </select>
 
                         @for (int i = 1; i < 4; i++)
                         {
-                            int size = (int)Math.Pow(10, i);
-                            @Html.ActionLink("Show by " + size, "Search", new { category = Model.CategoryId, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest }, new { @class = "btn" })
+                            int size = (int) Math.Pow(10, i);
+                            @Html.ActionLink("Show by " + size, "Search", new {category = Model.CategoryId, sort = Model.SortType, pageSize = size, reverse = Model.Reverse, data = Model.SearchRequest}, new {@class = "btn"})
                         }
                     </div> 
                         
@@ -91,7 +91,7 @@
                     @{
                         int pageSize = Model.PageSize;
                         int productCount = Model.CountAll;
-                        int pageCount = (int)Math.Ceiling(productCount / pageSize + 0.5);
+                        int pageCount = (int) Math.Ceiling(productCount/pageSize + 0.5);
                     } 
     
                     <div class="pagination pagination-centered">
@@ -101,7 +101,7 @@
                                 @for (int i = 1; i <= pageCount; i++)
                                 {
                                     <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
                                     </li>
                                 }
                             </ul>
@@ -109,13 +109,13 @@
                     </div>
 
 
-                    @foreach(var product in Model.Products)
+                    @foreach (var product in Model.Products)
                     {
                         <div class="well product_box">
                             @{
                                 string href = "/product/details/" + product.Id;
                                 string path = "/Image/ProductImg/" + product.Id;
-            
+
                                 <div class="info">
                                     <a class="no_underline" href="@href">
                                         <img class="product_photo" width="70" height="70" src="@path" />
@@ -124,7 +124,7 @@
                                         @product.Name
                                     </a>
                                 </div>
-                
+
                                 <div class="tocart">
                                     @Html.Partial("../Partial/Counter", product)  
                                 </div>
@@ -139,15 +139,23 @@
                                 @for (int i = 1; i <= pageCount; i++)
                                 {
                                     <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new { category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest })
+                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
                                     </li>
                                 }
                             </ul>
                         }
                     </div>
                 </div>
-                
-                <button id="add_all_button" class="btn btn-danger" onclick="addAll()">Add all</button>
+
+                <button id="add_all_button" class="btn btn-danger" onclick=" addAll() ">Add all</button>
+            }
+            else
+            {
+                // if product's not founded
+                if (String.IsNullOrWhiteSpace(Model.SearchRequest))
+                {
+                    <b><i>Enter more then three characters!</i></b>
+                }
             }
             </div>
         </div>

@@ -24,6 +24,10 @@ namespace iTechArt.Shop.Web.Controllers
 
         public ActionResult Search(string data, int? category, int? page, int? pageSize, SortType? sort, bool? reverse)
         {
+            if (String.IsNullOrWhiteSpace(data) || (data.Length <= 3))
+            {
+                return View(new SearchPageModel() { Categories = new List<CategoriesInSearch>(), Products = new List<Product>()});
+            }
 
             List<CategoriesInSearch> categories = SearchService.GetCategories(data);
 
