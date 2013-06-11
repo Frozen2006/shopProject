@@ -16,7 +16,7 @@ namespace iTechArt.Shop.Entities
     {
         public Category()
         {
-            this.Categories1 = new HashSet<Category>();
+            this.ChildCategories = new HashSet<Category>();
             this.Products = new HashSet<Product>();
         }
     
@@ -24,8 +24,8 @@ namespace iTechArt.Shop.Entities
         public int Parent { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<Category> Categories1 { get; set; }
-        public virtual Category Category1 { get; set; }
+        public virtual ICollection<Category> ChildCategories { get; set; }
+        public virtual Category ParentCategory { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

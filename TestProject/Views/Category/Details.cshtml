@@ -23,7 +23,7 @@
                                 var subcategory = subcategories[i];
                                 string href;
                             }
-                            @if(subcategory.Categories1.Count() != 0)
+                            @if(subcategory.ChildCategories.Count() != 0)
                               {
                                 //if has subcategories
                                 href = "/category/details/" + subcategory.Id;                                

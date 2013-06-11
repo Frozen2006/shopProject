@@ -14,7 +14,7 @@ namespace iTechArt.Shop.Entities
     
     public partial class Zip
     {
-        public string zip1 { get; set; }
+        public string zip { get; set; }
         public string city { get; set; }
         public string sub_city { get; set; }
     }

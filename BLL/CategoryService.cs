@@ -28,18 +28,18 @@ namespace iTechArt.Shop.Logic.Services
 
         public IEnumerable<Category> GetSubcategories(Category category)
         {
-            return category.Categories1.Where(c => c.Id != category.Id);
+            return category.ChildCategories.Where(c => c.Id != category.Id);
         }
 
         public IEnumerable<Category> GetParentsList(Category category)
         {
-            Category parent = category.Category1;
+            Category parent = category.ParentCategory;
             var parents = new List<Category>();
 
-            while (category.Category1.Id != category.Id)
+            while (category.ParentCategory.Id != category.Id)
             {
-                parents.Add(category.Category1);
-                category = category.Category1;
+                parents.Add(category.ParentCategory);
+                category = category.ParentCategory;
             }
 
             parents.Reverse();

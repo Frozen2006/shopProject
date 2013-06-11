@@ -20,9 +20,8 @@ namespace iTechArt.Shop.DataAccess.Repositories
                 categoty.Parent = item.Parent;
                 categoty.Name = item.Name;
 
-                //Не ясно нужно это или нет. Тестировать.
-                categoty.Categories1 = item.Categories1;
-                categoty.Category1 = item.Category1;
+                categoty.ChildCategories = item.ChildCategories;
+                categoty.ParentCategory = item.ParentCategory;
                 categoty.Products = item.Products;
             }
             Context.SaveChanges();

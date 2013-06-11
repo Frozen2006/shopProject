@@ -392,8 +392,8 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Parent" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Categories1" Relationship="ShopModel.FK_Categories_ToCategories" FromRole="Category" ToRole="Category1" />
-          <NavigationProperty Name="Category1" Relationship="ShopModel.FK_Categories_ToCategories" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="ChildCategories" Relationship="ShopModel.FK_Categories_ToCategories" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="ParentCategory" Relationship="ShopModel.FK_Categories_ToCategories" FromRole="Category1" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="ShopModel.FK_Products_ToCategories" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
@@ -423,10 +423,10 @@
         </EntityType>
         <EntityType Name="Zip">
           <Key>
-            <PropertyRef Name="zip1" />
+            <PropertyRef Name="zip" />
             <PropertyRef Name="city" />
           </Key>
-          <Property Type="String" Name="zip1" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="zip" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="city" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="sub_city" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -647,7 +647,7 @@
               <MappingFragment StoreEntitySet="Zips">
                 <ScalarProperty Name="sub_city" ColumnName="sub_city" />
                 <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="zip1" ColumnName="zip" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

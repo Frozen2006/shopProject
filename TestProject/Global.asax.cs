@@ -27,7 +27,7 @@ namespace iTechArt.Shop.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            HttpContext ctx = HttpContext.Current;
+        /*    HttpContext ctx = HttpContext.Current;
             ShopExceptoion ex = ctx.Server.GetLastError() as ShopExceptoion;
             ctx.Response.Clear();
 
@@ -39,7 +39,7 @@ namespace iTechArt.Shop.Web
             {
                 Response.Redirect("/Error/Error?Code=" + ex.Code);
             }
-
+            */
             //Really good method is at http://hystrix.com.ua/2011/01/23/error-handling-for-all-asp-net-mvc3-application/
         }
     }

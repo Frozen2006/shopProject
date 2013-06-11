@@ -16,11 +16,11 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
         public override void Update(Zip tiem)
         {
-            Zip zip = CurrentDbSet.FirstOrDefault(m => m.zip1 == tiem.zip1);
+            Zip zip = CurrentDbSet.FirstOrDefault(m => m.zip == tiem.zip);
 
             if (zip != null)
             {
-                zip.zip1 = tiem.zip1;
+                zip.zip = tiem.zip;
                 zip.city = tiem.city;
                 zip.sub_city = tiem.sub_city;
 
