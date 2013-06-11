@@ -57,7 +57,7 @@ function updateAll() {
             for (var i in data) {
                 var productId = data[i].Id;
                 $("div#" + productId).find(".counter")[0].innerHTML = data[i].count;
-                $("div#" + productId).find(".estimated_Price_value")[0].innerHTML = data[i].positionPrice;
+                $("div#" + productId).find(".estimated_price_value")[0].innerHTML = data[i].positionPrice;
 
                 var rem = $("div#" + productId).find("#update");
 
@@ -103,7 +103,7 @@ function sendAjaxToChange(productId, newVal) {
         type: "POST",
         success: function (data) {
             $("div#" + productId).find(".counter")[0].value = newVal;
-            $("div#" + productId).find(".estimated_Price_value")[0].innerHTML = data.positionPrice;
+            $("div#" + productId).find(".estimated_price_value")[0].innerHTML = data.positionPrice;
             $("#totalPrice")[0].innerHTML = data.totalPrice;
 
             $("div#" + productId).find("#update")[0].remove();
