@@ -149,9 +149,7 @@
     <Content Include="Content\js\alerts.js" />
     <Content Include="Content\js\cart.js" />
     <Content Include="Content\js\counter.js" />
-    <Content Include="Content\js\product-details.js" />
-    <Content Include="Content\js\productpage.js" />
-    <Content Include="Content\js\time_slots.js" />
+    <Content Include="Content\js\timeSlots.js" />
     <Content Include="Content\css\validation.css" />
     <Compile Include="Controllers\Cart\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -213,7 +211,7 @@
     <Content Include="Content\js_frameworks\bootstrap.input-clear.js" />
     <Content Include="Content\js_frameworks\bootstrap.js" />
     <Content Include="Content\js_frameworks\bootstrap.min.js" />
-    <Content Include="Content\js\reg_autocomp.js" />
+    <Content Include="Content\js\registerAutocompleat.js" />
     <Content Include="Content\js\search.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
