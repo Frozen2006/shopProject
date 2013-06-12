@@ -30,7 +30,7 @@ namespace iTechArt.Shop.Web.Controllers
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
             }
 
-            if (order.OrderStatus != OrderStatus.WaitForPaid)
+            if (order.OrderStatus != OrderStatus.NotPaid)
             {
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
             }
