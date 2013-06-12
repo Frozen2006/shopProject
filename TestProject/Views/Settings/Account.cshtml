@@ -27,12 +27,12 @@
                     </li>
                     <li>
                         @Html.LabelFor(q => q.Password)
-                        @Html.PasswordFor(m => m.Password, new { @class="input-block-level", @placeholder="Password"})
+                        @Html.PasswordFor(m => m.Password, new { @class="input-block-level", @placeholder="New password"})
                         @Html.ValidationMessageFor(m => m.Password)
                     </li>
                     <li>
                         @Html.LabelFor(q => q.ConfirmPassword)
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class="input-block-level", @placeholder="Confirm Password"})
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class="input-block-level", @placeholder="Confirm new password"})
                         @Html.ValidationMessageFor(m => m.ConfirmPassword)
                     </li>
                 </ol>
