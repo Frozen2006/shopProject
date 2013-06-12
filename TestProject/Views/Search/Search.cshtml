@@ -93,20 +93,59 @@
                         int productCount = Model.CountAll;
                         int pageCount = (int) Math.Ceiling(productCount/pageSize + 0.5);
                     } 
-    
-                    <div class="pagination pagination-centered">
+
+                    @*This block is generated only once. Then it will be copied via JavaScript to the botton of the page*@
+                    <div id="pagination_source" class="pagination pagination-centered">
                         @if (pageCount > 1)
                         {
                             <ul>
-                                @for (int i = 1; i <= pageCount; i++)
+                                @if (pageCount < 15)
                                 {
-                                    <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
-                                    </li>
+                                    for (int i = 1; i <= pageCount; i++)
+                                    {
+                                        <li @((i == Model.Page) ? "class=active" : "")>
+                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    int firstLinkBlockCount = (Model.Page) < 6 ? 6 : 2;
+                                    for (int i = 1; i <= firstLinkBlockCount; i++)
+                                    {
+                                        <li @((i == Model.Page) ? "class=active" : "")>
+                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
+                                        </li>
+                                    }
+
+                                    <li class="disabled"><a>...</a></li>
+                    
+                                    if (Model.Page >= 6 && pageCount - Model.Page >= 5)
+                                    {
+                                        for (int i = Model.Page - 2; i <= Model.Page + 2; i++)
+                                        {
+                                            <li @((i == Model.Page) ? "class=active" : "")>
+                                                @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
+                                            </li>
+                                        }
+                        
+                                        <li class="disabled"><a>...</a></li>
+                                    }
+
+                                    int lastLinkBlockCount = (pageCount - Model.Page) < 5 ? 5 : 1;
+                                    for (int i = pageCount - lastLinkBlockCount; i <= pageCount; i++)
+                                    {
+                                        <li @((i == Model.Page) ? "class=active" : "")>
+                                            @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
+                                        </li>
+                                    }
                                 }
                             </ul>
                         }
                     </div>
+                    
+                    
+                    
 
 
                     @foreach (var product in Model.Products)
@@ -131,21 +170,18 @@
                             }     
                         </div>
                     }
-                        
-                    <div class="pagination pagination-centered">
-                        @if (pageCount > 1)
-                        {
-                            <ul>
-                                @for (int i = 1; i <= pageCount; i++)
-                                {
-                                    <li @((i == Model.Page) ? "class=active" : "")>
-                                        @Html.ActionLink(i.ToString(CultureInfo.InvariantCulture), "Search", new {category = Model.CategoryId, page = i, sort = Model.SortType, pageSize = Model.PageSize, reverse = Model.Reverse, data = Model.SearchRequest})
-                                    </li>
-                                }
-                            </ul>
-                        }
-                    </div>
+                    
+
                 </div>
+                
+                @*We will copy pagination block here*@
+                <div id="pagination_copy"></div>
+                
+                <script>
+                    $(function () {
+                        var pagination = $("#pagination_source").clone().appendTo("#pagination_copy");
+                    });
+                </script>
 
                 <button id="add_all_button" class="btn btn-danger" onclick=" addAll() ">Add all</button>
             }
