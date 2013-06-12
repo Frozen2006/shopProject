@@ -37,7 +37,7 @@ namespace iTechArt.Shop.Logic
         {
             string serchString = searchData.ToLowerInvariant();
             var allCat = new List<CategoriesInSearch>();
-            var categories = _categoryRepository.ReadAll().Where(m => m.Products.FirstOrDefault(q => q.Name.Contains(serchString)) != null);
+            var categories = _categoryRepository.ReadAll().Where(m => m.Products.Count(q => q.Name.Contains(serchString)) > 0);
 
             foreach (var category in categories)
             {
@@ -84,7 +84,7 @@ namespace iTechArt.Shop.Logic
                 default:
                     return null;
             }
-            //!
+
             if (reverse)
                 products = products.Reverse();
 
