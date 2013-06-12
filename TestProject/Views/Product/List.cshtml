@@ -77,7 +77,7 @@
                         <li class="disabled"><a>...</a></li>
                     }
 
-                    int lastLinkBlockCount = (pageCount - Model.PageNumber) < 5 ? 6 : 1;
+                    int lastLinkBlockCount = (pageCount - Model.PageNumber) < 5 ? 5 : 1;
                     for (int i = pageCount - lastLinkBlockCount; i <= pageCount; i++)
                     {
                         <li @((i == Model.PageNumber) ? "class=active" : "")>
