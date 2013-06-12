@@ -2,6 +2,6 @@
 {
     public interface IProductRepository
     {
-        //Special product repository methods
+        //Add specific methods here. The interface is privided for flexibility.
     }
 }

@@ -9,11 +9,9 @@ namespace iTechArt.Shop.DataAccess.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class, IEntity
     {
-        //Вот этот контекст должен назначаться Ninject'ом. Поэтому попросим его в конструктор
         protected static DbContext Context { get; set; }
         protected DbSet<T> CurrentDbSet { get; set; }
 
-        //И пускай теперь Ninject сам думает, как сделать, чтобы контекст был один.
         protected RepositoryBase(DbContext context)
         {
             Context = context;
@@ -45,11 +43,8 @@ namespace iTechArt.Shop.DataAccess.Repositories
             var query = from i in CurrentDbSet where predicate(i) select i;
             return query;
         }
-        //Необходим нормальный Unit of Work, или хотябы человеческий Dispose
-        //там нужна какая-то проверка
 
-
-        //state of current object
+        //Current context object state
         private bool _isDisposed = false;
 
         public void Dispose()
