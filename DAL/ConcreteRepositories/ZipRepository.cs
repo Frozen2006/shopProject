@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -20,10 +21,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (zip != null)
             {
-                zip.ZipCode = tiem.ZipCode;
-                zip.City = tiem.City;
-                zip.SubCity = tiem.SubCity;
-
+                zip = Mapper.Map(tiem, zip);
                 Context.SaveChanges();
             }
 

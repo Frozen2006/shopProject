@@ -253,7 +253,7 @@ namespace iTechArt.Shop.Logic.Membership
             return false;
         }
 
-        //Return user title and first last name
+        //Return user Title and first last name
         //
         //
         public string GetUserFoolTitle(string email)

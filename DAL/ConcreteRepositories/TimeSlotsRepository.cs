@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -19,11 +20,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (ds != null)
             {
-                ds.EndTime = tiem.EndTime;
-                ds.Orders = tiem.Orders;
-                ds.StartTime = tiem.StartTime;
-                ds.Type = tiem.Type;
-                ds.Users = tiem.Users;
+                ds = Mapper.Map(tiem, ds);
             }
 
             Context.SaveChanges();

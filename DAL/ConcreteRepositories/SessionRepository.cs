@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -19,8 +20,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (session != null)
             {
-                session.Guid = tiem.Guid;
-                session.User = tiem.User;
+                session = Mapper.Map(tiem, session);
 
                 Context.SaveChanges();
             }
