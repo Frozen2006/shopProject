@@ -5,10 +5,6 @@ function Bookin(hour, day, mounth, year, slotType) {
     $("#myModal").modal('show');
 }
 
-function closeModal() {
-    $("#myModal").modal('hide');
-}
-
 //Send ajax to book time
 function SendBook(hour, day, mounth, year, slotType) {
     $.ajax({
@@ -16,8 +12,10 @@ function SendBook(hour, day, mounth, year, slotType) {
         data: { hour: hour, day: day, mounth: mounth, year: year, slotType: slotType },
         type: "POST",
         success: function (data) {
-            $("td#" + hour + "-" + day + "-" + mounth + "-" + year + "-" + slotType)[0].style.background = "#5BB75B";
-            $("td#" + hour + "-" + day + "-" + mounth + "-" + year + "-" + slotType)[0].onclick = function() {};
+            var currentSlot = $("td#" + hour + "-" + day + "-" + mounth + "-" + year + "-" + slotType)[0];
+            currentSlot.style.background = "#5BB75B";
+            currentSlot.onclick = function () { };
+            currentSlot.innerHTML = "Your slot";
             $("#myModal").modal('hide');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
