@@ -1,10 +1,12 @@
 ﻿      body {
         padding-top: 60px;
         padding-bottom: 40px;
+        min-width: 680px;
       }
 
       header {
           padding: 20px 0;
+          min-width: 680px;
       }
 
           .no_underline:hover {
@@ -118,6 +120,16 @@
 
     .no-margin {
         margin: 0;
+    }
+
+    .photo70 {
+        width: 70px;
+        height: 70px;   
+    }
+
+    .photo30 {
+        width: 30px;
+        height: 30px;
     }
 
 /*Styles for product list*/

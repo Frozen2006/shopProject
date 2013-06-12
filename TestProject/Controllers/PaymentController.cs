@@ -30,6 +30,11 @@ namespace iTechArt.Shop.Web.Controllers
                 return RedirectToAction("Error", "Error", new { Code = ErrorCode.NotFound });
             }
 
+            if (order.OrderStatus != OrderStatus.WaitForPaid)
+            {
+                return RedirectToAction("Error", "Error", new { Code = ErrorCode.Forbidden });
+            }
+
             var model = new PaymentModel()
                 {
                     FinalPrice = order.PriceWithDiscount,
