@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -14,16 +15,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
             var product = CurrentDbSet.Find(item.Id);
             if (product != null)
             {
-                product.Name = item.Name;
-                product.CategoryId = item.CategoryId;
-                product.Price = item.Price;
-                product.SellByWeight = item.SellByWeight;
-                product.AverageWeight = item.AverageWeight;
-                product.UnitOfMeasure = item.UnitOfMeasure;
-                product.Description = item.Description;
-
-                //Нужно тестировать.
-                product.Category = item.Category;
+                product = Mapper.Map(item, product);
             }
             Context.SaveChanges();
         }

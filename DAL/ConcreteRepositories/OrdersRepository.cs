@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -19,13 +20,9 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (ord != null)
             {
-                ord.Buyes = tiem.Buyes;
-                ord.DeliverySpot = tiem.DeliverySpot;
-                ord.Status = tiem.Status;
-                ord.User = tiem.User;
-                
+                ord = Mapper.Map(tiem, ord);
+                Context.SaveChanges();
             }
-            Context.SaveChanges();
         }
     }
 }

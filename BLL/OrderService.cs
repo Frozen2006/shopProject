@@ -140,7 +140,7 @@ namespace iTechArt.Shop.Logic.Services
 
             string email = UserService.GetEmailIfLoginIn();
             //Access forbidden
-            if (order.userEmail != email)
+            if (order.UserEmail != email)
                 return null;
 
             return order;

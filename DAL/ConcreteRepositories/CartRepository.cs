@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Linq;
-
+using AutoMapper;
 using iTechArt.Shop.Entities;
 
 namespace iTechArt.Shop.DataAccess.Repositories
@@ -20,8 +20,10 @@ namespace iTechArt.Shop.DataAccess.Repositories
 
             if (cart != null)
             {
-                cart.Count = tiem.Count;
-                cart.Product = cart.Product;
+                /*cart.Count = tiem.Count;
+                cart.Product = cart.Product;*/
+                cart = Mapper.Map(tiem, cart);
+
                 Context.SaveChanges();
             }
 

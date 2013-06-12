@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
@@ -16,13 +17,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
             var categoty = CurrentDbSet.Find(item.Id);
             if (categoty != null)
             {
-
-                categoty.Parent = item.Parent;
-                categoty.Name = item.Name;
-
-                categoty.ChildCategories = item.ChildCategories;
-                categoty.ParentCategory = item.ParentCategory;
-                categoty.Products = item.Products;
+                categoty = Mapper.Map(item, categoty);
             }
             Context.SaveChanges();
         }
