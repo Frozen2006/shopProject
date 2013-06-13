@@ -4,8 +4,7 @@ using System.Linq;
 using iTechArt.Shop.Common.Repositories;
 using iTechArt.Shop.Entities;
 
-
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.Base
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : class, IEntity
     {
@@ -31,7 +30,7 @@ namespace iTechArt.Shop.DataAccess.Repositories
         {
             return CurrentDbSet.FirstOrDefault(i => i.Id == id);
         }
-        public abstract void Update(T tiem);
+        public abstract void Update(T item);
 
         public IQueryable<T> ReadAll()
         {

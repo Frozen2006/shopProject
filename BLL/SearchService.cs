@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using iTechArt.Shop.Common.Enumerations;
-using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.DataAccess.ConcreteRepositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;

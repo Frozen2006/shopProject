@@ -1,4 +1,4 @@
-﻿using iTechArt.Shop.DataAccess.Repositories;
+﻿using iTechArt.Shop.DataAccess.ConcreteRepositories;
 using Entities;
 using ProductDescriptionGenerator;
 

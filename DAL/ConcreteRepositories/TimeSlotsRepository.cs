@@ -2,9 +2,10 @@
 using System.Linq;
 using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.Base;
 using iTechArt.Shop.Entities;
 
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.ConcreteRepositories
 {
     public class TimeSlotsRepository : RepositoryBase<DeliverySpot>, ITimeSlotsRepository
     {
@@ -14,13 +15,13 @@ namespace iTechArt.Shop.DataAccess.Repositories
         }
 
 
-        public override void Update(DeliverySpot tiem)
+        public override void Update(DeliverySpot item)
         {
-            DeliverySpot ds = CurrentDbSet.FirstOrDefault(m => (m.StartTime == tiem.StartTime) && (m.Type == tiem.Type));
+            DeliverySpot ds = CurrentDbSet.FirstOrDefault(m => (m.StartTime == item.StartTime) && (m.Type == item.Type));
 
             if (ds != null)
             {
-                ds = Mapper.Map(tiem, ds);
+                ds = Mapper.Map(item, ds);
             }
 
             Context.SaveChanges();

@@ -6,8 +6,7 @@
 
         public override string ToString()
         {
-            var st = string.Format("id: {0}, zip code: {1}, city: {2}", this.Id, this.ZipCode, this.City);
-            return st;
+            return string.Format("id: {0}, zip code: {1}, city: {2}", Id, ZipCode, City);
         }
     }
 }

@@ -27,12 +27,12 @@
                 <ol>
                     <li>
                         @Html.Label("Enter you main adress to delivery")
-                        @Html.TextBoxFor(m => m.Address, new { @class = "input-block-level", @placeholder = "Adress" })
+                        @Html.TextBoxFor(m => m.Address, new { @class = "input-block-level", @placeholder = "Address" })
                         @Html.ValidationMessageFor(m => m.Address)
                     </li>
                     <li>
                         @Html.Label("Enter you secondary adress (additional)")
-                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-block-level", @placeholder = "Secondary adress" })
+                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-block-level", @placeholder = "Secondary address" })
                         @Html.ValidationMessageFor(m => m.Address2)
                     </li>
                     <li>

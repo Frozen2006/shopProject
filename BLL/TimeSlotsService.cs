@@ -5,7 +5,7 @@ using System.Linq;
 using System.Management.Instrumentation;
 using AutoMapper;
 using iTechArt.Shop.Common.Enumerations;
-using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.DataAccess.ConcreteRepositories;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
 using Ninject;

@@ -52,7 +52,6 @@ namespace iTechArt.Shop.Web.Controllers
             }
             ModelState.AddModelError("", "Input data is bad");
             model.IsSuccess = false;
-            ViewBag.Data = "BAD";
             return View(model);
         }
 
@@ -73,7 +72,6 @@ namespace iTechArt.Shop.Web.Controllers
             }
             ModelState.AddModelError("", "Input data is bad");
             model.IsSuccess = false;
-            ViewBag.Data = "BAD";
             return View(model);
         }
 

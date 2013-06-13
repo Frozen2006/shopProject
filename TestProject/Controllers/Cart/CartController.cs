@@ -129,10 +129,10 @@ namespace iTechArt.Shop.Web.Controllers .Cart
 
                 var outData = new List<jsonUpdateAll>();
 
-                for (int q = 0; q < Id.Count; q++)
+                for (int i = 0; i < Id.Count; i++)
                 {
-                        double newPositionTotalPrice = CartService.UpateCount(userEmail, Convert.ToInt32(Id[q]), Count[q]);
-                        outData.Add(new jsonUpdateAll { Id = Convert.ToString(Id[q]), positionPrice = Convert.ToString(newPositionTotalPrice), count = Convert.ToString(Count[q])});
+                        double newPositionTotalPrice = CartService.UpateCount(userEmail, Convert.ToInt32(Id[i]), Count[i]);
+                        outData.Add(new jsonUpdateAll { Id = Convert.ToString(Id[i]), positionPrice = Convert.ToString(newPositionTotalPrice), count = Convert.ToString(Count[i])});
                 }
 
                 string totalPrice = Convert.ToString(CartService.GetTotalPrice(userEmail));

@@ -74,7 +74,7 @@ namespace iTechArt.Shop.Web
 
             kernel.Load(nm);
 
-            var s = kernel.Get<ICategoryService>();            
+            var s = kernel.Get<ICategoryService>();
 
             Kernel = kernel;
         }        

@@ -2,10 +2,10 @@
 using System.Linq;
 using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.Base;
 using iTechArt.Shop.Entities;
 
-
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.ConcreteRepositories
 {
     public class ZipRepository : RepositoryBase<Zip>, IZipRepository
     {
@@ -15,13 +15,13 @@ namespace iTechArt.Shop.DataAccess.Repositories
         }
 
 
-        public override void Update(Zip tiem)
+        public override void Update(Zip item)
         {
-            Zip zip = CurrentDbSet.FirstOrDefault(m => m.ZipCode == tiem.ZipCode);
+            Zip zip = CurrentDbSet.FirstOrDefault(m => m.ZipCode == item.ZipCode);
 
             if (zip != null)
             {
-                zip = Mapper.Map(tiem, zip);
+                zip = Mapper.Map(item, zip);
                 Context.SaveChanges();
             }
 

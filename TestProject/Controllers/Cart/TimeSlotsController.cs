@@ -51,7 +51,7 @@ namespace iTechArt.Shop.Web.Controllers .Cart
 
             var toList = new DateTime(start.Year, start.Month, start.Day, 9, 0, 0);
 
-            for (int q = 0; q < 13; q++)
+            for (int i = 0; i < 13; i++)
             {
                 model.StartDay.Add(toList);
                 toList = toList.AddHours(1.0);

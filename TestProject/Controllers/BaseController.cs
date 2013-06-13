@@ -2,6 +2,7 @@
 using Ninject;
 using System.Web.Mvc;
 using iTechArt.Shop.Common.Services;
+using iTechArt.Shop.Entities;
 
 namespace iTechArt.Shop.Web.Controllers 
 {
@@ -24,7 +25,9 @@ namespace iTechArt.Shop.Web.Controllers
 
         protected string GetUserEmail()
         {
-            return (string)HttpContext.Items["email"];
+			var user = (User)HttpContext.Items["userData"];
+
+            return user.Email;
         }
 
         public JsonResult JsonReport(string report, bool withError)

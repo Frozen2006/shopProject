@@ -17,13 +17,13 @@ namespace iTechArt.Shop.Common.Services
         bool ChangePassword(string email, string oldPassword, string newPassword);
         RolesType GetUserRole(string userEmail);
         void ChangeRole(string userEmail, RolesType newRole);
-        string AtributeCheck(RolesType roleName);
+        User AttributeCheck(RolesType role);
 
         void ChangeDeliveryData(string email, ChangeDeliveryAddressModel data);
         string StartSession(string userEmail);
         void RemoveSession(string guid);
         bool CheckSession(string guid);
-        string GetUserFoolTitle(string email);
+        string GetUserFullTitle(string email);
         string GetUserEmailFromSession(string guid);
 
     }

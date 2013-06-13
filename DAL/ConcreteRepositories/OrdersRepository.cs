@@ -2,9 +2,10 @@
 using System.Linq;
 using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.Base;
 using iTechArt.Shop.Entities;
 
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.ConcreteRepositories
 {
     public class OrdersRepository : RepositoryBase<Order>, IOrdersRepository
     {
@@ -14,13 +15,13 @@ namespace iTechArt.Shop.DataAccess.Repositories
         }
 
 
-        public override void Update(Order tiem)
+        public override void Update(Order item)
         {
-            Order ord = CurrentDbSet.FirstOrDefault(m => m.Id == tiem.Id);
+            Order ord = CurrentDbSet.FirstOrDefault(m => m.Id == item.Id);
 
             if (ord != null)
             {
-                ord = Mapper.Map(tiem, ord);
+                ord = Mapper.Map(item, ord);
                 Context.SaveChanges();
             }
         }

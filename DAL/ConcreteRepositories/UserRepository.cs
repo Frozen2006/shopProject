@@ -3,11 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.Base;
 using iTechArt.Shop.Entities;
-using iTechArt.Shop.Common.Services;
 
-
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.ConcreteRepositories
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
@@ -18,15 +17,15 @@ namespace iTechArt.Shop.DataAccess.Repositories
         }
 
 
-        public override void Update(User tiem)
+        public override void Update(User item)
         {
 
         
-                User us = CurrentDbSet.FirstOrDefault(m => m.Id == tiem.Id);
+                User us = CurrentDbSet.FirstOrDefault(m => m.Id == item.Id);
 
                 if (us != null)
                 {
-                    us = Mapper.Map(tiem, us);
+                    us = Mapper.Map(item, us);
                     Debug.WriteLine("Now try use context: "+Context.GetHashCode());
 
                     Context.SaveChanges();

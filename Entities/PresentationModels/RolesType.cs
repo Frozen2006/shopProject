@@ -3,6 +3,7 @@
     public enum RolesType
     {
         Admin,
-        User
+        User,
+		Any
     }
 }

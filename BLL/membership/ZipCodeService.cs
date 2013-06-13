@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using iTechArt.Shop.Common.Services;
-using iTechArt.Shop.DataAccess.Repositories;
+using iTechArt.Shop.DataAccess.ConcreteRepositories;
 using iTechArt.Shop.Entities;
 
 namespace iTechArt.Shop.Logic.Membership

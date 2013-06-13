@@ -1,9 +1,10 @@
 ﻿using System.Data.Entity;
 using AutoMapper;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.Base;
 using iTechArt.Shop.Entities;
 
-namespace iTechArt.Shop.DataAccess.Repositories
+namespace iTechArt.Shop.DataAccess.ConcreteRepositories
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {

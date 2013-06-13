@@ -1,8 +1,8 @@
 ﻿using iTechArt.Shop.Common;
 using iTechArt.Shop.Common.Repositories;
+using iTechArt.Shop.DataAccess.ConcreteRepositories;
 using iTechArt.Shop.Logic;
 using iTechArt.Shop.Logic.Services;
-using iTechArt.Shop.DataAccess.Repositories;
 using Entities;
 using iTechArt.Shop.Entities;
 using iTechArt.Shop.Common.Services;
